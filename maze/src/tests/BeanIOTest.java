@@ -1,7 +1,9 @@
 package tests;
 
 import org.beanio.*;
+
 import java.io.*;
+import java.util.Map;
 
 public class BeanIOTest {
 
@@ -28,7 +30,7 @@ public class BeanIOTest {
                 System.out.println(header.get("fileDate"));
             }
             else if ("contact".equals(in.getRecordName())) {
-                Contact contact = (Contact) record;
+                //Contact contact = (Contact) record;
                 // process the contact...
             }
             else if ("trailer".equals(in.getRecordName())) {
