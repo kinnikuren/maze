@@ -1,5 +1,6 @@
 *.class
 .classpath
+.settings
 bin
 .metadata
 RemoteSystemsTempFiles
