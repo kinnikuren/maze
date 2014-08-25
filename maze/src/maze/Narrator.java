@@ -1,6 +1,9 @@
 package maze;
 
 import static util.Print.*;
+
+import java.util.ArrayList;
+
 import maze.Maze.Room;
 
 public class Narrator {
@@ -19,6 +22,8 @@ public class Narrator {
     public static void talksAboutRoom(Player player, Room room) {
         String speech = "";
         String monsters = "";
+        ArrayList<String> monsterArray = new ArrayList<String>();
+
         if (room.isBarren()) {
             speech = player.name() + " is disappointed to find nothing of interest in the room.  " +
                     "The stone walls silently stare back at him.\n";
@@ -27,14 +32,35 @@ public class Narrator {
             for (Interacter i : room.interactions) {
                 //print("Hello!");
                 if (i instanceof maze.Bestiary.Monster) {
-                    monsters = monsters + "a " + i.name() + ", ";
+                    //monsters = monsters + "a " + i.name() + ", ";
+                    monsterArray.add(i.name());
                 }
                 //print(i.name());
             }
 
+            monsters = oxfordCommify(monsterArray);
             speech = player.name() + " notices several things in the room.  He sees " + monsters;
         }
 
         print(formatSpeech(speech));
+    }
+
+
+    public static String oxfordCommify(ArrayList<String> list) {
+        String result = "a ";
+        if (list.size() == 1) {
+            result = list.get(0);
+        }
+        else if (list.size() > 1) {
+            for (int i=0;i < list.size();i++) {
+                if (i < list.size()-2)
+                    result = result + list.get(i) + ", a ";
+                else if (i == list.size()-2)
+                    result = result + list.get(i) + ", and a ";
+                else
+                    result = result + list.get(i);
+            }
+        }
+        return result;
     }
 }
