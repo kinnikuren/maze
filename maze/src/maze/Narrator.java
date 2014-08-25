@@ -4,6 +4,8 @@ import static util.Print.*;
 
 import java.util.ArrayList;
 
+import com.google.common.collect.ArrayListMultimap;
+
 import maze.Maze.Room;
 
 public class Narrator {
@@ -23,6 +25,7 @@ public class Narrator {
         String speech = "";
         String monsters = "";
         ArrayList<String> monsterArray = new ArrayList<String>();
+        //ArrayListMultimap<String, Integer> monsterArray = ArrayListMultimap.create();
 
         if (room.isBarren()) {
             speech = player.name() + " is disappointed to find nothing of interest in the room.  " +
@@ -39,7 +42,8 @@ public class Narrator {
             }
 
             monsters = oxfordCommify(monsterArray);
-            speech = player.name() + " notices several things in the room.  He sees " + monsters;
+            speech = player.name() + " notices several things in the room.  He sees " + monsters +
+                    "!!!";
         }
 
         print(formatSpeech(speech));
