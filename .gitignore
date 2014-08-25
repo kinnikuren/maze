@@ -5,3 +5,5 @@ bin
 .metadata
 RemoteSystemsTempFiles
 build
+.DS_Store
+.gitignore
