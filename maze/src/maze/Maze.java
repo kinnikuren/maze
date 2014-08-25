@@ -43,6 +43,12 @@ public class Maze {
                 addActor(dg);
                 print("Weapon damage: " + dg.getWeaponDamage());
 
+                for (int i = 0; i < 10; i++) {
+                    BestiaryGenerator.spawnMonsters(this);
+                    addActor(new BronzeCoin()); addActor(new BronzeCoin()); addActor(new BronzeCoin());
+                    addActor(new Dagger());
+                }
+
             }
             else {
                 //addActor(new Skeleton());

@@ -17,17 +17,13 @@ public class RunMazeTest {
 
         print("Constructing cool Maze...");
 
-        /* HashSet<Coordinate> openSet = new HashSet<Coordinate>();
+        HashSet<Coordinate> openSet = new HashSet<Coordinate>();
         Coordinate center = new Coordinate();
         openSet.add(center);
         openSet.add(new Coordinate(0,1));
-        openSet.add(new Coordinate(1,1));
-        openSet.add(new Coordinate(1,0));
-        //positionSet.add(new Coordinate(4,2));
-        openSet.add(new Coordinate(4,3));
-        Maze coolMaze = MazeFactory.buildMaze(openSet, openSet.size(), center); */
+        Maze coolMaze = MazeFactory.buildMaze(openSet, 30, center);
 
-        Maze coolMaze = MazeFactory.buildMaze(30);
+        //Maze coolMaze = MazeFactory.buildMaze(30);
         coolMaze.populateRooms();
 
         //coolMaze.setExit(new Coordinate(1,1));

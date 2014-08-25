@@ -114,11 +114,18 @@ public class Narrator {
 
     public static void wordWrapPrint(String text) {
         int i=0;
+        int j;
         if (text.length() > 100) {
             do {
-
-                print(text.substring(i,i+101));
-                i += 100;
+                j = i + 100;
+                if (text.charAt(j) != ' ') {
+                    j = text.indexOf(" ",j);
+                }
+                if (j == -1) {
+                    break;
+                }
+                print(text.substring(i,j));
+                i = j+1;
             } while(text.length()-i > 100);
             print(text.substring(i,text.length()));
         }
