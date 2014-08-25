@@ -24,7 +24,9 @@ public class Narrator {
     public static void talksAboutRoom(Player player, Room room) {
         String speech = "";
         String monsters = "";
+        String items = "";
         ArrayList<String> monsterArray = new ArrayList<String>();
+        ArrayList<String> itemArray = new ArrayList<String>();
         //ArrayListMultimap<String, Integer> monsterArray = ArrayListMultimap.create();
 
         if (room.isBarren()) {
@@ -37,13 +39,16 @@ public class Narrator {
                 if (i instanceof maze.Bestiary.Monster) {
                     //monsters = monsters + "a " + i.name() + ", ";
                     monsterArray.add(i.name());
+                } else if (i instanceof maze.AbstractItemPortable) {
+                    itemArray.add(i.name());
                 }
                 //print(i.name());
             }
 
             monsters = oxfordCommify(monsterArray);
+            items = oxfordCommify(itemArray);
             speech = player.name() + " notices several things in the room.  He sees " + monsters +
-                    "!!!";
+                    "!!!" + " " + "He also sees " + items + "!!!";
         }
 
         print(formatSpeech(speech));
