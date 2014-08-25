@@ -13,6 +13,7 @@ public class Narrator {
     private static String formatSpeech(String speech) {
         speech = "***" + speech.toUpperCase() + "***";
         return speech;
+        //sample comment- REMOVE THIS
     }
 
     public static void speakIntro(Player player) {
