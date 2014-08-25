@@ -13,6 +13,7 @@ public class Narrator {
     private static String formatSpeech(String speech) {
         speech = "***" + speech.toUpperCase() + "***";
         return speech;
+        //sample comment- REMOVE THIS
     }
 
     public static void speakIntro(Player player) {
@@ -25,8 +26,12 @@ public class Narrator {
         String speech = "";
         String monsters = "";
         String items = "";
+
+        String fixtures = "";
         ArrayList<String> monsterArray = new ArrayList<String>();
         ArrayList<String> itemArray = new ArrayList<String>();
+        ArrayList<String> fixtureArray = new ArrayList<String>();
+
         //ArrayListMultimap<String, Integer> monsterArray = ArrayListMultimap.create();
 
         if (room.isBarren()) {
@@ -38,17 +43,22 @@ public class Narrator {
                 //print("Hello!");
                 if (i instanceof maze.Bestiary.Monster) {
                     //monsters = monsters + "a " + i.name() + ", ";
-                    monsterArray.add(i.name());
+                    monsterArray.add(i.name().toLowerCase());
                 } else if (i instanceof maze.AbstractItemPortable) {
-                    itemArray.add(i.name());
+                    itemArray.add(i.name().toLowerCase());
+                } else if (i instanceof maze.AbstractItemFixture) {
+                    fixtureArray.add(i.name().toLowerCase());
                 }
                 //print(i.name());
             }
 
             monsters = oxfordCommify(monsterArray);
             items = oxfordCommify(itemArray);
+
+            fixtures = oxfordCommify(fixtureArray);
             speech = player.name() + " notices several things in the room.  He sees " + monsters +
-                    "!!!" + " " + "He also sees " + items + "!!!";
+                    "!!!" + " " + "He also sees " + items + "!!!" + " " + "Finally, he sees " +
+                    fixtures + "!!!";
         }
 
         print(formatSpeech(speech));
@@ -56,20 +66,54 @@ public class Narrator {
 
 
     public static String oxfordCommify(ArrayList<String> list) {
-        String result = "a ";
+        //String result = "a ";
+        String result = "";
+        list = addArticles(list);
         if (list.size() == 1) {
-            result = list.get(0);
+            result = result + list.get(0);
         }
         else if (list.size() > 1) {
             for (int i=0;i < list.size();i++) {
-                if (i < list.size()-2)
-                    result = result + list.get(i) + ", a ";
-                else if (i == list.size()-2)
-                    result = result + list.get(i) + ", and a ";
+                if (i < list.size()-2) {
+                    //result = result + list.get(i) + ", a ";
+                    result = result + list.get(i) + ", ";
+                }
+                else if (i == list.size()-2) {
+                    //result = result + list.get(i) + ", and a ";
+                    result = result + list.get(i) + ", and ";
+                }
                 else
                     result = result + list.get(i);
             }
         }
         return result;
+    }
+
+    public static ArrayList<String> addArticles(ArrayList<String> list) {
+        ArrayList<String> vowels = new ArrayList<String>();
+        vowels.add("a");
+        vowels.add("e");
+        vowels.add("i");
+        vowels.add("o");
+        vowels.add("u");
+        print(vowels);
+        for (int i=0;i < list.size();i++) {
+            //print(list.get(i).substring(0,1));
+            if (vowels.contains(list.get(i).substring(0,1))) {
+                //print("found a vowel!");
+                list.add(i,"an " + list.get(i));
+                list.remove(i+1);
+            } else {
+                list.add(i,"a " + list.get(i));
+                list.remove(i+1);
+            }
+        }
+        return list;
+    }
+
+    public static void wordWrapPrint(String text) {
+        if (text.length() > 100) {
+
+        }
     }
 }
