@@ -1,7 +1,8 @@
-package maze;
+package util;
 
-public class Status {
-    /*
+import java.util.*;
+
+public class SuffixGenerator {
     private String[] suffixArray = new String[10];
 
     public SuffixGenerator() {
@@ -17,9 +18,8 @@ public class Status {
         this.suffixArray[9] = "of ???";
     }
 
-    public String getStatus() {
-
+    public String getSuffix() {
+        Random rand = new Random();
         return suffixArray[rand.nextInt(this.suffixArray.length)];
     }
-    */
 }

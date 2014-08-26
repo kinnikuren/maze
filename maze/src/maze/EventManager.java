@@ -1,25 +1,26 @@
 package maze;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.PriorityQueue;
+
 import static maze.Priority.*;
 import static util.Loggers.*;
 
 public class EventManager {
-    private ArrayList<Interacter> interactions;
+    private Collection<Interacter> interactions;
     private PriorityQueue<Event> currentEvents =
             new PriorityQueue<Event>(10, Collections.reverseOrder());
 
-    public EventManager(ArrayList<Interacter> interactions) {
+    public EventManager(Collection<Interacter> interactions) {
         this.interactions = interactions;
     }
 
-    public ArrayList<Interacter> getInteractions() {
-        return interactions;
+    public Collection<Interacter> interactions() {
+      return interactions;
     }
 
-    public void setInteractions(ArrayList<Interacter> interactions) {
+    public void setInteractions(Collection<Interacter> interactions) {
         this.interactions = interactions;
     }
 

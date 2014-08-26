@@ -3,8 +3,8 @@ package maze;
 import static util.Print.*;
 
 import java.util.ArrayList;
-
-import com.google.common.collect.ArrayListMultimap;
+import java.util.Collection;
+import java.util.List;
 
 import maze.Maze.Room;
 
@@ -30,18 +30,17 @@ public class Narrator {
 
         String quantity = "a few";
 
-        ArrayList<String> monsterArray = new ArrayList<String>();
-        ArrayList<String> itemArray = new ArrayList<String>();
-        ArrayList<String> fixtureArray = new ArrayList<String>();
-
-        ArrayListMultimap<String, Integer> itemArray1 = ArrayListMultimap.create();
+        Collection<Interacter> interactions = room.interactions();
+        List<String> monsterArray = new ArrayList<String>();
+        List<String> itemArray = new ArrayList<String>();
+        List<String> fixtureArray = new ArrayList<String>();
 
         if (room.isBarren()) {
             speech = player.name() + " is disappointed to find nothing of interest in the room.  " +
                     "The stone walls silently stare back at him.\n";
         }
         else {
-            for (Interacter i : room.interactions) {
+            for (Interacter i : interactions) {
                 //print("Hello!");
                 if (i instanceof maze.Bestiary.Monster) {
                     //monsters = monsters + "a " + i.name() + ", ";
@@ -57,12 +56,12 @@ public class Narrator {
                 //print(i.name());
             }
 
-            print(room.interactions.size());
+            print(interactions.size());
 
-            if (room.interactions.size() > 5) {
+            if (interactions.size() > 5) {
                 quantity = "some";
             }
-            if (room.interactions.size() > 20) {
+            if (interactions.size() > 20) {
                 quantity = "many";
             }
 
@@ -91,7 +90,7 @@ public class Narrator {
                     monsters + "!!!" + " " + "He also sees " + items + "!!!" + " " +
                     "Finally, he sees " + fixtures + "!!!";
 
-            for (Interacter i : room.interactions) {
+            for (Interacter i : interactions) {
                 //print(room.howManyOf(i.name()) + " " + i.name());
                 //print(util.NumbersToText.convert(room.howManyOf(i.name())) + " " + i.name());
             }
@@ -100,11 +99,11 @@ public class Narrator {
         wordWrapPrint(formatSpeech(speech));
     }
 
-    private static ArrayList<String> noDuplicates(ArrayList<String> list, String s) {
+    private static List<String> noDuplicates(List<String> list, String s) {
         if (!list.contains(s)) {
             list.add(s);
         }
-        return list;
+      return list;
     }
 
     public static void wordWrapPrint(String text) {

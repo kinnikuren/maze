@@ -5,7 +5,7 @@ import static maze.References.*;
 public final class Weapons {
     public static class Dagger extends AbstractItemWeapon {
         private String name;
-        private maze.SuffixGenerator sg = new maze.SuffixGenerator();
+        private util.SuffixGenerator sg = new util.SuffixGenerator();
         private String suffix = sg.getSuffix();
 
         public Dagger() {

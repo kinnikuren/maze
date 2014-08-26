@@ -1,6 +1,7 @@
 package util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import maze.Maze.Room;
 import maze.Stage;
@@ -119,7 +120,7 @@ public class GrammarGuy {
         return word;
     }
 
-    public static ArrayList<String> numberify(ArrayList<String> list, Room room) {
+    public static List<String> numberify(List<String> list, Room room) {
         for (int i = 0;i < list.size();i++) {
             String s = list.get(i);
             int num;
@@ -136,10 +137,10 @@ public class GrammarGuy {
             list.add(i,s);
             list.remove(i+1);
         }
-        return list;
+      return list;
     }
 
-    public static String oxfordCommify(ArrayList<String> list) {
+    public static String oxfordCommify(List<String> list) {
         //String result = "a ";
         String result = "";
 
@@ -160,7 +161,7 @@ public class GrammarGuy {
                     result = result + list.get(i);
             }
         }
-        return result;
+      return result;
     }
 
     public static ArrayList<String> addArticles(ArrayList<String> list) {

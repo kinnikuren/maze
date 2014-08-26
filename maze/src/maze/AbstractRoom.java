@@ -7,11 +7,6 @@ import com.google.common.collect.ArrayListMultimap;
 import static util.Print.*;
 
 public abstract class AbstractRoom implements Stage {
-    ArrayListMultimap<String, Interacter> roomItems;
-
-    public int howManyOf(String name) {
-        return this.roomItems.get(name).size();
-    }
 
     public static AbstractRoom testRoom(Coordinate c) {
         return new AbstractRoom(c) {
@@ -20,30 +15,36 @@ public abstract class AbstractRoom implements Stage {
         };
     }
 
+
     public final Coordinate position;
-    ArrayList<Interacter> contents = new ArrayList<Interacter>();
-    ArrayList<Interacter> interactions = new ArrayList<Interacter>();
+    List<Interacter> contents;
+    ArrayListMultimap<String, Interacter> interactionMap;
     EventManager manager;
 
     public AbstractRoom(Coordinate c) {
         this.position = c;
-        this.manager = new EventManager(interactions);
-        this.roomItems = ArrayListMultimap.create();
+        this.contents = new ArrayList<Interacter>();
+        this.interactionMap = ArrayListMultimap.create();
+        this.manager = new EventManager(interactionMap.values());
     }
 
-    public String toString() { return "Room => " + position; }
+    public String toString() { return "Room at " + position; }
 
     public void describeRoom() {
         print ("You are in an unremarkable, nondescript room.");
         if(contents.size() == 0) { print("There is nothing in this room."); }
         else {
-          print("There are things in the room!");
-          print ("Contents of this room::");
+          print ("Contents of this room:");
           for(Interacter i : contents) {
             print(i.name());
           }
         }
     }
+
+    public int howManyOf(String name) {
+      return interactionMap.get(name).size();
+    }
+
 
     public abstract void populateRoom();
 
@@ -75,52 +76,51 @@ public abstract class AbstractRoom implements Stage {
         if (actor instanceof AbstractUnit || actor instanceof AbstractItem) {
           contents.add(actor);
         }
-        interactions.add(actor);
-        this.roomItems.put(actor.name(), actor);
+        interactionMap.put(actor.name(), actor);
     }
-
     @Override
     public void removeActor(Interacter actor) {
         if (actor instanceof AbstractUnit || actor instanceof AbstractItem) {
-            contents.remove(actor);
+          contents.remove(actor);
         }
-        interactions.remove(actor);
+        interactionMap.remove(actor.name(), actor);
     }
-
     @Override
     public void cleanupActors() {
-        for (Interacter actor : interactions) {
+        for (Interacter actor : interactionMap.values()) {
           if (actor.isDone(this)) removeActor(actor);
         }
     }
-
+    @Override
     public PriorityQueue<Event> getCurrentEvents() {
       return manager.getCurrentEvents();
     }
-
+    @Override
     public PriorityQueue<Event> getCurrentEvents(Commands trigger) {
       return manager.getCurrentEvents(trigger);
     }
-
+    @Override
     public PriorityQueue<Event> getCurrentEvents(Commands trigger, String objectName) {
       return manager.getCurrentEvents(trigger, objectName);
     }
-
+    @Override
     public boolean contains(String objectName) {
       return manager.contains(objectName);
     }
-
     @Override
     public boolean isBarren() {
-      return interactions.size() == 0 ? true : false;
+      return (interactionMap.values().size() == 0);
     }
-
     @Override
     public String getName() { return "the room"; }
 
     public void addToRoom() { }
 
-    public ArrayList<Interacter> contents() { return contents; }
+    public List<Interacter> contents() { return contents; }
 
-    public ArrayList<Interacter> interactions() { return interactions; }
+    public Collection<Interacter> interactions() {
+      return interactionMap.values();
+    }
+
+    //public ArrayListMultiMap interactionMap
 }
