@@ -16,7 +16,7 @@ public final class Trinkets {
     public static class BronzeCoin extends Coin {
         public BronzeCoin() { }
         public BronzeCoin(Coordinate c) { super(c); }
-        @Override public String name() { return "bronze coin"; }
+        @Override public String name() { return "Bronze Coin"; }
         @Override public boolean matches(String name) { return matchRef(BRONZE_COIN, name); }
         @Override public String details() { return "This bronze coin is very light and faded with age."; }
         @Override public int weight() { return 2; }

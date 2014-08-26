@@ -27,35 +27,9 @@ public class Maze {
             super(c);
         }
         @Override
-        public void populateRoom() { //for testing
-            BestiaryGenerator.spawnMonsters(this);
-            if (position.equals(Maze.this.center)) {
-
-                addActor(new Idol());
-                addActor(new HealingPotion());
-                addActor(new RabidRat());
-
-                //For testing (AYL)
-                //addActor(new Skeleton());
-                //addActor(new Rat());
-                //BestiaryGenerator.spawnMonsters(this);
-                Dagger dg = new Dagger();
-                addActor(dg);
-                print("Weapon damage: " + dg.getWeaponDamage());
-
-                for (int i = 0; i < 10; i++) {
-                    BestiaryGenerator.spawnMonsters(this);
-                    addActor(new BronzeCoin()); addActor(new BronzeCoin()); addActor(new BronzeCoin());
-                    addActor(new Dagger());
-                }
-
-            }
-            else {
-                //addActor(new Skeleton());
-                addActor(new BronzeCoin()); addActor(new BronzeCoin()); addActor(new BronzeCoin());
-                addActor(new EerieChimeSound());
-
-            }
+        public void populateRoom() {
+            //for testing
+            tests.PopulateRoomTest.fillerUp(position, center, this);
         }
         public View<Coordinate> viewNeighbors() {
           return Maze.this.viewNeighborsOf(position);

@@ -1,4 +1,4 @@
-package maze;
+package util;
 
 import java.util.*;
 
@@ -12,11 +12,6 @@ public class TextParser {
 
         String[] finalInput = new String[4];
         input = input.toLowerCase().trim();
-        ArrayList<String> preps = new ArrayList<String>();
-        preps.add("to");
-        preps.add("on");
-        preps.add("with");
-        preps.add("from");
 
         boolean prepFlag = false;
 
@@ -51,9 +46,9 @@ public class TextParser {
                 //print(inputs[i]);
             int i = 1;
             do {
-                if(preps.contains(inputs[i])) {
+                prepFlag = util.GrammarGuy.isPreposition(inputs[i]);
+                if(prepFlag) {
                     preposition = inputs[i];
-                    prepFlag = true;
                 } else {
                     object += inputs[i];
                 }

@@ -44,13 +44,11 @@ public class RunMazeTest {
             Player you = new Player(coolMaze);
             you.setName(name);
         print("\nWelcome to the Maze, " + you.name() + "!");
-        print("Type 'commands' for a list of commands.");
 
         Narrator.speakIntro(you);
-
         Narrator.talksAboutRoom(you, you.getRoom());
 
-        //you.setStatus("ebola");
+        print("\nType 'commands' for a list of commands.");
 
         do {
             print("\nPlease enter a command: ");

@@ -2,6 +2,7 @@ package maze;
 
 import java.util.*;
 
+import util.TextParser;
 import maze.Maze.Room;
 import static util.Print.*;
 import static maze.Commands.*;

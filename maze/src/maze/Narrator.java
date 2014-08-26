@@ -11,28 +11,30 @@ import maze.Maze.Room;
 public class Narrator {
 
     private static String formatSpeech(String speech) {
-        speech = "***" + speech.toUpperCase() + "***";
+        speech = "***" + speech + "***";
         return speech;
         //sample comment- REMOVE THIS
     }
 
     public static void speakIntro(Player player) {
         String speech = "The hero, " + player.name() + ", awakens in a dark, dank room.  He tries to get" +
-                " his bearings by taking a look around the room.\n";
-        print(formatSpeech(speech));
+                " his bearings by taking a look around the room.";
+        wordWrapPrint(formatSpeech(speech));
     }
 
     public static void talksAboutRoom(Player player, Room room) {
         String speech = "";
         String monsters = "";
         String items = "";
-
         String fixtures = "";
+
+        String quantity = "a few";
+
         ArrayList<String> monsterArray = new ArrayList<String>();
         ArrayList<String> itemArray = new ArrayList<String>();
         ArrayList<String> fixtureArray = new ArrayList<String>();
 
-        //ArrayListMultimap<String, Integer> monsterArray = ArrayListMultimap.create();
+        ArrayListMultimap<String, Integer> itemArray1 = ArrayListMultimap.create();
 
         if (room.isBarren()) {
             speech = player.name() + " is disappointed to find nothing of interest in the room.  " +
@@ -43,71 +45,64 @@ public class Narrator {
                 //print("Hello!");
                 if (i instanceof maze.Bestiary.Monster) {
                     //monsters = monsters + "a " + i.name() + ", ";
-                    monsterArray.add(i.name().toLowerCase());
+                    monsterArray = noDuplicates(monsterArray,i.name());
                 } else if (i instanceof maze.AbstractItemPortable) {
-                    itemArray.add(i.name().toLowerCase());
+                    //itemArray.add(i.name().toLowerCase());
+                    //itemArray1.put(i.name(), value)
+                    itemArray = noDuplicates(itemArray,i.name());
+                    //print(inventory.get("bronze coin"));
                 } else if (i instanceof maze.AbstractItemFixture) {
-                    fixtureArray.add(i.name().toLowerCase());
+                    fixtureArray = noDuplicates(fixtureArray,i.name());
                 }
                 //print(i.name());
             }
 
-            monsters = oxfordCommify(monsterArray);
-            items = oxfordCommify(itemArray);
+            print(room.interactions.size());
 
-            fixtures = oxfordCommify(fixtureArray);
-            speech = player.name() + " notices several things in the room.  He sees " + monsters +
-                    "!!!" + " " + "He also sees " + items + "!!!" + " " + "Finally, he sees " +
-                    fixtures + "!!!";
+            if (room.interactions.size() > 5) {
+                quantity = "some";
+            }
+            if (room.interactions.size() > 20) {
+                quantity = "many";
+            }
+
+            /*
+            print(monsterArray);
+            print(itemArray);
+            print(fixtureArray);
+            */
+
+            monsterArray = util.GrammarGuy.numberify(monsterArray, room);
+            itemArray = util.GrammarGuy.numberify(itemArray, room);
+            fixtureArray = util.GrammarGuy.numberify(fixtureArray, room);
+
+            /*
+            print(monsterArray);
+            print(itemArray);
+            print(fixtureArray);
+            */
+
+
+            monsters = util.GrammarGuy.oxfordCommify(monsterArray);
+            items = util.GrammarGuy.oxfordCommify(itemArray);
+
+            fixtures = util.GrammarGuy.oxfordCommify(fixtureArray);
+            speech = player.name() + " notices " + quantity + " things in the room.  He sees " +
+                    monsters + "!!!" + " " + "He also sees " + items + "!!!" + " " +
+                    "Finally, he sees " + fixtures + "!!!";
+
+            for (Interacter i : room.interactions) {
+                //print(room.howManyOf(i.name()) + " " + i.name());
+                //print(util.NumbersToText.convert(room.howManyOf(i.name())) + " " + i.name());
+            }
         }
 
-        print(formatSpeech(speech));
         wordWrapPrint(formatSpeech(speech));
     }
 
-
-    public static String oxfordCommify(ArrayList<String> list) {
-        //String result = "a ";
-        String result = "";
-        list = addArticles(list);
-        if (list.size() == 1) {
-            result = result + list.get(0);
-        }
-        else if (list.size() > 1) {
-            for (int i=0;i < list.size();i++) {
-                if (i < list.size()-2) {
-                    //result = result + list.get(i) + ", a ";
-                    result = result + list.get(i) + ", ";
-                }
-                else if (i == list.size()-2) {
-                    //result = result + list.get(i) + ", and a ";
-                    result = result + list.get(i) + ", and ";
-                }
-                else
-                    result = result + list.get(i);
-            }
-        }
-        return result;
-    }
-
-    public static ArrayList<String> addArticles(ArrayList<String> list) {
-        ArrayList<String> vowels = new ArrayList<String>();
-        vowels.add("a");
-        vowels.add("e");
-        vowels.add("i");
-        vowels.add("o");
-        vowels.add("u");
-        print(vowels);
-        for (int i=0;i < list.size();i++) {
-            //print(list.get(i).substring(0,1));
-            if (vowels.contains(list.get(i).substring(0,1))) {
-                //print("found a vowel!");
-                list.add(i,"an " + list.get(i));
-                list.remove(i+1);
-            } else {
-                list.add(i,"a " + list.get(i));
-                list.remove(i+1);
-            }
+    private static ArrayList<String> noDuplicates(ArrayList<String> list, String s) {
+        if (!list.contains(s)) {
+            list.add(s);
         }
         return list;
     }

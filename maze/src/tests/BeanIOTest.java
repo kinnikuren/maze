@@ -17,7 +17,7 @@ public class BeanIOTest {
         // create a BeanReader to read from "input.csv"
         BeanReader in = factory.createReader("bestiary", new File("bestiaryinput.csv"));
         // create a BeanWriter to write to "output.csv"
-        BeanWriter out = factory.createWriter("bestiary", new File("bestiaryoutput.csv"));
+        //BeanWriter out = factory.createWriter("bestiary", new File("bestiaryoutput.csv"));
 
         Object record = null;
 
@@ -39,13 +39,13 @@ public class BeanIOTest {
             }
 
             // write the record to "output.csv"
-            out.write(record);
+            //out.write(record);
         }
 
         in.close();
 
-        out.flush();
-        out.close();
+        //out.flush();
+        //out.close();
 
     }
 

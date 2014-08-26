@@ -2,9 +2,17 @@ package maze;
 
 import java.util.*;
 
+import com.google.common.collect.ArrayListMultimap;
+
 import static util.Print.*;
 
 public abstract class AbstractRoom implements Stage {
+    ArrayListMultimap<String, Interacter> roomItems;
+
+    public int howManyOf(String name) {
+        return this.roomItems.get(name).size();
+    }
+
     public static AbstractRoom testRoom(Coordinate c) {
         return new AbstractRoom(c) {
             @Override
@@ -20,6 +28,7 @@ public abstract class AbstractRoom implements Stage {
     public AbstractRoom(Coordinate c) {
         this.position = c;
         this.manager = new EventManager(interactions);
+        this.roomItems = ArrayListMultimap.create();
     }
 
     public String toString() { return "Room => " + position; }
@@ -67,6 +76,7 @@ public abstract class AbstractRoom implements Stage {
           contents.add(actor);
         }
         interactions.add(actor);
+        this.roomItems.put(actor.name(), actor);
     }
 
     @Override
