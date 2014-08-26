@@ -6,7 +6,7 @@ import java.util.List;
 public enum References {
     SKELETON(100, new String[] {"skeleton", "skelly"}),
     RAT(101,new String[] {"rat"}),
-    RABIDRAT(102,new String[] {"rabid rat", "rabidrat"}),
+    RABIDRAT(102,new String[] {"rabid rat"}),
     GOBLIN(110, new String[] {"goblin"}),
     IDOL(200, new String[] {"idol"}),
     DOODAD(1000, new String[] {"doodad"}),

@@ -1,12 +1,36 @@
 package util;
 
 import java.util.ArrayList;
+import static util.Loggers.*;
+import static util.Utilities.*;
+
 import java.util.List;
 
 import maze.Maze.Room;
-import maze.Stage;
 
 public class GrammarGuy {
+
+    /*public static final Set<String> PREPOSITIONS = Collections.unmodifiableSet(
+            Arrays. */
+
+    public enum Prepositions {
+        IN,
+        OF,
+        ON,
+        TO,
+        BETWEEN,
+        WITH,
+        FROM;
+
+        public static boolean isPreposition(String word) {
+            word = strip(word);
+            for (Prepositions p : Prepositions.values()) {
+                String prep = strip(p.toString());
+                if (prep.equals(word)) return true;
+            }
+          return false;
+        }
+    }
 
     public static String pluralizeNoun(String word) {
         int length = word.length();
@@ -16,14 +40,13 @@ public class GrammarGuy {
 
         if (length < 3) return "NULL";
 
-        String UL = null;
-        String PL = null;
+        String ul = null;
 
         // look for preposition
         String[] inputs = word.split("[\\s-]+");
 
         for (int i=0;i < inputs.length;i++) {
-            System.out.println(inputs[i]);
+                log("pluralize noun input: " + inputs[i]);
             if (isPreposition(inputs[i]))
                 hasSuffix = true;
         }
@@ -32,7 +55,7 @@ public class GrammarGuy {
             //System.out.println("there's a suffix!");
             hasSuffix = true;
             endOfFirstWord = word.indexOf(" ");
-            System.out.println(endOfFirstWord);
+                log("end of first word: " + endOfFirstWord);
             if (endOfFirstWord == -1) endOfFirstWord = word.indexOf("-");
             tempWord = word.substring(0,endOfFirstWord);
             //UL = word.substring(endOfFirstWord-1,endOfFirstWord);
@@ -46,24 +69,22 @@ public class GrammarGuy {
 
         length = tempWord.length();
 
-        UL = tempWord.substring(length-1,length);
-        PL = tempWord.substring(length-2,length-1);
+        ul = tempWord.substring(length-1,length);
+        Checkable pl = check(tempWord.substring(length-2,length-1));
         //if (PL.equals("g")) System.out.println("yay");
 
-        switch (UL) {
+        switch (ul) {
             case "a":
             case "e":
             case "i":
             case "u":
-                tempWord = tempWord + "s";
+                tempWord += "s";
                 break;
             case "o":
-                if (PL.equals("r") || PL.equals("d")) {
-                    tempWord = tempWord + "es";
-                }
-                else {
-                    tempWord = tempWord + "s";
-                }
+                if (pl.in("r", "d"))
+                  tempWord += "es";
+                else
+                  tempWord += "s";
                 break;
             case "b":
             case "d":
@@ -73,51 +94,45 @@ public class GrammarGuy {
             case "p":
             case "r":
             case "w":
-                tempWord = tempWord + "s";
+                tempWord += "s";
                 break;
             case "y":
-                if (PL.equals("l") || PL.equals("g") || PL.equals("r") || PL.equals("x") ||
-                        PL.equals("h") || PL.equals("n")) {
-                    //System.out.println("Hello!");
-                    tempWord = tempWord.substring(0,length-1) + "ies";
-                } else {
-                    tempWord = tempWord + "s";
-                }
+                if (pl.in("l", "g", "r", "x", "h", "n"))
+                  tempWord = tempWord.substring(0,length-1) + "ies";
+                else
+                  tempWord += "s";
                 break;
             case "n":
             case "l":
             case "t":
-                tempWord = tempWord + "s";
+                tempWord += "s";
                 break;
             case "c":
-                if (PL.equals("h")) {
-                    word = word.substring(0,length-1) + "es";
-                }
+                if (pl.in("h"))
+                  word = word.substring(0,length-1) + "es";
                 break;
             case "h":
-                if (PL.equals("s") || PL.equals("c")) {
-                    tempWord = tempWord + "es";
-                } else {
-                    tempWord = tempWord + "s";
-                }
+                if (pl.in("s", "c"))
+                  tempWord += "es";
+                else
+                  tempWord += "s";
                 break;
             case "s":
-                if (PL.equals("u") || PL.equals("i")) {
-                    tempWord = tempWord + "es";
-                }
+                if (pl.in("u", "i"))
+                  tempWord += "es";
                 break;
             case "x":
-                tempWord = tempWord + "es";
+                tempWord += "es";
                 break;
         }
 
         // if pluralizing the first word
-        if (hasSuffix) {
-            word = word.replaceFirst(word.substring(0,endOfFirstWord), tempWord);
-        } else {
-            word = tempWord;
-        }
-        return word;
+        if (hasSuffix)
+          word = word.replaceFirst(word.substring(0,endOfFirstWord), tempWord);
+        else
+          word = tempWord;
+
+      return word;
     }
 
     public static List<String> numberify(List<String> list, Room room) {
@@ -165,13 +180,9 @@ public class GrammarGuy {
     }
 
     public static ArrayList<String> addArticles(ArrayList<String> list) {
-        ArrayList<String> vowels = new ArrayList<String>();
-        vowels.add("a"); vowels.add("e"); vowels.add("i"); vowels.add("o"); vowels.add("u");
-        vowels.add("A"); vowels.add("E"); vowels.add("I"); vowels.add("O"); vowels.add("U");
-        //print(vowels);
         for (int i=0;i < list.size();i++) {
             //print(list.get(i).substring(0,1));
-            if (vowels.contains(list.get(i).substring(0,1))) {
+            if (isFirstLetterVowel(list.get(i))) {
                 //print("found a vowel!");
                 list.add(i,"an " + list.get(i));
                 list.remove(i+1);
@@ -184,29 +195,50 @@ public class GrammarGuy {
     }
 
     public static String addArticle(String word) {
-        ArrayList<String> vowels = new ArrayList<String>();
-        vowels.add("a"); vowels.add("e"); vowels.add("i"); vowels.add("o"); vowels.add("u");
-        vowels.add("A"); vowels.add("E"); vowels.add("I"); vowels.add("O"); vowels.add("U");
-        if (vowels.contains(word.substring(0,1))) {
-            //print("found a vowel!");
-            word = "an " + word;
-        } else {
-            word = "a " + word;
-        }
-        return word;
+        if (isFirstLetterVowel(word))
+          return "an " + word;
+        else
+          return "a " + word;
     }
 
-    public static boolean isPreposition(String s) {
-        ArrayList<String> preps = new ArrayList<String>();
-        preps.add("to");
-        preps.add("on");
-        preps.add("with");
-        preps.add("from");
-        preps.add("in");
-        preps.add("of");
-
-        if(preps.contains(s)) return true;
+    public static boolean isPreposition(String word) {
+      return Prepositions.isPreposition(word);
+      //return check(strip(word)).in(
+      //        "to", "on", "with", "from", "in", "of", "between");
+        /* if(preps.contains(s)) return true;
         return false;
+        return preps.contains(s);
+        if (preps.contains(s) == true)
+        */
     }
 
+    public static boolean isFirstLetterVowel(String word) {
+      return check(strip(word).charAt(0)).in('a', 'e', 'i', 'o', 'u');
+    }
+
+    public static String strip(String word) {
+      return word.trim().toLowerCase();
+    }
+
+    /*public static void main(String[] args) { //debug and test
+        String test1 = "hello";
+        String test2 = "ayo";
+        String test3 = "word to your mama";
+        String test4 = " word   to your mamas  ";
+
+        System.out.println(isFirstLetterVowel(test1));
+        System.out.println(isFirstLetterVowel(test2));
+        System.out.println(isFirstLetterVowel(test3));
+        System.out.println(isFirstLetterVowel(test4));
+
+        System.out.println(addArticle(test3));
+        System.out.println(addArticle(test4));
+    } */
+
+    public static void main(String[] args) {
+        String test1 = "of";
+        String test2 = "IN ";
+        System.out.println(isPreposition(test1));
+        System.out.println(isPreposition(test2));
+    }
 }

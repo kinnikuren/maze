@@ -1,8 +1,8 @@
 package maze;
 
 import java.util.*;
-
-import util.TextParser;
+import static util.TextParser.ParsedCommand;
+import static util.TextParser.parseCommand;
 import maze.Maze.Room;
 import static util.Print.*;
 import static maze.Commands.*;
@@ -14,11 +14,10 @@ public final class GameInputHandler {
 
     public static void run(String input, Player you, Maze maze, List<Coordinate> path) {
         input = input.toLowerCase().trim();
-        String[] parsedInput = TextParser.parseText(input);
-        String leadInput = parsedInput[0];
-        String arg = parsedInput[1];
-
-        print(leadInput);
+        ParsedCommand cmd = parseCommand(input);
+        String leadInput = cmd.command;
+        String arg = cmd.object;
+            log(leadInput);
 
         String[] inputs = input.split("\\s+");
 

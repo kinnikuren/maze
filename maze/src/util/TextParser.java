@@ -1,20 +1,85 @@
 package util;
 
 import java.util.*;
+import static util.GrammarGuy.*;
 
 public class TextParser {
 
-    public static String[] parseText(String input) {
+    public static class ParsedCommand {
+        public final String command;
+        public final String object;
+        public final String preposition;
+        public final String secondObject;
+
+        private ParsedCommand(String command, String object, String preposition, String secondObject) {
+            this.command = command != null ? command.trim() : null;
+            this.object = object != null ? object.trim() : null;
+            this.preposition = preposition != null ? preposition.trim() : null;
+            this.secondObject = secondObject != null ? secondObject.trim() : null;
+        }
+    }
+
+    public static ParsedCommand parseCommand(String input) {
         String command = null;
         String object = null;
         String preposition = null;
         String secondObject = null;
 
-        String[] finalInput = new String[4];
+
+        //String[] parsedCommands = new String[4];
         input = input.toLowerCase().trim();
 
-        boolean prepFlag = false;
+        String[] inputs = input.split("\\s+");
 
+        command = inputs[0];
+        if (inputs.length > 1) {
+            //arg = inputs[1];
+            object = "";
+
+            //for (int i = 1; i < inputs.length; i++) {
+                //use for loop here
+            //}
+
+            /*
+            do {
+                prepFlag = isPreposition(inputs[i]);
+                if(prepFlag) {
+                    preposition = inputs[i];
+                } else {
+                    object += " " + inputs[i];
+                }
+                i++;
+            } while(i < inputs.length && !prepFlag);
+            */
+            int index = 0;
+
+            for (int i = 1; i < inputs.length; ++i) {
+                index = i;
+
+                if (isPreposition(inputs[i])) {
+                    preposition = inputs[i];
+                    break;
+                }
+                else {
+                    object += " " + inputs[i];
+                }
+            }
+
+            if (index < inputs.length) {
+                String tempObject = "";
+                while (index < inputs.length) {
+                    tempObject += " " + inputs[index];
+                    ++index;
+                }
+                //if (object == null) object = tempObject;
+                //else secondObject = tempObject;
+                secondObject = tempObject;
+            }
+        }
+        ParsedCommand parsedCmds = new ParsedCommand(command, object, preposition, secondObject);
+
+      return parsedCmds;
+    }
         /*
         int numSpaces = 0;
         int prevSpacePos = 0;
@@ -30,62 +95,29 @@ public class TextParser {
                 numSpaces++;
             }
         } while(nextSpacePos != -1);
-         */
+        */
 
         //print("Number of spaces: " + numSpaces);
-        String[] inputs = input.split("\\s+");
         //String leadInput = input.split("\\s+", numSpaces+1)[0];
         //print("Lead Input = " + leadInput);
         //print("Input = " + inputs);
         //String arg = null;
-        command = inputs[0];
-        if (inputs.length > 1) {
-            //arg = inputs[1];
-            object = "";
-            //for (int i = 1; i < inputs.length; i++) {
-                //print(inputs[i]);
-            int i = 1;
-            do {
-                prepFlag = util.GrammarGuy.isPreposition(inputs[i]);
-                if(prepFlag) {
-                    preposition = inputs[i];
-                } else {
-                    object += inputs[i];
-                }
-                i++;
-            } while(i < inputs.length && !prepFlag);
-            //}
-
-            if (i < inputs.length) {
-                secondObject = "";
-                while (i < inputs.length) {
-                    secondObject += inputs[i];
-                    i++;
-                }
-            }
-
-        }
         //print("Arg = " + arg);
 
         //Commands fullCmd = get(input); //entire trimmed input, for checking intransitive actions
         //Commands leadCmd = get(leadInput);
 
-        finalInput[0] = command;
-        finalInput[1] = object;
-        finalInput[2] = preposition;
-        finalInput[3] = secondObject;
-
-        return finalInput;
-    }
-
-
     public static void main(String[] args) {
         // TODO Auto-generated method stub
-        String[] input = parseText("use red potion on goblin goon");
-        for (int i = 0; i < input.length; i++) {
-            System.out.println(input[i]);
-        }
-    }
+        //String toParse = "use red potion on goblin goon";
+        String toParse = "use red potion on";
+        ParsedCommand cmd = parseCommand(toParse);
 
+        System.out.println("parsed command is => ");
+        System.out.println("    command: " + cmd.command);
+        System.out.println("    object: " + cmd.object);
+        System.out.println("    preposition: " + cmd.preposition);
+        System.out.println("    secondObject: " + cmd.secondObject);
+    }
 
 }

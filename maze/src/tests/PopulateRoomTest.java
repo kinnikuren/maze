@@ -13,6 +13,7 @@ import maze.Trinkets.BronzeCoin;
 import maze.Weapons.Dagger;
 
 public class PopulateRoomTest {
+    static int spawnFactor = 2;
 
     public static void fillerUp(Coordinate position, Coordinate center, Room room) {
         BestiaryGenerator.spawnMonsters(room);
@@ -33,7 +34,7 @@ public class PopulateRoomTest {
             print("Weapon damage: " + dg.getWeaponDamage());
 
             //testing lots of items
-            for (int i = 0; i < 50; i++) {
+            for (int i = 0; i < spawnFactor; i++) {
                 BestiaryGenerator.spawnMonsters(room);
                 room.addActor(new BronzeCoin()); room.addActor(new BronzeCoin()); room.addActor(new BronzeCoin());
                 room.addActor(new Dagger());
