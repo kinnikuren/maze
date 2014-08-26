@@ -10,7 +10,7 @@ public final class InteractionHandler {
         print("Starting fight!!...");
         String playerMove;
         String enemyMove;
-        String[] moves = {"attack", "block", "kill"}; //kill cheat for easier testing
+        String[] moves = {"attack", "block", "kill", "kill all"}; //kill cheat for easier testing
         int playerDamage;
         boolean playerCrit = false;
         boolean enemyCrit = false;

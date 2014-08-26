@@ -3,7 +3,6 @@ package maze;
 import static maze.Priority.*;
 import static util.Loggers.*;
 import static util.Print.print;
-
 import java.util.PriorityQueue;
 
 public final class Events {
@@ -110,17 +109,23 @@ public final class Events {
 
     public static boolean fire(Player player, Stage stage) {
         boolean response = false;
-        PriorityQueue<Event> currentEvents = stage.getCurrentEvents();
+        PriorityQueue<Event> currentEvents = stage.getCurrentEvents(); //retrieves all events sitting in the queue
             log(currentEvents.toString(), LOW);
 
         int counter = currentEvents.size();
-        log("Counter = " + counter);
+            log("Event Fire Counter = " + counter);
         if (counter > 0) response = true;
 
         for (int i = 0; i < counter; ++i) {
+          if (currentEvents.size() == 0) {
+            log("Events queue has been cleared. Exiting event queue.", LOW);
+            break;
+          }
+
           Event event = currentEvents.poll();
           event.fire(player);
           event.cleanup(stage);
+          currentEvents.clear();
         }
       return response;
     }
