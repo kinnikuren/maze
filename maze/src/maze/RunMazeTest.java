@@ -10,7 +10,7 @@ import static util.Print.*;
 public class RunMazeTest {
     public static void main(String[] args) {
         //Logger logger = Loggers.programLog;
-        programLog.setLevel(Priority.DORMANT);
+        programLog.setLevel(Priority.HIGH);
 
         Scanner scanner = new Scanner(System.in);
         String input;

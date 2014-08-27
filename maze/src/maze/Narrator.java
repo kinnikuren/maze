@@ -5,10 +5,12 @@ import static util.Print.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 import maze.Maze.Room;
 
 public class Narrator {
+    private static Random rand = new Random();
 
     private static String formatSpeech(String speech) {
         speech = "***" + speech + "***";
@@ -30,6 +32,8 @@ public class Narrator {
 
         String quantity = "a few";
 
+        int trinketCount = 0;
+
         Collection<Interacter> interactions = room.interactions();
         List<String> monsterArray = new ArrayList<String>();
         List<String> itemArray = new ArrayList<String>();
@@ -49,7 +53,9 @@ public class Narrator {
                     //itemArray.add(i.name().toLowerCase());
                     //itemArray1.put(i.name(), value)
                     itemArray = noDuplicates(itemArray,i.name());
-                    //print(inventory.get("bronze coin"));
+                    if (i instanceof maze.AbstractItemTrinket) {
+                        trinketCount++;
+                    }
                 } else if (i instanceof maze.AbstractItemFixture) {
                     fixtureArray = noDuplicates(fixtureArray,i.name());
                 }
@@ -86,9 +92,11 @@ public class Narrator {
             items = util.GrammarGuy.oxfordCommify(itemArray);
 
             fixtures = util.GrammarGuy.oxfordCommify(fixtureArray);
-            speech = player.name() + " notices " + quantity + " things in the room.  He sees " +
+            speech = leadIn(player) + player.name() + " notices " + quantity + " things in the room.  He sees " +
                     monsters + "!!!" + " " + "He also sees " + items + "!!!" + " " +
-                    "Finally, he sees " + fixtures + "!!!";
+                    "Finally, he sees " + fixtures + "...";
+
+            if (trinketCount > 8) speech = speech + " So many trinkets!  Glittering prizes!";
 
             for (Interacter i : interactions) {
                 //print(room.howManyOf(i.name()) + " " + i.name());
@@ -106,22 +114,105 @@ public class Narrator {
       return list;
     }
 
-    public static void wordWrapPrint(String text) {
-        int i=0;
-        int j;
-        if (text.length() > 100) {
-            do {
-                j = i + 100;
-                if (text.charAt(j) != ' ') {
-                    j = text.indexOf(" ",j);
-                }
-                if (j == -1) {
-                    break;
-                }
-                print(text.substring(i,j));
-                i = j+1;
-            } while(text.length()-i > 100);
-            print(text.substring(i,text.length()));
+    private static String leadIn(Player player) {
+        List<String> list = new ArrayList<String>();
+
+        String PN = player.name();
+        int x = 8; //number of generic leadins
+
+        list.add("Hark! ");
+        list.add("Lo! ");
+        list.add("Behold! ");
+        list.add("Beware... ");
+        list.add("The silence is deafening... ");
+        list.add("Danger! ");
+        list.add("Hi-diddle-dee-dee! ");
+        list.add("The cheese stands alone. ");
+        list.add("It's theeeee AAAAmmmazzzzzinnnnggggg MAZZZEEEEEE!!! ");
+
+        list.add("What a lark! ");
+        list.add("The story continues... ");
+        list.add("Subsequently, ");
+        list.add("Upon entering the room, ");
+        list.add("Yawn...it's another room. ");
+        list.add("Yowza! ");
+        list.add(("What manner of foul beasts will " + PN + " encounter now?"));
+        list.add((PN + " is relieved to find no Minotaur here. "));
+
+        /*
+        I wonder what the weather's like outside.  Anyway,
+        I wonder...
+        <name> is aMAZEd.
+        This new area is surprisingly ROOMy.
+
+        <name> takes a moment to ROOMinate on his next move.
+
+
+
+        Everything in this room appears to be in disarray.  It's so MAZEy in here.
+
+        If only <name> was a stone MAZEon, he could just dig his way out.  No suck luck, so,
+
+        Of Maze and Man.  Ba Dum Tss!
+
+        <name> is still holding onto his coins.  Don't be so MAZErly.
+
+        <name> feels a rumble in his stomach.  If only the walls were made of MAIZE...
+
+        <name> feels a rumble in his stomach.  Hopefully, there is a restroom in this maze.
+
+        would never find a more wretched hive of scum and villainy.
+
+        ...
+
+        The door slowly creaks open and
+        The shadows melt away and
+        */
+
+        if(player.location() != player.maze().center()) {
+            return (list.get(rand.nextInt(list.size())));
+        } else {
+            return (list.get(rand.nextInt(x)));
         }
+    }
+
+    public static void postFightCommentary(Player player, Fighter fighter) {
+        List<String> list = new ArrayList<String>();
+
+        list.add("You fight like a dairy farmer.");
+        list.add("You fight like a cow.");
+        list.add("What a glorious battle!");
+        list.add("What a mediocre battle!");
+        list.add("Close call!");
+        list.add("Dicey!");
+        list.add("Whew, you made it!");
+        list.add("Toasty!");
+        list.add("Easy as pie.");
+        list.add("Down to the wire.");
+        list.add(("How amazing.  You killed a " + fighter.name()));
+
+
+        String s = list.get(rand.nextInt(list.size()));
+
+        wordWrapPrint(formatSpeech(s));
+    }
+
+    public static void respondToGo() {
+        List<String> list = new ArrayList<String>();
+
+        list.add("Which way is the right way?");
+        list.add("Are you lost yet?");
+        list.add("Do you know where you are?");
+        list.add("WWPD?  P is for Perseus.");
+        list.add("Where's Waldo?");
+
+        String s = list.get(rand.nextInt(list.size()));
+
+        wordWrapPrint(formatSpeech(s));
+    }
+
+    public static void main(String[] args) {
+        //print(leadIn());
+
     }
 }

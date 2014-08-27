@@ -9,6 +9,7 @@ public enum References {
     RABIDRAT(102,new String[] {"rabid rat"}),
     GOBLIN(110, new String[] {"goblin"}),
     IDOL(200, new String[] {"idol"}),
+    CONSOLE(201, new String[] {"mysterious console", "console"}),
     DOODAD(1000, new String[] {"doodad"}),
     BRONZE_COIN(1101, new String[] {"bronze coin", "coin"}),
     SILVER_COIN(1102, new String[] {"silver coin", "coin"}),

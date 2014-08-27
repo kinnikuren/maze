@@ -38,6 +38,8 @@ public class GrammarGuy {
         boolean hasSuffix = false;
         int endOfFirstWord = length;
 
+        log("pluralize word: " + word);
+
         if (length < 3) return "NULL";
 
         String ul = null;
@@ -144,10 +146,10 @@ public class GrammarGuy {
             if (num > 1) {
                 s = util.GrammarGuy.pluralizeNoun(s);
                 String x = util.NumbersToText.convert(num);
-                s =  x + " " + s;
+                s =  x + " " + s.toUpperCase();
                 //print(s);
             } else {
-                s = addArticle(s);
+                s = addArticle(s.toUpperCase());
             }
             list.add(i,s);
             list.remove(i+1);
@@ -161,8 +163,9 @@ public class GrammarGuy {
 
         if (list.size() == 1) {
             result = result + list.get(0);
-        }
-        else if (list.size() > 1) {
+        } else if (list.size() == 2) {
+            result = list.get(0) + " and " + list.get(1);
+        } else if (list.size() > 2) {
             for (int i=0;i < list.size();i++) {
                 if (i < list.size()-2) {
                     //result = result + list.get(i) + ", a ";
@@ -213,7 +216,7 @@ public class GrammarGuy {
     }
 
     public static boolean isFirstLetterVowel(String word) {
-      return check(strip(word).charAt(0)).in('a', 'e', 'i', 'o', 'u');
+      return check(strip(word).charAt(0)).in('a', 'e', 'i', 'o', 'u','A','E','I','O','U');
     }
 
     public static String strip(String word) {

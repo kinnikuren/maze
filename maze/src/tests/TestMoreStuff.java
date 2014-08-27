@@ -26,7 +26,7 @@ public class TestMoreStuff {
 
         //print(s.indexOf(" "));
 
-        maze.Narrator.wordWrapPrint(s);
+        wordWrapPrint(s);
 
         //OuterMaze om = new OuterMaze(5);
         //InnerRoom ir = om.buildInnerRoom(c); InnerRoom is not visible if private

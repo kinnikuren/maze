@@ -81,7 +81,10 @@ public final class GameInputHandler {
             }
         }
         else if (leadCmd == MOVE) {
-          if (arg == null) { print("Please supply a direction to move in."); }
+          if (arg == null) {
+              print("Please supply a direction to move in.");
+              Narrator.respondToGo();
+              }
           else {
             Cardinals direction = Cardinals.get(arg);
                     log("direction supplied was: " + direction, Priority.DORMANT); //debug
@@ -97,6 +100,8 @@ public final class GameInputHandler {
               Room room = maze.getRoom(you.location());
               Events.fire(you, MOVE, room);
               room.describeRoom();
+
+              Narrator.talksAboutRoom(you, room);
 
               if(you.isAlive()) {
                 print("\nYou can go in the following directions: ");

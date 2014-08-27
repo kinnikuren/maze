@@ -19,6 +19,8 @@ public class PopulateRoomTest {
         BestiaryGenerator.spawnMonsters(room);
         if (position.equals(center)) {
 
+            room.addActor(new maze.MysteriousConsole());
+
             room.addActor(new Idol());
             room.addActor(new HealingPotion());
             room.addActor(new RabidRat());
