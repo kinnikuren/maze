@@ -3,7 +3,7 @@
   <!-- 'format' identifies the type of stream -->
   <stream name="bestiary" format="csv">
     <!-- 'class' binds the header record to a java.util.HashMap -->
-    <record name="header" class="map">
+    <record name="header" class="map" maxOccurs="1">
       <!-- 'rid' indicates this field is used to identify the record -->
       <field name="recordType" rid="true" literal="H" />
       <!-- 'format' can be used to provide Date and Number formats -->
@@ -11,7 +11,7 @@
     </record>
 
     <!-- Detail records are bound to example.Contact -->
-    <record name="contact" class="example.Contact">
+    <record name="detail" class="maze.BestiaryBean">
       <!-- 'ignore' indicates this field is not bound to a bean property -->
       <field name="recordType" rid="true" literal="D" ignore="true" />
       <field name="name" />
