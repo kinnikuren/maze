@@ -8,6 +8,7 @@ public abstract class Event implements Comparable<Event> {
     private Interacter actor;
     //private Stage stage;
     private Priority priority;
+    private boolean isSticky;
 
     public Event(Interacter actor, Priority priority) {
         this.actor = actor;
@@ -47,4 +48,10 @@ public abstract class Event implements Comparable<Event> {
             stage.removeActor(actor);
         }
     }
+
+    public void stick() { isSticky = true; }
+
+    public void unStick() { isSticky = false; }
+
+    public boolean isSticky() { return isSticky; }
 }

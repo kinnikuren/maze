@@ -6,6 +6,41 @@ import static util.Print.print;
 import java.util.PriorityQueue;
 
 public final class Events {
+
+    public enum EventActions {
+        CLEAR_REMAINING,
+        CLEAR_ALL_FORCED,
+        ADD;
+    }
+
+    public static class EventMessage {
+        private final Player player;
+        private final Commands trigger;
+        private final Stage stage;
+        private String object;
+        private Module module;
+        private EventActions eventAction;
+
+        public EventMessage(Player player, Commands trigger, Stage stage) {
+            this.player = player;
+            this.trigger = trigger;
+            this.stage = stage;
+        }
+
+        public void setObject(String object) {
+            this.object = object;
+        }
+
+        public void setModule(Module module) {
+            this.module = module;
+        }
+
+        public void setEventAction(EventActions eventAction) {
+            this.eventAction = eventAction;
+        }
+    }
+
+
     public static Event announce(final Interacter talker, final Priority priority, final String message) {
         Event event = new Event(talker, priority) {
           @Override public void fire(Player player) {
@@ -28,7 +63,8 @@ public final class Events {
     public static Event question(final Questioner questioner, final Priority priority) {
         Event event = new Event(questioner, priority) {
           @Override public void fire(Player player) {
-            InteractionHandler.run(questioner, player, new Module.Question());
+            //InteractionHandler.run(questioner, player, new Module.Question());
+            questioner.question(player);
           }
         };
       return event;
@@ -87,7 +123,7 @@ public final class Events {
         }
         else {
             stage.getCurrentEvents(trigger);
-            response = fire(player, stage);
+            response = fire(player, stage, new Module.Multiple());
         }
       return response;
     }
@@ -102,30 +138,53 @@ public final class Events {
         }
         else {
             stage.getCurrentEvents(trigger, object);
-            response = fire(player, stage);
+            response = fire(player, stage, new Module.Multiple());
         }
       return response;
     }
 
-    public static boolean fire(Player player, Stage stage) {
+    public static boolean fire(Player player, Stage stage, Module.Multiple mt) {
         boolean response = false;
         PriorityQueue<Event> currentEvents = stage.getCurrentEvents(); //retrieves all events sitting in the queue
             log(currentEvents.toString(), LOW);
 
         int counter = currentEvents.size();
             log("Event Fire Counter = " + counter);
-        if (counter > 0) response = true;
+        if (counter > 0) {
+          response = true;
+          for (int i = 0; i < counter; ++i) {
 
-        for (int i = 0; i < counter; ++i) {
-          if (currentEvents.size() == 0) {
-            log("Events queue has been cleared. Exiting event queue.", LOW);
-            break;
-          }
+              if (currentEvents.size() == 0) {
+                log("Events queue has been cleared. Exiting event queue.", LOW);
+                break;
+              }
 
-          Event event = currentEvents.poll();
-          event.fire(player);
+              Event event = currentEvents.poll();
+              event.fire(player);
+              event.cleanup(stage);
+              //currentEvents.clear();
+            }
+        }
+      return response;
+    }
+
+    public static boolean fire(Player player, Stage stage, Module.Single st) {
+        boolean response = false;
+        PriorityQueue<Event> currentEvents = stage.getCurrentEvents(); //retrieves all events sitting in the queue
+            log(currentEvents.toString(), LOW);
+
+        int counter = currentEvents.size();
+            log("Event Fire Counter = " + counter);
+        if (counter > 0) {
+          response = true;
+          Event event = currentEvents.poll(); //polls ONLY the highest priority event (if multiple, picks one)
+          event.fire(player);                 //and then clears the rest unless they are sticky!
           event.cleanup(stage);
-          currentEvents.clear();
+              log("clearing event queue after firing singleton event.", LOW);
+          for (Event e : currentEvents) {
+            if (!e.isSticky())
+              currentEvents.remove(e);
+          }
         }
       return response;
     }

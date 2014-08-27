@@ -1,10 +1,7 @@
 package maze;
 
 import java.util.*;
-
-import util.Logger;
 import static util.Loggers.*;
-import maze.Maze.Room;
 import static util.Print.*;
 
 public class RunMazeTest {

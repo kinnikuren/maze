@@ -1,14 +1,17 @@
 package maze;
 
 public class Module {
-    public static class Fight { }
+    public static class Fight extends Module { }
 
-    public static class Question { }
+    public static class Question extends Module { }
 
-    public static class Announce { }
+    public static class Announce extends Module { }
 
-    public static class Carry { }
+    public static class Carry extends Module { }
 
-    public static class Use { }
+    public static class Use extends Module { }
 
+    public static class Single extends Module { }
+
+    public static class Multiple extends Module { }
 }

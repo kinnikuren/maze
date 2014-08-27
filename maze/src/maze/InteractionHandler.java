@@ -96,29 +96,4 @@ public final class InteractionHandler {
         questioner.question(player);
     }
 
-    /* public static void run(Carryable c, Player p, Module.Carry ct) {
-        String s = c.getClass().getSimpleName();
-        if(!p.getInventory().containsKey(s)) {
-            p.getInventory().put(s,1);
-        }
-        else {
-            p.getInventory().put(s,p.getInventory().get(s)+1);
-        }
-    }
-
-    public static void run(Carryable c, Player p, Module.Use ut) {
-        String s = c.getClass().getSimpleName();
-        if(!p.getInventory().containsKey(s) || p.getInventory().get(s) == 0) {
-            print("You do not have this item in your inventory.");
-        }
-        else {
-            p.getInventory().put(s, p.getInventory().get(s)-1);
-            if(p.getInventory().get(s) == 0) {
-                print("You have no "+s+"'s left in the inventory.");
-            }
-            else {
-                print("You have "+p.getInventory().get(s)+" "+"'s left.");
-            }
-        }
-    } */
 }
