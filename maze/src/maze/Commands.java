@@ -56,6 +56,9 @@ public enum Commands {
     EQUIP( new String[] {"equip"},
         "equip item in inventory."
             ),
+    STATS( new String[] {"stats", "statistics"},
+        "print out current player statistics."
+            ),
     HELP(new String[] {"help"},
         "help usage: help <command name> to print out details of using the command."
                 + "\n" + "e.g. help move || help appr|| help xx"
@@ -102,6 +105,7 @@ public enum Commands {
                     "pickup item (pkup)", "use item (use)", "equip item",
                     "inventory (got?)",
                     "my status (status)",
+                    "statistics (stats)",
                     "exit maze (xx)", "help"
             };
         }

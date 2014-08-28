@@ -99,9 +99,13 @@ public final class GameInputHandler {
               path.add(oldLocation);
               Room room = maze.getRoom(you.location());
               Events.fire(you, MOVE, room);
-              room.describeRoom();
-
               you.narrator().talksAboutRoom(you, room);
+              if (!room.isVisited) {
+                  you.stats().update("roomsExplored");
+              }
+              room.visitedBy(you);
+
+              room.describeRoom();
 
               if(you.isAlive()) {
                 print("\nYou can go in the following directions: ");
@@ -116,6 +120,9 @@ public final class GameInputHandler {
                 print("There's no path to the " + direction + " from this room.");
             }
           }
+        }
+        else if (leadCmd == STATS) {
+            you.stats().printStats();
         }
         else if (leadCmd == HELP) {
             if (arg == null) print(HELP.getUsage());

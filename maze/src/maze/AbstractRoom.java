@@ -5,6 +5,8 @@ import java.util.*;
 import com.google.common.collect.ArrayListMultimap;
 
 import static util.Print.*;
+import static util.Loggers.*;
+import static maze.Priority.*;
 
 public abstract class AbstractRoom implements Stage {
 
@@ -20,6 +22,7 @@ public abstract class AbstractRoom implements Stage {
     List<Interacter> contents;
     ArrayListMultimap<String, Interacter> interactionMap;
     EventManager manager;
+    boolean isVisited = false;
 
     public AbstractRoom(Coordinate c) {
         this.position = c;
@@ -29,6 +32,11 @@ public abstract class AbstractRoom implements Stage {
     }
 
     public String toString() { return "Room at " + position; }
+
+    public void visitedBy(Player player) {
+        isVisited = true;
+        log("This room has been visited by you.",LOW);
+    }
 
     public void describeRoom() {
         int count = 0;

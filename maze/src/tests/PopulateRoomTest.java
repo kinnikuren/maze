@@ -1,6 +1,9 @@
 package tests;
 
 import static util.Print.print;
+import static util.Loggers.*;
+import static maze.Priority.*;
+
 import maze.BestiaryGenerator;
 import maze.Coordinate;
 import maze.EerieChimeSound;
@@ -33,7 +36,7 @@ public class PopulateRoomTest {
             //BestiaryGenerator.spawnMonsters(this);
             Dagger dg = new Dagger();
             room.addActor(dg);
-            print("Weapon damage: " + dg.getWeaponDamage());
+            log("Weapon damage: " + dg.getWeaponDamage(),LOW);
 
             //testing lots of items
             for (int i = 0; i < spawnFactor; i++) {

@@ -8,6 +8,7 @@ public class Player extends AbstractUnitFighterMover
 implements Fighter {
     private Maze maze;
     private Narrator narrator;
+    private Statistics stats;
 
     public void setMaze(Maze ref) { maze = ref; }
 
@@ -15,19 +16,22 @@ implements Fighter {
 
     public Narrator narrator() { return this.narrator; }
 
+    public Statistics stats() { return this.stats; }
+
     public Room getRoom() { return maze.getRoom(location); }
 
     public Player(Maze maze) {
         super(maze.center()); //creates Player at location c
         this.maze = maze;
         this.narrator = new Narrator();
+        this.stats = new Statistics();
     }
 
     @Override //overrides AbstractFighterUnit method
     public void defineTypeDefaultValues() {
         super.defineTypeDefaultValues();
         this.defaultHitPoints = 20;
-        this.defaultAttackVal = 1;
+        this.defaultAttackVal = 2;
         this.defaultDefenseVal = 0;
         //this.status = "healthy";
     }

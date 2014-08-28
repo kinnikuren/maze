@@ -43,6 +43,8 @@ public class RunMazeTest {
             you.setName(name);
         print("\nWelcome to the Maze, " + you.name() + "!");
 
+        you.getRoom().visitedBy(you);
+
         you.narrator().speakIntro(you);
         you.narrator().talksAboutRoom(you, you.getRoom());
 

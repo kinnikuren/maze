@@ -5,9 +5,12 @@ import static util.Loggers.*;
 import static maze.Priority.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+
+import com.google.common.collect.ArrayListMultimap;
 
 import maze.Maze.Room;
 
@@ -135,6 +138,7 @@ public class Narrator {
 
     private String leadIn(Player player) {
         List<String> list = new ArrayList<String>();
+        ArrayListMultimap<String, String> leadInMap = ArrayListMultimap.create();
 
         String PN = player.name();
         int x = 8; //number of generic leadins
@@ -168,6 +172,16 @@ public class Narrator {
         list.add((PN + " feels a rumble in his stomach. If only the walls were made of MA(I)ZE. "));
         list.add((PN + " feels a rumble in his stomach. Hopefully, there is a restroom in "
                 + "this maze. "));
+        list.add("The door slowly creaks open and ");
+        list.add("The shadows melt away and ");
+
+        leadInMap.putAll("visited", Arrays.asList(
+                (PN + " decides to backtrack. "),
+                "Haven't you been here before? ",
+                "This room looks very familiar... ",
+                (PN + " seems to be going in circles. "),
+                ("Must've been a dead end. Or " + PN + " is completely lost. ")));
+
         /*
         I wonder what the weather's like outside.  Anyway,
         I wonder...
@@ -175,14 +189,15 @@ public class Narrator {
         would never find a more wretched hive of scum and villainy.
 
         ...
-
-        The door slowly creaks open and
-        The shadows melt away and
         */
 
+        // if player is not in the first room
         if(player.location() != player.maze().center()) {
+            if (player.getRoom().isVisited) { // if player has already visited the room
+                return leadInMap.get("visited").get(getRand(leadInMap.size()));
+            }
             return (list.get(getRand(list.size())));
-        } else {
+        } else { // if player is still in the first room
             return (list.get(getRand(x)));
         }
     }
@@ -224,9 +239,11 @@ public class Narrator {
 
     public static void main(String[] args) {
         //print(leadIn());
+        /*
         Narrator Narrator = new Narrator();
         for (int i=0;i<100;i++) {
             print(Narrator.getRand(10));
         }
+        */
     }
 }

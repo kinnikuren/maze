@@ -11,7 +11,6 @@ public final class Bestiary {
         public Monster() { }
         public Monster(Coordinate c) { super(c); }
 
-
         @Override
         public boolean canInteract(AbstractUnit unit) {
           return unit instanceof Fighter ? true : false;

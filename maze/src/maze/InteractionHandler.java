@@ -62,7 +62,7 @@ public final class InteractionHandler {
                 if (enemyMove.equals(moves[0]) && enemy.hp() > 0) {
                     int damage = enemy.attack(player.getDefense(),enemyCrit);
                     print("\nThe enemy attacked.");
-                    if (damage > 0 && (player.status != enemy.getStatusEffect()) && enemy.getStatusEffect() != null) {
+                    if (damage > 0 && (player.status != enemy.getStatusEffect()) && enemy.getStatusEffect() != "") {
                         player.setStatus(enemy.getStatusEffect());
                         print("You have been afflicted with " + player.status + ".");
                     }
@@ -83,6 +83,7 @@ public final class InteractionHandler {
         }
         if(enemy.hp() == 0) {
             print("\nYou have defeated the enemy.");
+            player.stats().monsterKill();
             player.narrator().postFightCommentary(player, enemy);
             //enemy.death();
         }

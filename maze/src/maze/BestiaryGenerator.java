@@ -29,10 +29,10 @@ public class BestiaryGenerator {
             //System.out.println(monsterRef);
         } while (monsterRef == References.ERROR);
 
-        System.out.println(monsterRef);
+        //System.out.println(monsterRef);
         //System.out.println(sk.classId);
         randMonster = summonMonster(monsterRef);
-        System.out.println(randMonster.name);
+        //System.out.println(randMonster.name);
 
       return randMonster;
     }
