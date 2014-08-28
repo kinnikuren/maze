@@ -7,16 +7,20 @@ import util.View;
 public class Player extends AbstractUnitFighterMover
 implements Fighter {
     private Maze maze;
+    private Narrator narrator;
 
     public void setMaze(Maze ref) { maze = ref; }
 
     public Maze maze() { return maze; }
+
+    public Narrator narrator() { return this.narrator; }
 
     public Room getRoom() { return maze.getRoom(location); }
 
     public Player(Maze maze) {
         super(maze.center()); //creates Player at location c
         this.maze = maze;
+        this.narrator = new Narrator();
     }
 
     @Override //overrides AbstractFighterUnit method
@@ -97,7 +101,6 @@ implements Fighter {
     }*/
     private Inventory inventory = new Inventory();
 
-
     public boolean equip(Equippable item) {
         if (!inventory.contains(item)) {
             print("You do not have " + item + " in your inventory.");
@@ -111,7 +114,6 @@ implements Fighter {
             return true;
         }
     }
-
 
     public void addToInventory(Portable item) { inventory.add(item); }
 

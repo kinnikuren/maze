@@ -31,13 +31,17 @@ public abstract class AbstractRoom implements Stage {
     public String toString() { return "Room at " + position; }
 
     public void describeRoom() {
+        int count = 0;
         print ("You are in an unremarkable, nondescript room.");
         if(contents.size() == 0) { print("There is nothing in this room."); }
         else {
-          print ("Contents of this room:");
-          for(Interacter i : contents) {
-            print(i.name());
+          String roomContents = "Contents of this room:";
+          for (String thing : interactionMap.keySet()) {
+              count = interactionMap.get(thing).size();
+              String addDescription= "\n" + thing + " (" + count + ")";
+              roomContents += addDescription;
           }
+          print(roomContents);
         }
     }
 

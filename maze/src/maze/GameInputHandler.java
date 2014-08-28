@@ -83,7 +83,7 @@ public final class GameInputHandler {
         else if (leadCmd == MOVE) {
           if (arg == null) {
               print("Please supply a direction to move in.");
-              Narrator.respondToGo();
+              you.narrator().respondToGo();
               }
           else {
             Cardinals direction = Cardinals.get(arg);
@@ -101,7 +101,7 @@ public final class GameInputHandler {
               Events.fire(you, MOVE, room);
               room.describeRoom();
 
-              Narrator.talksAboutRoom(you, room);
+              you.narrator().talksAboutRoom(you, room);
 
               if(you.isAlive()) {
                 print("\nYou can go in the following directions: ");

@@ -83,7 +83,7 @@ public final class InteractionHandler {
         }
         if(enemy.hp() == 0) {
             print("\nYou have defeated the enemy.");
-            Narrator.postFightCommentary(player, enemy);
+            player.narrator().postFightCommentary(player, enemy);
             //enemy.death();
         }
         else if(player.hp() == 0) {
