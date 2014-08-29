@@ -176,10 +176,10 @@ public class Narrator {
         list.add("The shadows melt away and ");
 
         leadInMap.putAll("visited", Arrays.asList(
-                (PN + " decides to backtrack. "),
+                PN + " decides to backtrack. ",
                 "Haven't you been here before? ",
                 "This room looks very familiar... ",
-                (PN + " seems to be going in circles. "),
+                PN + " seems to be going in circles. ",
                 ("Must've been a dead end. Or " + PN + " is completely lost. ")));
 
         /*
