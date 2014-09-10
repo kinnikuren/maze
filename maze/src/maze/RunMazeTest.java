@@ -41,8 +41,8 @@ public class RunMazeTest {
         print("What is your name? ");
          //name = scanner.nextLine();
         name = "Test Guy"; // for testing
-            Player you = new Player(coolMaze);
-            you.setName(name);
+        Player you = new Player(coolMaze);
+        you.setName(name);
         print("\nWelcome to the Maze, " + you.name() + "!");
 
         you.getRoom().visitedBy(you);

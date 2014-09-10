@@ -102,7 +102,7 @@ public enum Commands {
                     "approach (appr) + <<object>>",
                     "describe (desc) + <<object>>",
                     "talk + <<object>>",
-                    "pickup item (pkup)", "use item (use)", "equip item",
+                    "pickup item (pkup)", "use item (use)", "consume item (consume)", "equip item",
                     "inventory (got?)",
                     "my status (status)",
                     "statistics (stats)",

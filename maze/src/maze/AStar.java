@@ -45,50 +45,59 @@ public class AStar {
         checkNullArgs(start, goal, maze);
         boolean discovery = false;
         LinkedList<Coordinate> path = null;
+        log("Start is " + start);
+        log("Goal is " + goal);
 
-      if (maze.size() == 0) discovery = false;
-      else {
-        open = new PriorityQueue<Coordinate>(maze.size(), fComparator);
+        if (maze.size() == 0) {
+          discovery = false;
+          log("Maze size is 0.");
+        }
+        else {
+            log("Maze size is " + maze.size());
+            open = new PriorityQueue<Coordinate>(maze.size(), fComparator);
 
-        g.put(start,0.0);
-        f.put(start, g.get(start)+h(start,goal));
-        open.add(start);
+            g.put(start,0.0);
+            f.put(start, g.get(start)+h(start,goal));
+            open.add(start);
 
-        while(!open.isEmpty()) {
-          current = open.poll();
-          if (current.equals(goal)) {
-            discovery = true;
-            closed.add(current);
-            break;
-          }
-          closed.add(current);
-          for(Coordinate c : maze.viewNeighborsOf(current)) {
-            if (closed.contains(c)) continue;
+            while(!open.isEmpty()) {
+                log(open.toString());
+              current = open.poll();
+              log("Discovery? " + discovery);
+              if (current.equals(goal)) {
+                discovery = true;
+                closed.add(current);
+                break;
+              }
+              closed.add(current);
+              for(Coordinate c : maze.viewNeighborsOf(current)) {
+                if (closed.contains(c)) continue;
 
-            double temp_g = g.get(current) + current.getDistanceTo(c);
-            if (!open.contains(c) || temp_g < g.get(c)) {
-              paths.put(c, current);
-              g.put(c, temp_g);
-              f.put(c, g.get(c) + h(c,goal));
-              if (!open.contains(c)) open.add(c);
+                double temp_g = g.get(current) + current.getDistanceTo(c);
+                if (!open.contains(c) || temp_g < g.get(c)) {
+                  paths.put(c, current);
+                  g.put(c, temp_g);
+                  f.put(c, g.get(c) + h(c,goal));
+                  if (!open.contains(c)) open.add(c);
+                }
+              }
             }
-          }
-        }
-        if (discovery) {
-          StringBuilder pathline = new StringBuilder();
-          path = solvePath(paths,goal,start);
-          print("A*: success: path found.");
+            log("Discovery? " + discovery);
+            if (discovery) {
+              StringBuilder pathline = new StringBuilder();
+              path = solvePath(paths,goal,start);
+              log("A*: success: path found.");
 
-          for (Iterator<Coordinate> i = path.descendingIterator(); i.hasNext();) {
-            Coordinate c = i.next();
-            if (i.hasNext()) pathline.append(c + " -> ");
-            else pathline.append(c);
-          } //String representation of path;
-          log(pathline.toString());
-        } else {
-          print("A*: failure: path not found.");
+              for (Iterator<Coordinate> i = path.descendingIterator(); i.hasNext();) {
+                Coordinate c = i.next();
+                if (i.hasNext()) pathline.append(c + " -> ");
+                else pathline.append(c);
+              } //String representation of path;
+              log(pathline.toString());
+            } else {
+              log("A*: failure: path not found.");
+            }
         }
-      }
       return path;
     }
 
@@ -102,5 +111,13 @@ public class AStar {
         }
         path.add(start);
       return path;
+    }
+
+    public static void reset() {
+        g.clear();
+        f.clear();
+        paths.clear();
+        closed.clear();
+        open.clear();
     }
 }

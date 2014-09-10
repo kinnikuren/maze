@@ -1,6 +1,11 @@
 package maze;
 
 import static maze.References.*;
+import static util.Print.*;
+
+import java.util.LinkedList;
+
+import util.View;
 
 public final class Trinkets {
     private Trinkets() {} //no instantiation
@@ -25,7 +30,7 @@ public final class Trinkets {
     public static class SilverCoin extends Coin {
         public SilverCoin() { }
         public SilverCoin(Coordinate c) { super(c); }
-        @Override public String name() { return "silver coin"; }
+        @Override public String name() { return "Silver Coin"; }
         @Override public boolean matches(String name) { return matchRef(SILVER_COIN, name); }
         @Override public String details() { return "This silver coin is light and still somewhat shiny."; }
         @Override public int weight() { return 5; }
@@ -34,7 +39,7 @@ public final class Trinkets {
     public static class GoldCoin extends Coin {
         public GoldCoin() { }
         public GoldCoin(Coordinate c) { super(c); }
-        @Override public String name() { return "gold coin"; }
+        @Override public String name() { return "Gold Coin"; }
         @Override public boolean matches(String name) { return matchRef(GOLD_COIN, name); }
         @Override public String details() { return "This gold coin is heavy and has a dull lustre."; }
         @Override public int weight() { return 8; }
@@ -46,6 +51,7 @@ public final class Trinkets {
         @Override public String name() { return "Golden Statue"; }
         @Override public boolean matches(String name) { return matchRef(GOLDEN_STATUE, name); }
         @Override public String details() { return "This is going to be worth a lot of money."; }
-        @Override public int weight() { return 8; }
+        @Override public int weight() { return 16; }
     }
+
 }

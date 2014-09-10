@@ -3,8 +3,7 @@ package maze;
 import static maze.Events.*;
 import static maze.Commands.PICKUP;
 
-public abstract class AbstractItemTrinket extends AbstractItemPortable
-implements Portable {
+public abstract class AbstractItemTrinket extends AbstractItemPortable {
     private boolean pickedUp = false;
     public AbstractItemTrinket() { }
 

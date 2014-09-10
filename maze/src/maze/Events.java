@@ -87,7 +87,6 @@ public final class Events {
             print("You have consumed the " + consumable + ".");
             consumable.consumedBy(player);
             player.deleteFromInventory(consumable);
-            print("You have picked up the " + consumable.name() + ".");
           }
         };
       return event;
@@ -101,6 +100,16 @@ public final class Events {
                     print("You have equipped the " + item);
                 }
             }
+        };
+      return event;
+    }
+
+    public static Event use(final Useable useable) {
+        Event event = new Event(useable, LOW) {
+          @Override public void fire(Player player) {
+              print("You have used the " + useable + ".");
+              useable.usedBy(player);
+          }
         };
       return event;
     }
@@ -130,11 +139,12 @@ public final class Events {
 
     public static Boolean fire(Player player, Commands trigger, String object, Stage stage) {
         Boolean response = false;
-            log("responding to..." + player + " " + trigger + " " + object, LOW);
+            log("responding to..." + player + " " + trigger + " " + object + " in " + stage, LOW);
 
         // if the stage (room/inventory) does not contain the object
         if(!stage.contains(object)) {
             response = null;
+            log(stage + " does not contain " + object);
         }
         else {
             stage.getCurrentEvents(trigger, object);

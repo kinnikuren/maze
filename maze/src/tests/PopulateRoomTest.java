@@ -10,9 +10,10 @@ import maze.EerieChimeSound;
 import maze.Idol;
 import maze.Maze;
 import maze.Bestiary.RabidRat;
-import maze.Consumables.HealingPotion;
+import maze.Consumables.*;
+import maze.Useables.*;
 import maze.Maze.Room;
-import maze.Trinkets.BronzeCoin;
+import maze.Trinkets.*;
 import maze.Weapons.Dagger;
 
 public class PopulateRoomTest {
@@ -27,6 +28,8 @@ public class PopulateRoomTest {
             room.addActor(new Idol());
             room.addActor(new HealingPotion());
             room.addActor(new RabidRat());
+
+            room.addActor(new Compass());
 
             room.addActor(new BronzeCoin()); room.addActor(new BronzeCoin()); room.addActor(new BronzeCoin());
 

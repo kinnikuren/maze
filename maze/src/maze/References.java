@@ -15,6 +15,7 @@ public enum References {
     SILVER_COIN(1102, new String[] {"silver coin", "coin"}),
     GOLD_COIN(1103, new String[] {"gold coin", "coin"}),
     GOLDEN_STATUE(1104, new String[] {"golden statue"}),
+    COMPASS(1105, new String[] {"compass"}),
     HEALING_POTION(1201, new String[] {"healing potion", "potion"}),
     APPLE(1202, new String[] {"apple"}),
     DAGGER(2000, new String[] {"dagger"}),

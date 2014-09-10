@@ -4,6 +4,8 @@ import static maze.References.*;
 import static util.Print.*;
 import static java.lang.Math.*;
 
+import java.util.LinkedList;
+
 public final class Consumables {
     private Consumables() {} //no instantiation
     //contains various consumable classes that extend AbstractItemConsumable

@@ -11,4 +11,6 @@ public interface Portable extends Interacter {
 
     public int weight();
 
+    //public void utilize(Player player);
+
 }

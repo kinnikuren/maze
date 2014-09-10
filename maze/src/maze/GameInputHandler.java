@@ -59,7 +59,7 @@ public final class GameInputHandler {
         Commands leadCmd = get(leadInput); //first word, delimited by space, for checking transitive actions (that allow or require arguments)
 
 
-        if (check(leadCmd).in(APPROACH, FIGHT, PICKUP, USE, TALK)) {
+        if (check(leadCmd).in(APPROACH, FIGHT, PICKUP, TALK)) {
             if (arg == null) {
                 if (check(leadCmd).in(TALK)) {
                     print("\nYou talk to yourself.  You find the conversation unstimulating.");
@@ -72,7 +72,7 @@ public final class GameInputHandler {
               performAction(you, leadCmd, arg, you.getRoom());
             }
         }
-        else if (check(leadCmd).in(EQUIP, DROP, CONSUME)) {
+        else if (check(leadCmd).in(EQUIP, DROP, CONSUME, USE)) {
             if (arg == null) {
                 print("What do you want to " + leadCmd + "?");
             }
@@ -99,7 +99,7 @@ public final class GameInputHandler {
               path.add(oldLocation);
               Room room = maze.getRoom(you.location());
 
-              EncounterGenerator.run(you);
+              //EncounterGenerator.run(you);
 
               Events.fire(you, MOVE, room);
               you.narrator().talksAboutRoom(you, room);
