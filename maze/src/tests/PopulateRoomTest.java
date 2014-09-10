@@ -30,6 +30,7 @@ public class PopulateRoomTest {
             room.addActor(new RabidRat());
 
             room.addActor(new Compass());
+            room.addActor(new EncNone());
 
             room.addActor(new BronzeCoin()); room.addActor(new BronzeCoin()); room.addActor(new BronzeCoin());
 

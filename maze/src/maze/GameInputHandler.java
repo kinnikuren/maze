@@ -18,6 +18,7 @@ public final class GameInputHandler {
         String leadInput = cmd.command;
         String arg = cmd.object;
             log(leadInput);
+            log(arg);
 
         String[] inputs = input.split("\\s+");
 
@@ -80,6 +81,20 @@ public final class GameInputHandler {
                 performAction(you, leadCmd, arg, you.getInventory());
             }
         }
+        else if (leadCmd == DESCRIBE) {
+            if (arg == null) {
+                Room r = maze.getRoom(you.location());
+                r.describeRoom();
+            }
+            else if (you.getRoom().contains(arg)){
+                log("Room contains " + arg);
+                performAction(you, leadCmd, arg, you.getRoom());
+            }
+            else if (you.getInventory().contains(arg)){
+                log("Inventory contains " + arg);
+                performAction(you, leadCmd, arg, you.getInventory());
+            }
+        }
         else if (leadCmd == MOVE) {
           if (arg == null) {
               print("Please supply a direction to move in.");
@@ -99,7 +114,11 @@ public final class GameInputHandler {
               path.add(oldLocation);
               Room room = maze.getRoom(you.location());
 
-              //EncounterGenerator.run(you);
+              if (you.getInventory().contains("Enc-None")) {
+                  print("\nRandom encounters begone! Enc-None shields you.\n");
+              } else {
+                  EncounterGenerator.run(you);
+              }
 
               Events.fire(you, MOVE, room);
               you.narrator().talksAboutRoom(you, room);
@@ -165,15 +184,6 @@ public final class GameInputHandler {
         else if(fullCmd == INVENTORY) {
             if(you.getInventory().isEmpty()) { print("You have nothing in your inventory."); }
             else you.printInventory();
-        }
-        else if (fullCmd == DESCRIBE) {
-            if (arg == null) {
-                Room r = maze.getRoom(you.location());
-                r.describeRoom();
-            }
-            else {
-                //code to describe the object
-            }
         }
         else if (fullCmd == WHEREGO) {
             print("\nYou can go in the following directions: ");

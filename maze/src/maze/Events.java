@@ -114,6 +114,15 @@ public final class Events {
       return event;
     }
 
+    public static Event describe(final Portable item) {
+        Event event = new Event(item, LOW) {
+          @Override public void fire(Player player) {
+              print(item.details());
+          }
+        };
+      return event;
+    }
+
     public static Event drop(final Portable item) {
         Event event = new Event(item, LOW) {
           @Override public void fire(Player player) {

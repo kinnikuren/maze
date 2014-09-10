@@ -60,7 +60,7 @@ public class Parade {
 
         if (input.equals("A")) {
             if (!player.skillCheck(STR, 2, 1)) {
-                wordWrapPrint("You collapse under the weight. The bodybuilder laughs and helps you"
+                wordWrapPrint("You collapse under the weight. The bodybuilder laughs and helps you "
                         + "up.");
             } else {
                 wordWrapPrint("You knock'em out. You feel stronger.");

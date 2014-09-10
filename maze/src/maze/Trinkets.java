@@ -23,7 +23,8 @@ public final class Trinkets {
         public BronzeCoin(Coordinate c) { super(c); }
         @Override public String name() { return "Bronze Coin"; }
         @Override public boolean matches(String name) { return matchRef(BRONZE_COIN, name); }
-        @Override public String details() { return "This bronze coin is very light and faded with age."; }
+        @Override public String details() { return "This bronze coin is very light and faded "
+                + "with age."; }
         @Override public int weight() { return 2; }
     }
 
@@ -32,7 +33,8 @@ public final class Trinkets {
         public SilverCoin(Coordinate c) { super(c); }
         @Override public String name() { return "Silver Coin"; }
         @Override public boolean matches(String name) { return matchRef(SILVER_COIN, name); }
-        @Override public String details() { return "This silver coin is light and still somewhat shiny."; }
+        @Override public String details() { return "This silver coin is light and still somewhat "
+                + "shiny."; }
         @Override public int weight() { return 5; }
     }
 
@@ -41,7 +43,8 @@ public final class Trinkets {
         public GoldCoin(Coordinate c) { super(c); }
         @Override public String name() { return "Gold Coin"; }
         @Override public boolean matches(String name) { return matchRef(GOLD_COIN, name); }
-        @Override public String details() { return "This gold coin is heavy and has a dull lustre."; }
+        @Override public String details() { return "This gold coin is heavy and has a dull "
+                + "lustre."; }
         @Override public int weight() { return 8; }
     }
 
@@ -51,6 +54,16 @@ public final class Trinkets {
         @Override public String name() { return "Golden Statue"; }
         @Override public boolean matches(String name) { return matchRef(GOLDEN_STATUE, name); }
         @Override public String details() { return "This is going to be worth a lot of money."; }
+        @Override public int weight() { return 16; }
+    }
+
+    public static class EncNone extends AbstractItemTrinket {
+        public EncNone() { }
+        public EncNone(Coordinate c) { super(c); }
+        @Override public String name() { return "Enc-None"; }
+        @Override public boolean matches(String name) { return matchRef(ENCNONE, name); }
+        @Override public String details() { return "Tired of pesky random encounters? Keep this in "
+                + "your inventory and let Enc-None shield you in a cloak of cowardice!"; }
         @Override public int weight() { return 16; }
     }
 

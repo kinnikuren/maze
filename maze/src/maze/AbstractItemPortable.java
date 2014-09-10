@@ -1,13 +1,11 @@
 package maze;
 
-import static maze.Commands.CONSUME;
-import static maze.Commands.PICKUP;
-import static maze.Commands.DROP;
-import static maze.Commands.USE;
+import static maze.Commands.*;
 import static maze.Events.consume;
 import static maze.Events.pickup;
 import static maze.Events.drop;
 import static maze.Events.use;
+import static maze.Events.describe;
 import static util.Print.print;
 import static util.Utilities.checkNullArg;
 
@@ -36,13 +34,10 @@ public abstract class AbstractItemPortable extends AbstractItem implements Porta
     @Override
     public String toString() { return this.name(); }
 
-    public void utilize() {
-        print("The " + this.name() + " can't be used.");
-    }
-
     public Event interact(Commands trigger) {
         if (trigger == DROP) return drop(this);
         else if (trigger == PICKUP) return pickup(this);
+        else if (trigger == DESCRIBE) return describe(this);
         else return null;
     }
 }
