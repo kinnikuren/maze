@@ -1,12 +1,15 @@
 package maze;
 
 import java.util.*;
+
+import maze.Bestiary.Monster;
+import maze.Bestiary.Rat;
 import static util.Print.*;
 
 public final class InteractionHandler {
     private InteractionHandler() { } //no instantiation
 
-    public static void run(Fighter enemy, Player player, Module.Fight ft) {
+    public static void run(Monster enemy, Player player, Module.Fight ft) {
         print("Starting fight!!...");
         String playerMove;
         String enemyMove;
@@ -16,6 +19,9 @@ public final class InteractionHandler {
         boolean enemyCrit = false;
         Random rand = new Random();
         Scanner scanner = new Scanner(System.in);
+
+        enemy.buff();
+
         printnb("Your HP: "+player.hp());
         printnb(" Enemy HP: "+enemy.hp());
         while(enemy.hp() > 0 && player.hp() > 0) {
@@ -85,6 +91,11 @@ public final class InteractionHandler {
         if(enemy.hp() == 0) {
             print("\nYou have defeated the enemy.");
             player.stats().monsterKill();
+            Statistics.globalUpdate("monsterKillCount");
+            if (enemy instanceof Rat) {
+                player.stats().update("ratKillCount");
+                Statistics.globalUpdate("ratKillCount");
+            }
             player.narrator().postFightCommentary(player, enemy);
             //enemy.death();
         }

@@ -124,6 +124,7 @@ public final class GameInputHandler {
               you.narrator().talksAboutRoom(you, room);
               if (!room.isVisited) {
                   you.stats().update("roomsExplored");
+                  Statistics.globalUpdate("roomsExplored");
               }
               room.visitedBy(you);
 
@@ -144,7 +145,7 @@ public final class GameInputHandler {
           }
         }
         else if (leadCmd == STATS) {
-            you.stats().printStats();
+            Statistics.globalPrintStats();
         }
         else if (leadCmd == HELP) {
             if (arg == null) print(HELP.getUsage());

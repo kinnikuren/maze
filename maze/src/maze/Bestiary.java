@@ -7,7 +7,7 @@ import static maze.Commands.*;
 import static maze.Events.*;
 
 public final class Bestiary {
-    public static abstract class Monster extends AbstractUnitFighter implements Fighter {
+    public static abstract class Monster extends AbstractUnitFighter {
         public Monster() { }
         public Monster(Coordinate c) { super(c); }
 
@@ -19,6 +19,8 @@ public final class Bestiary {
         public boolean isDone(Stage stage) {
           return isAlive ? false : true;
         }
+
+        public void buff() { }
     }
 
     public static class Skeleton extends Monster {
@@ -187,6 +189,86 @@ public final class Bestiary {
             return trigger == FIGHT ? fight(this, HIGH)
                 : (trigger == APPROACH ? announce(this, HIGH, inspect())
                 : (trigger == MOVE ? announce(this, DEFAULT, "You hear squeaking of a non-mechanical nature.")
+                :  null));
+        }
+    }
+
+    public static class RatKing extends Rat {
+        public static final int classId = RABIDRAT.classId;
+        private int ratBuff;
+
+        public RatKing() { //sets values to default
+            super();
+            this.name = "Rat King";
+            this.ratBuff = 2 * Statistics.globalGet("ratKillCount"); //initially 0
+        }
+
+        public RatKing(Coordinate c) {
+            super(c);
+            this.name = "Rat King";
+        }
+
+        private void selfPrint(String input) { print(name + ">> " + input); }
+
+        @Override
+        public void buff() { //buffs stats based on # rats dead
+            int x = 2 * Statistics.globalGet("ratKillCount"); //2 * # of rats killed
+            if (x > this.ratBuff) { //if greater than previous buff amount
+                this.ratBuff = x;
+
+                this.resetAttack();
+                this.resetDefense();
+                this.resetHP();
+
+                this.attackVal = this.defaultAttackVal + this.ratBuff;
+                this.defenseVal = this.defaultDefenseVal + this.ratBuff;
+                this.hitPoints = this.defaultHitPoints + this.ratBuff;
+            }
+        }
+
+        @Override //overrides AbstractFighterUnit method
+        public void defineTypeDefaultValues() {
+            super.defineTypeDefaultValues();
+            this.defaultAttackVal = 10;
+            this.defaultHitPoints = 10;
+        }
+        @Override //overrides AbstractFighterUnit method
+        public String battlecry() {
+          return "A multitude of rat voices squeak in unison.";
+        }
+
+        @Override
+        public String inspect() {
+            return ("A disgusting mass of rats, both alive and dead, writhes in front of you. The "
+                    + "shape constantly changes but there is a uniformity in movement that makes "
+                    + "you believe that the thing acts as one unit. Somehow, the combined cries "
+                    + "of the rats is able to form a voice understandable to you.\n"
+                    + "'You have killed " + Statistics.globalGet("ratKillCount") + " of our "
+                    + "brethren. Prepare to receive your comeuppance!'");
+        }
+
+        @Override //overrides Unit method
+        public void death() {
+            if (isAlive) {
+              print("Countless rat corpses lie at your feet.");
+              print("You have earned the title, 'The Exterminator.'");
+            }
+            super.death();
+        }
+        //begin implementation of Interacter methods defined as abstract in FighterUnit
+        @Override
+        public boolean matches(String name) {
+          return matchRef(RATKING, name);
+        }
+
+        @Override
+        public Event interact(Commands trigger) {
+            if (!isAlive) return null;
+
+            return trigger == FIGHT ? fight(this, HIGH)
+                : (trigger == APPROACH ? announce(this, HIGH, inspect())
+                : (trigger == MOVE ? announce(this, DEFAULT, "You hear a chorus of squeaking, "
+                        + "spanning a spectrum from bass to soprano.")
                 :  null));
         }
     }

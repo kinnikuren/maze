@@ -3,7 +3,10 @@ package maze;
 import static maze.Priority.*;
 import static util.Loggers.*;
 import static util.Print.print;
+
 import java.util.PriorityQueue;
+
+import maze.Bestiary.Monster;
 
 public final class Events {
 
@@ -50,11 +53,11 @@ public final class Events {
       return event;
     }
 
-    public static Event fight(final Fighter fighter, final Priority priority) {
-        Event event = new Event(fighter, priority) {
+    public static Event fight(final Monster enemy, final Priority priority) {
+        Event event = new Event(enemy, priority) {
           @Override public void fire(Player player) {
-            print(fighter.battlecry());
-            InteractionHandler.run(fighter, player, new Module.Fight());
+            print(enemy.battlecry());
+            InteractionHandler.run(enemy, player, new Module.Fight());
           }
         };
       return event;
