@@ -1,7 +1,6 @@
 package maze;
 
-import static maze.References.HEALING_POTION;
-import static maze.References.matchRef;
+import static maze.References.*;
 import static util.Print.*;
 import static java.lang.Math.*;
 
@@ -29,6 +28,21 @@ public final class Consumables {
             int healed = min(healing, player.getDefaultHP() - player.hp());
             player.addHP(healed);
             printnb("Refreshing!");
+        }
+    }
+
+    public static class Apple extends Potion {
+        private int healing = 2;
+        public Apple() { }
+        public Apple(Coordinate c) { super(c); }
+        @Override public String name() { return "Apple"; }
+        @Override public boolean matches(String name) { return matchRef(APPLE, name); }
+        @Override public String details() { return "It's a crisp, delicious apple."; }
+        @Override public int weight() { return 5; }
+        @Override public void consumedBy(Player player) {
+            int healed = min(healing, player.getDefaultHP() - player.hp());
+            player.addHP(healed);
+            printnb("Yum!");
         }
     }
 }

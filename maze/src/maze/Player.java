@@ -1,7 +1,15 @@
 package maze;
 
 import static util.Print.*;
+import static util.Loggers.*;
+import static maze.References.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import maze.Maze.Room;
+import util.GrammarGuy;
 import util.View;
 
 public class Player extends AbstractUnitFighterMover
@@ -9,6 +17,12 @@ implements Fighter {
     private Maze maze;
     private Narrator narrator;
     private Statistics stats;
+    private EncounterTracker tracker;
+    private Random rand = new Random();
+
+    private int dexterity;
+    private int strength;
+    private int intelligence;
 
     public void setMaze(Maze ref) { maze = ref; }
 
@@ -18,6 +32,12 @@ implements Fighter {
 
     public Statistics stats() { return this.stats; }
 
+    public EncounterTracker tracker() { return this.tracker; }
+
+    public int getDex() { return this.dexterity; }
+    public int getStr() { return this.strength; }
+    public int getInt() { return this.intelligence; }
+
     public Room getRoom() { return maze.getRoom(location); }
 
     public Player(Maze maze) {
@@ -25,6 +45,64 @@ implements Fighter {
         this.maze = maze;
         this.narrator = new Narrator();
         this.stats = new Statistics();
+        this.tracker = new EncounterTracker();
+        this.dexterity = 4;
+        this.strength = 4;
+        this.intelligence = 4;
+    }
+
+    public boolean skillCheck(References ref,int dmg, int difficulty) {
+        int roll;
+        int successes = 0;
+        int playerSkill=0;
+
+        switch(ref) {
+            case DEX:
+                playerSkill = this.dexterity;
+                break;
+            case STR:
+                playerSkill = this.strength;
+                break;
+            case INT:
+                playerSkill = this.intelligence;
+                break;
+        }
+
+        for (int i=0;i < playerSkill;i++) {
+            roll = rand.nextInt(6)+1;
+            log("You rolled a " + ((Integer)roll).toString());
+            if (roll == 5 || roll == 6) {
+                successes++;
+            }
+        }
+
+        if (successes >= difficulty) {
+            return true;
+        } else {
+            this.loseHP(dmg);
+            return false;
+        }
+    }
+
+    public void skillChange(References ref, int amt) {
+        switch(ref) {
+        case DEX:
+            this.dexterity += amt;
+            break;
+        case STR:
+            this.strength += amt;
+            break;
+        case INT:
+            this.intelligence += amt;
+            break;
+        }
+        if (amt > 0) {
+            print("You have gained " + amt + " " + ref.toString() + ".");
+        } else if (amt < 0) {
+            print("You have lost " + amt + " " + ref.toString() + ".");
+        } else {
+            print("Your skills remain the same.");
+        }
     }
 
     @Override //overrides AbstractFighterUnit method
@@ -39,6 +117,14 @@ implements Fighter {
     public String battlecry() {
         return "Ahhhh!!!!";
     }
+
+    @Override
+    public void setStatus(String status) {
+        super.setStatus(status);
+        print("You have been afflicted with " + status);
+    }
+
+
     @Override //overrides Unit method
     public void addHP(int hp) {
         print("You have gained " + hp + " health.");
@@ -46,8 +132,10 @@ implements Fighter {
     }
     @Override //overrides Unit method
     public void loseHP(int hp) {
-        print("You have taken " + hp + " damage.");
-        super.loseHP(hp);
+        if (hp > 0) {
+            print("You have taken " + hp + " damage.");
+            super.loseHP(hp);
+        }
     }
     @Override //overrides Unit method
     public void death() {
@@ -58,9 +146,12 @@ implements Fighter {
     //begin implementation of mover abstract methods
     @Override
     public void whereCanIGo(Maze maze) {
+        List<String> list = new ArrayList<String>();
         for (Cardinals d: maze.viewAvailableMoves(location)) {
-            print(d);
+            //printnb(d + " ");
+            list.add(d.name());
         }
+        print(GrammarGuy.oxfordCommify(list));
     }
     @Override
     public boolean move(Cardinals move, Maze maze) {
@@ -132,11 +223,13 @@ implements Fighter {
     public void printInventory() { print(inventory); }
 
     public void printStatus() {
-        if (status == "healthy") {
+        String statusList;
+        statusList = util.GrammarGuy.oxfordCommify(status);
+        if (status.isEmpty()) {
             print("You have " + hp() + " hitpoints and are otherwise fine.");
         }
         else {
-            print("You have " + hp() + " hitpoints but you are afflicted with " + status + ".");
+            print("You have " + hp() + " hitpoints but you are afflicted with " + statusList + ".");
         }
     }
 }

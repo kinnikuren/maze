@@ -62,7 +62,8 @@ public final class InteractionHandler {
                 if (enemyMove.equals(moves[0]) && enemy.hp() > 0) {
                     int damage = enemy.attack(player.getDefense(),enemyCrit);
                     print("\nThe enemy attacked.");
-                    if (damage > 0 && (player.status != enemy.getStatusEffect()) && enemy.getStatusEffect() != "") {
+                    if (damage > 0 && (!player.status.contains(enemy.getStatusEffect())) &&
+                            enemy.getStatusEffect() != "") {
                         player.setStatus(enemy.getStatusEffect());
                         print("You have been afflicted with " + player.status + ".");
                     }

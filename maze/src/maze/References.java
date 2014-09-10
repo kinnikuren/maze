@@ -14,8 +14,13 @@ public enum References {
     BRONZE_COIN(1101, new String[] {"bronze coin", "coin"}),
     SILVER_COIN(1102, new String[] {"silver coin", "coin"}),
     GOLD_COIN(1103, new String[] {"gold coin", "coin"}),
+    GOLDEN_STATUE(1104, new String[] {"golden statue"}),
     HEALING_POTION(1201, new String[] {"healing potion", "potion"}),
+    APPLE(1202, new String[] {"apple"}),
     DAGGER(2000, new String[] {"dagger"}),
+    DEX(9001, new String[] {"dexterity", "dex"}),
+    STR(9002, new String[] {"strength", "str"}),
+    INT(9003, new String[] {"intelligence", "int"}),
     ERROR(9999, new String[] {"ERROR"});
 
     public final int classId;

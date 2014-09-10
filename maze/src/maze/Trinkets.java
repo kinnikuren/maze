@@ -39,4 +39,13 @@ public final class Trinkets {
         @Override public String details() { return "This gold coin is heavy and has a dull lustre."; }
         @Override public int weight() { return 8; }
     }
+
+    public static class GoldenStatue extends AbstractItemTrinket {
+        public GoldenStatue() { }
+        public GoldenStatue(Coordinate c) { super(c); }
+        @Override public String name() { return "Golden Statue"; }
+        @Override public boolean matches(String name) { return matchRef(GOLDEN_STATUE, name); }
+        @Override public String details() { return "This is going to be worth a lot of money."; }
+        @Override public int weight() { return 8; }
+    }
 }

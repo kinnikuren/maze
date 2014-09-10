@@ -1,12 +1,15 @@
 package maze;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class AbstractUnitFighter extends AbstractUnit
 implements Fighter {
     int defaultAttackVal;
     int attackVal;
     int defaultDefenseVal;
     int defenseVal;
-    String status;
+    List<String> status = new ArrayList<String>();
     String statusEffect;
 
     public AbstractUnitFighter() {
@@ -22,7 +25,7 @@ implements Fighter {
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        this.status.add(status);
     }
 
     public String getStatusEffect() {
@@ -34,7 +37,6 @@ implements Fighter {
         this.defaultHitPoints = 0;
         this.defaultAttackVal = 0;
         this.defaultDefenseVal = 0;
-        this.status = "healthy";
         this.statusEffect = "";
     }
     //begin Interacter methods, abstract

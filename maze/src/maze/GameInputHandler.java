@@ -98,6 +98,9 @@ public final class GameInputHandler {
               print("You have moved " + direction + ".");
               path.add(oldLocation);
               Room room = maze.getRoom(you.location());
+
+              EncounterGenerator.run(you);
+
               Events.fire(you, MOVE, room);
               you.narrator().talksAboutRoom(you, room);
               if (!room.isVisited) {

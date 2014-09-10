@@ -2,6 +2,8 @@ package maze;
 
 import java.util.*;
 
+import util.GrammarGuy;
+
 import com.google.common.collect.ArrayListMultimap;
 
 import static util.Print.*;
@@ -40,16 +42,19 @@ public abstract class AbstractRoom implements Stage {
 
     public void describeRoom() {
         int count = 0;
-        print ("You are in an unremarkable, nondescript room.");
+        //print ("You are in an unremarkable, nondescript room.");
+        List<String> list = new ArrayList<String>();
         if(contents.size() == 0) { print("There is nothing in this room."); }
         else {
-          String roomContents = "Contents of this room:";
+          String roomContents = "CONTENTS OF THIS ROOM:";
           for (String thing : interactionMap.keySet()) {
               count = interactionMap.get(thing).size();
-              String addDescription= "\n" + thing + " (" + count + ")";
-              roomContents += addDescription;
+              String addDescription= thing + " (" + count + ")";
+              //roomContents += addDescription;
+              list.add(addDescription);
           }
           print(roomContents);
+          wordWrapPrint(GrammarGuy.oxfordCommify(list));
         }
     }
 

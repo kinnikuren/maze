@@ -1,6 +1,8 @@
 package maze;
 
+import java.lang.reflect.*;
 import java.util.*;
+
 import static util.Loggers.*;
 import static util.Print.*;
 
@@ -47,6 +49,18 @@ public class RunMazeTest {
 
         you.narrator().speakIntro(you);
         you.narrator().talksAboutRoom(you, you.getRoom());
+
+        //EncounterHandler.run(you);
+        //Parade Parade = new Parade();
+        //Parade.indyBallTrap(you);
+
+        //for (int i=0;i<10;i++) {
+        //EncounterGenerator.run(you);
+        //}
+        //you.tracker().printMap();
+        //you.setStatus("rabies");
+        //you.setStatus("the zombie virus");
+        //you.setStatus("dysentery");
 
         print("\nType 'commands' for a list of commands.");
 
