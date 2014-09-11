@@ -57,10 +57,10 @@ public final class InteractionHandler {
                     }
                     // Calculates player dmg given enemy defense
                     playerDamage = player.attack(enemy.getDefense(),playerCrit);
-                    if (playerCrit) {
+                    if (playerCrit && playerDamage > 0) {
                         print ("\nCritical Hit!");
                     }
-                    print("You attacked and did "+playerDamage+" damage.");
+                    print("You did "+playerDamage+" damage.");
                     enemy.loseHP(playerDamage);
                     playerCrit = false;
                 }
@@ -69,7 +69,7 @@ public final class InteractionHandler {
                     int damage = enemy.attack(player.getDefense(),enemyCrit);
                     print("\nThe enemy attacked.");
                     if (damage > 0 && (!player.status.contains(enemy.getStatusEffect())) &&
-                            enemy.getStatusEffect() != "") {
+                            enemy.getStatusEffect() != null) {
                         player.setStatus(enemy.getStatusEffect());
                         print("You have been afflicted with " + player.status + ".");
                     }

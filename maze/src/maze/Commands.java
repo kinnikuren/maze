@@ -62,6 +62,9 @@ public enum Commands {
     UNEQUIP(new String[] {"unequip"},
         "unequip item and return it to inventory."
             ),
+    ATTRIB( new String[] {"attributes", "attrib", "attribs"},
+        "print out current player attributes."
+            ),
     STATS( new String[] {"stats", "statistics"},
         "print out current player statistics."
             ),
@@ -113,6 +116,7 @@ public enum Commands {
                     "inventory (got?)",
                     "equipped",
                     "my status (status)",
+                    "my attributes (attrib)",
                     "statistics (stats)",
                     "exit maze (xx)", "help"
             };

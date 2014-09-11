@@ -11,6 +11,11 @@ public final class Armor  {
     public static abstract class Helmet extends AbstractItemArmor {
         private Helmet() { super(); }
         private Helmet(Coordinate c) { super(c); }
+
+        @Override
+        public String type() {
+            return "Head";
+        }
     }
 
     public static class BrownFedora extends Helmet {
@@ -33,10 +38,7 @@ public final class Armor  {
         */
 
         @Override public String name() { return "Brown Fedora"; }
-        @Override
-        public String type() {
-            return "Head";
-        }
+
         @Override
         public String details() {
             return "This dusty brown fedora would accessorize well with a bullwhip.";
@@ -48,6 +50,50 @@ public final class Armor  {
             return matchRef(FEDORA, name);
         }
 
+        @Override
+        public HashMap<References, Integer> getStats() {
+            return stats;
+        }
+
+    }
+
+    public static abstract class ChestArmor extends AbstractItemArmor {
+        private ChestArmor() { super(); }
+        private ChestArmor(Coordinate c) { super(c); }
+
+        @Override
+        public String type() {
+            return "Body";
+        }
+    }
+
+    public static class SuperSuit extends ChestArmor {
+        protected HashMap<References, Integer> stats = new HashMap<References, Integer>();
+
+        public SuperSuit() {
+            super();
+            this.stats.put(DEX, 100);
+            this.stats.put(STR, 100);
+            this.stats.put(INT, 100);
+        }
+
+        @Override public String name() { return "Super Suit"; }
+
+        @Override
+        public String details() {
+            return "This will make you super.";
+        }
+        @Override
+        public int weight() { return 5; }
+        @Override
+        public boolean matches(String name) {
+            return matchRef(SUPERSUIT, name);
+        }
+
+        @Override
+        public HashMap<References, Integer> getStats() {
+            return stats;
+        }
     }
 
     //Testing

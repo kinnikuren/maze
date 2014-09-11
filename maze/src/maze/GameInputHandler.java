@@ -152,6 +152,9 @@ public final class GameInputHandler {
             }
           }
         }
+        else if (leadCmd == ATTRIB) {
+            you.printAttribs();
+        }
         else if (leadCmd == STATS) {
             Statistics.globalPrintStats();
         }

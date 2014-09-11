@@ -14,7 +14,7 @@ import maze.Consumables.*;
 import maze.Useables.*;
 import maze.Maze.Room;
 import maze.Trinkets.*;
-import maze.Weapons.Dagger;
+import maze.Weapons.*;
 import maze.Armor.*;
 
 public class PopulateRoomTest {
@@ -34,6 +34,7 @@ public class PopulateRoomTest {
             room.addActor(new Compass());
             room.addActor(new EncNone());
             room.addActor(new BrownFedora());
+            room.addActor(new SuperSuit());
 
             room.addActor(new BronzeCoin()); room.addActor(new BronzeCoin()); room.addActor(new BronzeCoin());
 
@@ -43,7 +44,7 @@ public class PopulateRoomTest {
             //BestiaryGenerator.spawnMonsters(this);
             Dagger dg = new Dagger();
             room.addActor(dg);
-            log("Weapon damage: " + dg.getWeaponDamage(),LOW);
+            room.addActor(new LongSword());
 
             //testing lots of items
             for (int i = 0; i < spawnFactor; i++) {

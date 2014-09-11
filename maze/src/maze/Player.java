@@ -5,6 +5,7 @@ import static util.Loggers.*;
 import static maze.References.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -99,9 +100,23 @@ implements Fighter {
         if (amt > 0) {
             print("You have gained " + amt + " " + ref.toString() + ".");
         } else if (amt < 0) {
-            print("You have lost " + amt + " " + ref.toString() + ".");
+            print("You have lost " + Math.abs(amt) + " " + ref.toString() + ".");
         } else {
             print("Your skills remain the same.");
+        }
+    }
+
+    public void printAttribs() {
+        print("Attributes:");
+        print(" Strength: " + strength);
+        print(" Dexterity: " + dexterity);
+        print(" Intelligence: " + intelligence);
+        print(" Base Attack Value: " + attackVal);
+
+        Equippable weapon = paperDoll.getWeapon();
+        if (weapon != null) {
+            print(" Equipped Weapon Damage: " + weapon.getStats().get(WDLOW) + " - " +
+                    weapon.getStats().get(WDHIGH));
         }
     }
 
@@ -116,6 +131,27 @@ implements Fighter {
     @Override //overrides AbstractFighterUnit method
     public String battlecry() {
         return "Ahhhh!!!!";
+    }
+
+    @Override
+    public int attack(int enemyDefense, boolean crit) {
+        Equippable weapon = paperDoll.getWeapon();
+        int plusDmg = 0;
+        if (weapon != null) {
+            print("You attack with the " + weapon + ".");
+            HashMap<References, Integer> stats = weapon.getStats();
+            plusDmg = rand.nextInt(stats.get(WDHIGH)-stats.get(WDLOW)) + stats.get(WDLOW);
+            log(weapon + " increased attack damage by " + plusDmg + "...");
+        } else {
+            print("You attack with your bare hands.");
+        }
+
+        int damage = this.attackVal + plusDmg;
+        if (crit) {
+            damage *= 2;
+        }
+        int result = damage - enemyDefense;
+        return result < 0 ? 0 : result;
     }
 
     @Override
@@ -205,6 +241,16 @@ implements Fighter {
         else {
             Equippable oldItem = null;
             oldItem = paperDoll.add(item);
+
+            HashMap<References, Integer> equipmentStats;
+            equipmentStats = item.getStats();
+
+            for (References key : equipmentStats.keySet()) {
+                if (key == STR || key == DEX || key == INT) {
+                    skillChange(key, equipmentStats.get(key));
+                }
+            }
+
             log("Removing " + item + " from inventory...");
             inventory.remove(item);
             if (oldItem != null) {
@@ -226,6 +272,13 @@ implements Fighter {
         }
         else {
             paperDoll.removeActor(item);
+
+            HashMap<References, Integer> equipmentStats;
+            equipmentStats = item.getStats();
+            for (References key : equipmentStats.keySet()) {
+                skillChange(key, (-equipmentStats.get(key)));
+            }
+
             log("Returning " + item + " to inventory...");
             inventory.add(item);
             //inventory.removeActor(item);

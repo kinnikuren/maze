@@ -37,7 +37,7 @@ implements Fighter {
         this.defaultHitPoints = 0;
         this.defaultAttackVal = 0;
         this.defaultDefenseVal = 0;
-        this.statusEffect = "";
+        this.statusEffect = null;
     }
     //begin Interacter methods, abstract
     @Override public abstract boolean matches(String name);

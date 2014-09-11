@@ -27,6 +27,10 @@ public class PaperDoll implements Stage {
         this.paperDoll.put("Body", null);
     }
 
+    public Equippable getWeapon() {
+        return paperDoll.get("Main Hand");
+    }
+
   //@throws[NullArgumentException]
     public Equippable add(Equippable item) throws NullArgumentException {
         checkNullArg(item);
@@ -60,6 +64,7 @@ public class PaperDoll implements Stage {
     }
 
     public boolean contains(Equippable item) {
+        log("Checking if paperdoll contains " + item + "...");
         return paperDoll.containsValue(item);
     }
 
@@ -129,6 +134,7 @@ public class PaperDoll implements Stage {
         Weapons.Dagger dg = new Weapons.Dagger();
         Weapons.Dagger dg1 = new Weapons.Dagger();
         Armor.BrownFedora fed = new Armor.BrownFedora();
+        Armor.SuperSuit ss = new Armor.SuperSuit();
         print(fed.type());
         Equippable oldItem = null;
 
@@ -137,6 +143,7 @@ public class PaperDoll implements Stage {
         print("Adding items...");
         oldItem = pd.add(dg);
         pd.add(fed);
+        pd.add(ss);
 
         print("Dropped " + oldItem);
         print(pd.toString());
@@ -151,6 +158,7 @@ public class PaperDoll implements Stage {
         print("Removing items...");
         pd.removeActor(dg1);
         pd.removeActor(fed);
+        pd.removeActor(ss);
         print(pd.toString());
     }
 }

@@ -100,7 +100,7 @@ public final class Events {
             @Override public void fire(Player player) {
                 if (player.equip(item)) {
                     item.equipped();
-                    print("You have equipped the " + item);
+                    print("You have equipped the " + item + ".");
                 }
             }
         };
@@ -112,7 +112,7 @@ public final class Events {
             @Override public void fire(Player player) {
                 if (player.unequip(item)) {
                     item.unequipped();
-                    print("You have unequipped the " + item);
+                    print("You have unequipped the " + item + ".");
                 }
             }
         };

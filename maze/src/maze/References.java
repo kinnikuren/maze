@@ -34,14 +34,18 @@ public enum References {
 
     //2000-2099 Weapons
     DAGGER(2000, new String[] {"dagger"}),
+    LONGSWORD(2001, new String[] {"longsword", "long sword"}),
 
     //2100-2199 Armor
     FEDORA(2100, new String[] {"fedora", "brown fedora"}),
+    SUPERSUIT(2199, new String[] {"super suit"}),
 
     //9000-9099 Skills
     DEX(9001, new String[] {"dexterity", "dex"}),
     STR(9002, new String[] {"strength", "str"}),
     INT(9003, new String[] {"intelligence", "int"}),
+    WDLOW(9010, new String[] {"weapon damage (low)"}),
+    WDHIGH(9011, new String[] {"weapon damage (high)"}),
 
     ERROR(9999, new String[] {"ERROR"});
 

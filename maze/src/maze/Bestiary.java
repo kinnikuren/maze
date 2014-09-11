@@ -8,7 +8,7 @@ import static maze.Events.*;
 
 public final class Bestiary {
     public static abstract class Monster extends AbstractUnitFighter {
-        public Monster() { }
+        public Monster() { super(); }
         public Monster(Coordinate c) { super(c); }
 
         @Override
