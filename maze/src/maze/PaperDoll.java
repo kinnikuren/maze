@@ -22,6 +22,7 @@ public class PaperDoll implements Stage {
 
     public PaperDoll() {
         this.manager = new EventManager(interactions);
+        //this.manager = new EventManager(paperDoll.values());
         this.paperDoll.put("Main Hand", null);
         this.paperDoll.put("Head", null);
         this.paperDoll.put("Body", null);
@@ -39,7 +40,7 @@ public class PaperDoll implements Stage {
         Equippable oldItem = null;
 
         //oldItem = paperDoll.replace(item.type(), item);
-        if (!paperDoll.keySet().contains(item.type())) {
+        if (paperDoll.keySet().contains(item.type())) {
             oldItem = paperDoll.put(item.type(), item);
         }
 

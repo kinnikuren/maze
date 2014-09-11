@@ -8,7 +8,6 @@ import static maze.Priority.DEFAULT;
 import static maze.Priority.HIGH;
 import static maze.Priority.LOW;
 import static util.Print.print;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
