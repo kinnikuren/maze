@@ -8,7 +8,7 @@ public abstract class Event implements Comparable<Event> {
     private Interacter actor;
     //private Stage stage;
     private Priority priority;
-    private boolean isSticky;
+    private boolean isSticky = false;
 
     public Event(Interacter actor, Priority priority) {
         this.actor = actor;
@@ -27,7 +27,7 @@ public abstract class Event implements Comparable<Event> {
 
     //public Stage stage() { return this.stage; }
 
-    public abstract void fire(Player player);
+    public abstract Events.ResultMessage fire(Player player);
 
     public String toString() {
         return "Event: Actor " + actor + " Priority " + priority;

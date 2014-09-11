@@ -17,8 +17,8 @@ public final class GameInputHandler {
         ParsedCommand cmd = parseCommand(input);
         String leadInput = cmd.command;
         String arg = cmd.object;
-            log(leadInput);
-            log(arg);
+            log("Lead Input: " + leadInput, Priority.LOW);
+            log("Argument: " + arg, Priority.LOW);
 
         String[] inputs = input.split("\\s+");
 
@@ -128,10 +128,9 @@ public final class GameInputHandler {
                   EncounterGenerator.run(you);
               }
 
-              Events.fire(you, MOVE, room);
+              Events.run(you, MOVE, room);
               you.narrator().talksAboutRoom(you, room);
               if (!room.isVisited) {
-                  you.stats().update("roomsExplored");
                   Statistics.globalUpdate("roomsExplored");
               }
               room.visitedBy(you);
@@ -223,7 +222,7 @@ public final class GameInputHandler {
 
     public static void performAction(Player you, Commands action, String object, Stage stage) {
         //Boolean result = r.respondsTo(you, trigger, arg);
-        Boolean result = Events.fire(you, action, object, stage);
+        Boolean result = Events.run(you, action, object, stage);
         String preposition = action.getPreposition() == null ? "" : action.getPreposition();
         //Grammar correction
         if (result == null) print("There isn't a " + object + " to " + action + preposition + " in " + stage.getName() + ".");

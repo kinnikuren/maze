@@ -62,32 +62,7 @@ public abstract class AbstractRoom implements Stage {
       return interactionMap.get(name).size();
     }
 
-
     public abstract void populateRoom();
-
-    /* public void populateRoom(Maze linkedMaze) {
-        int i = new Random().nextInt(25);
-        if (!position.equals(linkedMaze.getCenter())) {
-            if(i % 9 == 0) {
-                Skeleton sk = new Skeleton(position);
-                contents.add(sk);
-                interactions.add(sk);
-                print("Skeleton added to Room " + position);
-            }
-            if(i == 14) {
-                Idol idol = new Idol(position);
-                contents.add(idol);
-                interactions.add(idol);
-                print("Idol added to Room " + position);
-            }
-        }
-        else {
-            Rock r = new Rock(position);
-            contents.add(r);
-            interactions.add(r);
-            print("Rock added to Room " + position);
-        }
-    } */
 
     public void addActor(Interacter actor) {
         if (actor instanceof AbstractUnit || actor instanceof AbstractItem) {
@@ -95,6 +70,7 @@ public abstract class AbstractRoom implements Stage {
         }
         interactionMap.put(actor.name(), actor);
     }
+
     @Override
     public void removeActor(Interacter actor) {
         if (actor instanceof AbstractUnit || actor instanceof AbstractItem) {

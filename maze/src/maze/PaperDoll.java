@@ -38,7 +38,10 @@ public class PaperDoll implements Stage {
         log("Attempting to add " + item + " to paper doll...");
         Equippable oldItem = null;
 
-        oldItem = paperDoll.replace(item.type(), item);
+        //oldItem = paperDoll.replace(item.type(), item);
+        if (!paperDoll.keySet().contains(item.type())) {
+            oldItem = paperDoll.put(item.type(), item);
+        }
 
         manager.interactions().add(item);
         log("Item added to paperdoll interactions: " + interactions);

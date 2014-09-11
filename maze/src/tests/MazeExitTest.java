@@ -22,6 +22,8 @@ public class MazeExitTest {
         String input;
         String name;
 
+        int sizeIncreaseFactor = 5;
+
         HashSet<Coordinate> positionSet = new HashSet<Coordinate>();
 
         print("Constructing cool Maze...");
@@ -38,8 +40,8 @@ public class MazeExitTest {
         positionSet.add(new Coordinate(-1,1));
         positionSet.add(new Coordinate(1,2)); //10th
 
-        Maze coolMaze = MazeFactory.buildMaze(positionSet, positionSet.size()+30,
-                center);
+        Maze coolMaze = MazeFactory.buildMaze(positionSet,
+                positionSet.size() + sizeIncreaseFactor, center);
 
         //Maze coolMaze = MazeFactory.buildMaze(20);
 

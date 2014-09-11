@@ -4,6 +4,7 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.Collections;
 import static util.Utilities.*;
+import static maze.Cardinals.*;
 import maze.MazeMap.Gate;
 import maze.MazeMap.Key;
 import util.BinaryFunction;
@@ -12,16 +13,13 @@ public final class Coordinates {
     private Coordinates() { } //no instantiation
 
     public static final Set<Cardinals> CARDINALS = Collections.unmodifiableSet(
-            EnumSet.of(Cardinals.NORTH, Cardinals.SOUTH, Cardinals.EAST, Cardinals.WEST,
-                       Cardinals.NORTHEAST, Cardinals.NORTHWEST,
-                       Cardinals.SOUTHEAST, Cardinals.SOUTHWEST));
+            EnumSet.of(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST));
 
     public static final Set<Cardinals> PRIME_CARDINALS = Collections.unmodifiableSet(
-            EnumSet.of(Cardinals.NORTH, Cardinals.SOUTH, Cardinals.EAST, Cardinals.WEST));
+            EnumSet.of(NORTH, SOUTH, EAST, WEST));
 
     public static final Set<Cardinals> LESSER_CARDINALS = Collections.unmodifiableSet(
-            EnumSet.of(Cardinals.NORTHEAST, Cardinals.NORTHWEST,
-                       Cardinals.SOUTHEAST, Cardinals.SOUTHWEST));
+            EnumSet.of(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST));
 
     public static Coordinate origin = new Coordinate(0,0);
 

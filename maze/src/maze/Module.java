@@ -1,6 +1,7 @@
 package maze;
 
 public class Module {
+
     public static class Fight extends Module { }
 
     public static class Question extends Module { }

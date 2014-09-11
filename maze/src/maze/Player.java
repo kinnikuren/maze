@@ -17,7 +17,6 @@ public class Player extends AbstractUnitFighterMover
 implements Fighter {
     private Maze maze;
     private Narrator narrator;
-    private Statistics stats;
     private EncounterTracker tracker;
     private Random rand = new Random();
 
@@ -31,8 +30,6 @@ implements Fighter {
 
     public Narrator narrator() { return this.narrator; }
 
-    public Statistics stats() { return this.stats; }
-
     public EncounterTracker tracker() { return this.tracker; }
 
     public int getDex() { return this.dexterity; }
@@ -45,14 +42,10 @@ implements Fighter {
         super(maze.center()); //creates Player at location c
         this.maze = maze;
         this.narrator = new Narrator();
-        this.stats = new Statistics();
         this.tracker = new EncounterTracker();
-        this.dexterity = 4;
-        this.strength = 4;
-        this.intelligence = 4;
     }
 
-    public boolean skillCheck(References ref,int dmg, int difficulty) {
+    public boolean skillCheck(References ref, int dmg, int difficulty) {
         int roll;
         int successes = 0;
         int playerSkill=0;
@@ -126,6 +119,9 @@ implements Fighter {
         this.defaultHitPoints = 20;
         this.defaultAttackVal = 2;
         this.defaultDefenseVal = 0;
+        this.dexterity = 4;
+        this.strength = 4;
+        this.intelligence = 4;
         //this.status = "healthy";
     }
     @Override //overrides AbstractFighterUnit method

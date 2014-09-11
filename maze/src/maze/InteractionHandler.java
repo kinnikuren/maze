@@ -90,10 +90,8 @@ public final class InteractionHandler {
         }
         if(enemy.hp() == 0) {
             print("\nYou have defeated the enemy.");
-            player.stats().monsterKill();
             Statistics.globalUpdate("monsterKillCount");
             if (enemy instanceof Rat) {
-                player.stats().update("ratKillCount");
                 Statistics.globalUpdate("ratKillCount");
             }
             player.narrator().postFightCommentary(player, enemy);
