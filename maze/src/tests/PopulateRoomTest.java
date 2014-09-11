@@ -15,6 +15,7 @@ import maze.Useables.*;
 import maze.Maze.Room;
 import maze.Trinkets.*;
 import maze.Weapons.Dagger;
+import maze.Armor.*;
 
 public class PopulateRoomTest {
     static int spawnFactor = 2;
@@ -32,6 +33,7 @@ public class PopulateRoomTest {
 
             room.addActor(new Compass());
             room.addActor(new EncNone());
+            room.addActor(new BrownFedora());
 
             room.addActor(new BronzeCoin()); room.addActor(new BronzeCoin()); room.addActor(new BronzeCoin());
 

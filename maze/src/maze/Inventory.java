@@ -27,12 +27,8 @@ public class Inventory implements Stage {
     public void add(Portable item) throws NullArgumentException {
         checkNullArg(item);
         inventory.put(item.name(), item);
-        if (item instanceof AbstractItemPortable) {
-            contents.add(item);
-            log("Item added to contents: " + interactions);
-        }
         interactions.add(item);
-        log("Item added to interactions: " + interactions);
+        log("Item added to inventory interactions: " + interactions);
     }
 
     public Portable remove(Portable item) {
@@ -41,11 +37,12 @@ public class Inventory implements Stage {
         for (Portable i : inventory.get(itemName)) {
           if (i == item) {
             removed = i;
-
           }
         }
         if (removed != null) {
             inventory.remove(itemName, removed);
+            interactions.remove(removed);
+            log(removed + " removed from inventory interactions: " + interactions);
         }
         return removed;
     }

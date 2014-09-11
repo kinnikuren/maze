@@ -1,8 +1,12 @@
 package tests;
 
 import maze.*;
+import maze.Weapons.Dagger;
+
 import java.util.*;
+
 import static util.Print.*;
+
 import java.math.*;
 
 @SuppressWarnings("unused")
@@ -27,6 +31,9 @@ public class TestMoreStuff {
         //print(s.indexOf(" "));
 
         wordWrapPrint(s);
+
+        Dagger dg = new Dagger();
+        print("Dagger type: " + dg.type());
 
         //OuterMaze om = new OuterMaze(5);
         //InnerRoom ir = om.buildInnerRoom(c); InnerRoom is not visible if private

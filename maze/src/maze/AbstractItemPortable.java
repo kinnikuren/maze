@@ -13,6 +13,7 @@ public abstract class AbstractItemPortable extends AbstractItem implements Porta
     Coordinate location;
     String name; //populated via getClass by default
     boolean canCarry = true;
+    private boolean pickedUp = false;
 
     public AbstractItemPortable() {
         super();
@@ -40,4 +41,18 @@ public abstract class AbstractItemPortable extends AbstractItem implements Porta
         else if (trigger == DESCRIBE) return describe(this);
         else return null;
     }
+
+    @Override public abstract boolean matches(String name);
+    @Override
+    public boolean canInteract(AbstractUnit unit) {
+        return false;
+    }
+    @Override
+    public boolean isDone(Stage stage) {
+        return pickedUp;
+    }
+    @Override
+    public void pickedUp() { pickedUp = true; }
+    @Override
+    public void dropped() { pickedUp = false; }
 }

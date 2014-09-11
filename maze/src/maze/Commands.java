@@ -41,6 +41,9 @@ public enum Commands {
     INVENTORY(new String[] {"inventory", "inv", "got?"},
         "display the contents of the inventory and how many of each item is available."
         ),
+    EQUIPPED(new String[] {"equipped"},
+        "display what items are equipped."
+        ),
     PICKUP(new String[] {"pick up", "pickup", "pkup"},
         "pick up item in Room and place it in the inventory."
         ),
@@ -55,6 +58,9 @@ public enum Commands {
             ),
     EQUIP( new String[] {"equip"},
         "equip item in inventory."
+            ),
+    UNEQUIP(new String[] {"unequip"},
+        "unequip item and return it to inventory."
             ),
     STATS( new String[] {"stats", "statistics"},
         "print out current player statistics."
@@ -103,7 +109,9 @@ public enum Commands {
                     "describe (desc) + <<object>>",
                     "talk + <<object>>",
                     "pickup item (pkup)", "use item (use)", "consume item (consume)", "equip item",
+                    "unequip item",
                     "inventory (got?)",
+                    "equipped",
                     "my status (status)",
                     "statistics (stats)",
                     "exit maze (xx)", "help"

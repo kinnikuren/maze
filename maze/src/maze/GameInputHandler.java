@@ -81,6 +81,14 @@ public final class GameInputHandler {
                 performAction(you, leadCmd, arg, you.getInventory());
             }
         }
+        else if (leadCmd == UNEQUIP) {
+            if (arg == null) {
+                print("What do you want to " + leadCmd + "?");
+            }
+            else {
+                performAction(you, leadCmd, arg, you.getPaperDoll());
+            }
+        }
         else if (leadCmd == DESCRIBE) {
             if (arg == null) {
                 Room r = maze.getRoom(you.location());
@@ -185,6 +193,9 @@ public final class GameInputHandler {
         else if(fullCmd == INVENTORY) {
             if(you.getInventory().isEmpty()) { print("You have nothing in your inventory."); }
             else you.printInventory();
+        }
+        else if(fullCmd == EQUIPPED) {
+            you.printPaperDoll();
         }
         else if (fullCmd == WHEREGO) {
             print("\nYou can go in the following directions: ");

@@ -7,6 +7,7 @@ public final class Weapons {
         private String name;
         private util.SuffixGenerator sg = new util.SuffixGenerator();
         private String suffix = sg.getSuffix();
+        private String type = "Main Hand";
 
         public Dagger() {
             super();
@@ -30,7 +31,14 @@ public final class Weapons {
 
         @Override public String name() { return name; }
         @Override public boolean matches(String name) { return matchRef(DAGGER, name); }
-        @Override public String details() { return "This dagger's fancy name is irrelevant.  It is rusty and in poor condition.  On the plus side, you could probably give someone tetanus with this weapon."; }
+        @Override public String details() { return "This dagger's fancy name is irrelevant.  It is "
+                + "rusty and in poor condition.  On the plus side, you could probably give someone "
+                + "tetanus with this weapon."; }
         @Override public int weight() { return 10; }
+
+        @Override
+        public String type() {
+            return type;
+        }
     }
 }

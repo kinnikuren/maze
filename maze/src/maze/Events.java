@@ -107,6 +107,18 @@ public final class Events {
       return event;
     }
 
+    public static Event unequip(final Equippable item) {
+        Event event = new Event(item, LOW) {
+            @Override public void fire(Player player) {
+                if (player.unequip(item)) {
+                    item.unequipped();
+                    print("You have unequipped the " + item);
+                }
+            }
+        };
+      return event;
+    }
+
     public static Event use(final Useable useable) {
         Event event = new Event(useable, LOW) {
           @Override public void fire(Player player) {
@@ -151,7 +163,8 @@ public final class Events {
 
     public static Boolean fire(Player player, Commands trigger, String object, Stage stage) {
         Boolean response = false;
-            log("responding to..." + player + " " + trigger + " " + object + " in " + stage, LOW);
+            log("responding to..." + player + " " + trigger + " " + object + " in " +
+                    stage.getName(), LOW);
 
         // if the stage (room/inventory) does not contain the object
         if(!stage.contains(object)) {

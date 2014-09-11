@@ -195,6 +195,7 @@ implements Fighter {
         }
     }*/
     private Inventory inventory = new Inventory();
+    private PaperDoll paperDoll = new PaperDoll();
 
     public boolean equip(Equippable item) {
         if (!inventory.contains(item)) {
@@ -202,13 +203,39 @@ implements Fighter {
             return false;
         }
         else {
+            Equippable oldItem = null;
+            oldItem = paperDoll.add(item);
+            log("Removing " + item + " from inventory...");
+            inventory.remove(item);
+            if (oldItem != null) {
+                log("Returning " + oldItem + " to inventory...");
+                inventory.add(oldItem);
+            }
             //inventory.removeActor(item);
             //this.defaultAttackVal = item.getWeaponDamage()[0];
-            this.defaultAttackVal += item.getWeaponDamage();
-            print("Attack value: " + this.defaultAttackVal);
+            //this.defaultAttackVal += item.getWeaponDamage();
+            //print("Attack value: " + this.defaultAttackVal);
             return true;
         }
     }
+
+    public boolean unequip(Equippable item) {
+        if (!paperDoll.contains(item)) {
+            print("You do not have " + item + " equipped.");
+            return false;
+        }
+        else {
+            paperDoll.removeActor(item);
+            log("Returning " + item + " to inventory...");
+            inventory.add(item);
+            //inventory.removeActor(item);
+            //this.defaultAttackVal = item.getWeaponDamage()[0];
+            //this.defaultAttackVal += item.getWeaponDamage();
+            //print("Attack value: " + this.defaultAttackVal);
+            return true;
+        }
+    }
+
 
     public void addToInventory(Portable item) { inventory.add(item); }
 
@@ -220,7 +247,11 @@ implements Fighter {
 
     public Inventory getInventory() { return inventory; }
 
+    public PaperDoll getPaperDoll() { return paperDoll; }
+
     public void printInventory() { print(inventory); }
+
+    public void printPaperDoll() { print(paperDoll); }
 
     public void printStatus() {
         String statusList;

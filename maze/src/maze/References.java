@@ -35,6 +35,9 @@ public enum References {
     //2000-2099 Weapons
     DAGGER(2000, new String[] {"dagger"}),
 
+    //2100-2199 Armor
+    FEDORA(2100, new String[] {"fedora", "brown fedora"}),
+
     //9000-9099 Skills
     DEX(9001, new String[] {"dexterity", "dex"}),
     STR(9002, new String[] {"strength", "str"}),
