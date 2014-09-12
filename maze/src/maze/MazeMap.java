@@ -8,6 +8,7 @@ import static util.Utilities.*;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -18,8 +19,8 @@ import util.View;
 import com.google.common.collect.Sets;
 
 public class MazeMap {
-    private HashMap<Node,Room> roomMap = new HashMap<Node,Room>();
-    private HashSet<Gate> gates = new HashSet<Gate>();
+    private Map<Node,Room> roomMap = new HashMap<Node,Room>();
+    private Set<Gate> gates = new HashSet<Gate>();
     private static int keyCounter = 0;
 
     public MazeMap() {

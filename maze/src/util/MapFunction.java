@@ -14,8 +14,6 @@ public abstract class MapFunction<F, T> implements Function<F, T> {
         Entry<K, V> flatEntry = new AbstractMap.SimpleEntry<K, V>(fromEntry);
       return flatEntry;
     }
-    /* @Override
-    public T apply(F input) {
 
-    } */
+    public abstract T apply(F input);
 }

@@ -4,29 +4,39 @@ import java.util.Iterator;
 import java.util.Map;
 
 import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 
 import static util.Print.*;
 
 public class View<T> implements Iterable<T> {
     private final Iterable<T> view;
 
-    public <F> View(final Iterable<? extends F> originalSet,
+    public <F> View(final Iterable<? extends F> fromIterable,
             final Function<? super F, ? extends T> transform) {
-        this.view = Views.transformReadOnly(originalSet, transform);
+
+        this.view = Views.transformReadOnly(fromIterable, transform);
     }
 
-    public <X, F> View(X agent, final Iterable<? extends F> originalSet,
+    public <X, F> View(X agent, final Iterable<? extends F> fromIterable,
             final BinaryFunction<? super X, ? super F, ? extends T> catalyzer) {
-        this.view = Views.catalyzeReadOnly(agent, originalSet, catalyzer);
+
+        this.view = Views.catalyzeReadOnly(agent, fromIterable, catalyzer);
     }
 
-    public View(final Iterable<? extends T> originalSet) {
-        this.view = Views.flattenReadOnly(originalSet);
+    public View(final Iterable<? extends T> fromIterable) {
+
+        this.view = Views.flattenReadOnly(fromIterable);
+    }
+
+    public View(final Iterable<T> fromIterable, Predicate<? super T> predicate) {
+
+        this.view = Iterables.filter(fromIterable, predicate);
     }
 
     @SuppressWarnings("unchecked")
-    public <K, V> View(final Map<? extends K, ? extends V> originalMap) {
-        this.view = (Iterable<T>) Views.flattenMap(originalMap);
+    public <K, V> View(final Map<? extends K, ? extends V> fromMap) {
+        this.view = (Iterable<T>) Views.flattenMap(fromMap);
     }
 
     public boolean contains(final Object o) {
