@@ -63,11 +63,11 @@ public class MazeAstarTest {
         do {
             print("\nPlease enter a command: ");
             input = scanner.nextLine();
-            GameInputHandler.run(input, you, coolMaze, path);
+            GameInputHandler.run(input, you, coolMaze);
         } while(Commands.get(input) != Commands.EXITMAZE);
 
         print("\nHere is your path: ");
-        for(Coordinate c : path) {
+        for(Coordinate c : you.getPath()) {
             System.out.print(" -> " + c);
         }
         scanner.close();

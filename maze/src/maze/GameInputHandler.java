@@ -12,7 +12,7 @@ import static util.Loggers.*;
 public final class GameInputHandler {
     private GameInputHandler() { } //no instantiation
 
-    public static void run(String input, Player you, Maze maze, List<Coordinate> path) {
+    public static void run(String input, Player you, Maze maze) {
         input = input.toLowerCase().trim();
         ParsedCommand cmd = parseCommand(input);
         String leadInput = cmd.command;
@@ -111,44 +111,45 @@ public final class GameInputHandler {
           else {
             Cardinals direction = Cardinals.get(arg);
                     log("direction supplied was: " + direction, Priority.DORMANT); //debug
-            Coordinate oldLocation = you.location();
+            //Coordinate oldLocation = you.location();
 
             if (direction == null) {
                 print("That's not a valid direction! Try again. "
                         + "(for a list of valid directions, type: help move)");
             }
             else if (you.move(direction, maze)) { //returns true if the move is valid
-              print("You have moved " + direction + ".");
-              path.add(oldLocation);
-              Room room = maze.getRoom(you.location());
+                  print("You have moved " + direction + ".");
 
-              if (you.getInventory().contains("Enc-None")) {
-                  print("\nRandom encounters begone! Enc-None shields you.\n");
-              } else {
-                  EncounterGenerator.run(you);
-              }
+                  Room room = maze.getRoom(you.location());
 
-              Events.run(you, MOVE, room);
-              you.narrator().talksAboutRoom(you, room);
-              if (!room.isVisited) {
-                  Statistics.globalUpdate("roomsExplored");
-              }
-              room.visitedBy(you);
+                  if (you.getInventory().contains("Enc-None")) {
+                      print("\nRandom encounters begone! Enc-None shields you.\n");
+                  } else {
+                      EncounterGenerator.run(you);
+                  }
 
-              room.describeRoom();
+                  Events.run(you, MOVE, room);
 
-              if(you.isAlive()) {
-                print("\nYou can go in the following directions: ");
-                you.whereCanIGo(maze);
-                if (you.location().equals(maze.exit())) {
-                  print("You have found the exit to the maze! "
-                          + "You may exit this program at your convenience.");
+                  if(you.isAlive()) {
+                      if (you.location().equals(maze.exit())) {
+                          Win.foundExit();
+                      } else {
+                          you.narrator().talksAboutRoom(you, room);
+                          if (!room.isVisited) {
+                              Statistics.globalUpdate("roomsExplored");
+                          }
+                          room.visitedBy(you);
+
+                          room.describeRoom();
+
+                          print("\nYou can go in the following directions: ");
+                          you.whereCanIGo(maze);
+                      }
+                  }
                 }
-              }
-            }
-            else { //if you.move(direction) returned false
-                print("There's no path to the " + direction + " from this room.");
-            }
+                else { //if you.move(direction) returned false
+                    print("There's no path to the " + direction + " from this room.");
+                }
           }
         }
         else if (leadCmd == ATTRIB) {
@@ -210,7 +211,7 @@ public final class GameInputHandler {
             you.printStatus();
         }
         else if(fullCmd == EXITMAZE) {
-            path.add(you.location());
+            you.getPath().add(you.location());
             print("\nThank you for playing in the Maze.");
         }
         else if(fullCmd == COMMANDS) {

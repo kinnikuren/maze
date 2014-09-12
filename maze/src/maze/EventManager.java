@@ -62,8 +62,10 @@ public class EventManager {
         boolean objectExists = false;
         if (interactions.size() > 0) {
             for (Interacter actor : interactions) {
+                log("looking for interacters that match string '" + objectName + "'...");
               if (actor.matches(objectName)) {
                 objectExists = true;
+                log("object found!");
               }
             }
         }

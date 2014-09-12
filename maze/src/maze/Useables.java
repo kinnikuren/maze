@@ -44,4 +44,26 @@ public final class Useables {
             print("The Compass points " + Cardinals.get(diff) + ".");
         }
     }
+
+    public static class WarpWhistle extends AbstractItemUseable{
+        public WarpWhistle() { super(); }
+        public WarpWhistle(Coordinate c) { super(c); }
+        @Override public String name() { return "Warp Whistle"; }
+        @Override public boolean matches(String name) { return matchRef(WARPWHISTLE, name); }
+        @Override public String details() { return "Blow it."; }
+        @Override public int weight() { return 1; }
+
+        @Override
+        public void usedBy(Player player) {
+            LinkedList<Coordinate> path = null;
+
+            AStar.reset();
+
+            path = AStar.discover(player.location(),player.maze().exit(),player.maze());
+
+            player.setLocation(player.maze().exit());
+
+            Win.foundExit();
+        }
+    }
 }

@@ -18,6 +18,8 @@ implements Fighter {
     private Maze maze;
     private Narrator narrator;
     private EncounterTracker tracker;
+    private List<Coordinate> path = new ArrayList<Coordinate>();
+
     private Random rand = new Random();
 
     private int dexterity;
@@ -32,6 +34,8 @@ implements Fighter {
 
     public EncounterTracker tracker() { return this.tracker; }
 
+    public List<Coordinate> getPath() { return path; }
+
     public int getDex() { return this.dexterity; }
     public int getStr() { return this.strength; }
     public int getInt() { return this.intelligence; }
@@ -43,12 +47,23 @@ implements Fighter {
         this.maze = maze;
         this.narrator = new Narrator();
         this.tracker = new EncounterTracker();
+        this.path.add(maze.center());
     }
 
-    public boolean skillCheck(References ref, int dmg, int difficulty) {
+    @Override
+    public void setLocation(Coordinate c) {
+        log("Setting location to " + c + "...");
+        if (location() != c) {
+            log("Adding location " + c + " to path...");
+            path.add(c);
+        }
+        super.setLocation(c);
+    }
+
+    public boolean skillCheck(References ref,int dmg, int difficulty) {
         int roll;
         int successes = 0;
-        int playerSkill=0;
+        int playerSkill = 0;
 
         switch(ref) {
             case DEX:

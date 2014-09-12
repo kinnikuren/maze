@@ -3,6 +3,7 @@ package maze;
 import java.util.*;
 
 import static util.Print.*;
+import static util.Loggers.*;
 import static maze.Priority.*;
 import static maze.References.*;
 import static maze.Commands.*;
@@ -72,28 +73,67 @@ implements Questioner {
                     + "electronic bleeps and bloops. The display lights up and words appear.");
             //selfPrint("Enter the code:");
 
+            boolean coinInserted = false;
+            boolean isCorrect = false;
+
             int count = 3;
+
             String[] questions = riddles.getQuestions().toArray(new String[0]);
             //print("Number of questions: " + questions.length);
             String question = questions[0];
             Scanner scanner = new Scanner(System.in);
 
-            selfPrint(question);
-            while(count != 0) {
-                String input = scanner.nextLine();
+            do {
+                selfPrint("(Insert gold coin to play)");
+                print("A) Insert a gold coin.");
+                print("B) Leave.");
+                coinInserted = false;
 
-                if(riddles.checkAnswer(question, input)) break;
-                else {
-                    count--;
-                    if (count ==0) break;
-                    selfPrint("Try again. (Insert coin)");
-                }
-            }
+                String input = MultipleChoiceInputHandler.run(2);
+                log("input entered was " + input);
+
+                if (input.equals("A")) {
+                    log("checking for coins...");
+                    if (player.getInventory().contains("gold coin")) {
+                        log("player has a coin, now removing...");
+                        player.getInventory().remove("gold coin");
+                        coinInserted = true;
+
+                        selfPrint(question);
+
+                        input = scanner.nextLine();
+
+                        isCorrect = riddles.checkAnswer(question, input);
+
+                        if (isCorrect) {
+                            result = true;
+                            selfPrint("You win!");
+                            selfPrint("You have won the Warp Whistle!");
+                            selfPrint("Thanks for playing!");
+
+                            print("A plain whistle pops out of the console and you put it in "
+                                    + "your pocket.");
+
+                            player.getInventory().add(new Useables.WarpWhistle());
+
+                            visitedBy(player);
+                        } else {
+                            selfPrint("Incorrect. Try again.");
+                        }
+                    } else {
+                        print("You do not have any gold coins.");
+                    }
+                } else if (input.equals("B")) break;
+
+            } while(!isCorrect);
+
+                /*
             if(count == 0) {
                 result = false;
                 selfPrint("Game Over.");
                 visitedBy(player);
             }
+
             else {
                 result = true;
                 selfPrint("You win!");
@@ -103,6 +143,7 @@ implements Questioner {
                 player.getInventory().add(new Trinkets.BronzeCoin());
                 player.getInventory().add(new Trinkets.BronzeCoin());
             }
+            */
         }
         else {
             print("The console is darkened and unresponsive.");

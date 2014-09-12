@@ -32,11 +32,15 @@ public class PopulateRoomTest {
             room.addActor(new RatKing());
 
             room.addActor(new Compass());
+            room.addActor(new WarpWhistle());
             room.addActor(new EncNone());
             room.addActor(new BrownFedora());
             room.addActor(new SuperSuit());
 
             room.addActor(new BronzeCoin()); room.addActor(new BronzeCoin()); room.addActor(new BronzeCoin());
+            room.addActor(new GoldCoin());
+            room.addActor(new GoldCoin());
+            room.addActor(new GoldCoin());
 
             //For testing (AYL)
             //addActor(new Skeleton());

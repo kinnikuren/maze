@@ -33,7 +33,7 @@ public class RunMazeTest {
         log("Center location => " + coolMaze.center());
         log("Final size: " + coolMaze.size());
 
-        List<Coordinate> path = new ArrayList<Coordinate>();
+
         AStar.discover(coolMaze);
         print("\nMaze Run Test 3.0 :: Maze project.");
         print("Ready for user input.");
@@ -70,11 +70,11 @@ public class RunMazeTest {
         do {
             print("\nPlease enter a command: ");
             input = scanner.nextLine();
-            GameInputHandler.run(input, you, coolMaze, path);
-        } while((Commands.get(input) != Commands.EXITMAZE) && you.isAlive());
+            GameInputHandler.run(input, you, coolMaze);
+        } while((Commands.get(input) != Commands.EXITMAZE) && you.isAlive() && !Win.didI());
 
         print("\nHere is your path: ");
-        for(Coordinate c : path) {
+        for(Coordinate c : you.getPath()) {
             System.out.print(" -> " + c);
         }
         scanner.close();

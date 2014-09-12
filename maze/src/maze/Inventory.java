@@ -26,7 +26,7 @@ public class Inventory implements Stage {
     //@throws[NullArgumentException]
     public void add(Portable item) throws NullArgumentException {
         checkNullArg(item);
-        inventory.put(item.name(), item);
+        inventory.put(item.name().toLowerCase(), item);
         interactions.add(item);
         log("Item added to inventory interactions: " + interactions);
     }
@@ -52,12 +52,17 @@ public class Inventory implements Stage {
         //which item is removed is NOT specified!
         boolean removed = false;
         Random rand = new Random();
+        //get list of Portables associated with the string
         List<Portable> items = inventory.get(itemName);
         if (items.size() > 0) {
-            int index = rand.nextInt(items.size()) + 1;
+            //generates random number between 0 and size-1
+            int index = rand.nextInt(items.size());
+            //creates an array from the list of Portables
             Portable[] itemsArr = items.toArray(new Portable[items.size()]);
             Portable candidate = itemsArr[index];
+            log("Removing " + itemName + " from inventory...");
             removed = inventory.remove(itemName, candidate);
+            interactions.remove(candidate);
         }
       return removed;
     }

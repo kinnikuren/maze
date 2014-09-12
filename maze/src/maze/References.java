@@ -31,6 +31,7 @@ public enum References {
 
     //1300-1399 Reusable Trinkets
     COMPASS(1300, new String[] {"compass"}),
+    WARPWHISTLE(1301, new String[] {"warp whistle"}),
 
     //2000-2099 Weapons
     DAGGER(2000, new String[] {"dagger"}),

@@ -35,7 +35,9 @@ public abstract class AbstractUnit {
 
     public String name() { return name; }
 
-    public void setLocation(Coordinate c) { this.location = c; }
+    public void setLocation(Coordinate c) {
+        this.location = c;
+    }
 
     public abstract void defineTypeDefaultValues();
 
