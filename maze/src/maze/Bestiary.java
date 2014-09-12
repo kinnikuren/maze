@@ -80,6 +80,62 @@ public final class Bestiary {
         }
     }
 
+    public static class Revanton extends Monster {
+        public static final int classId = REVANTON.classId;
+        public static final References ref = REVANTON;
+        //public static final String battlecry = "The skeleton flashes you a toothy grin as it slowly raises a rusty sword.";
+        public Revanton() {
+            super();
+        }
+
+        public Revanton(Coordinate c) {
+            super(c);
+        }
+
+        private void selfPrint(String input) { print(name + ">> " + input); }
+
+        @Override //overrides AbstractFighterUnit method
+        public void defineTypeDefaultValues() {
+            this.defaultHitPoints = 60;
+            this.defaultAttackVal = 8;
+            this.defaultDefenseVal = 8;
+        }
+        @Override //overrides AbstractFighterUnit method
+        public String battlecry() {
+          return "The elf rogue stealthily waddles toward you.";
+        }
+
+        @Override
+        public String inspect() {
+            return ("All you see are shadows.");
+        }
+
+        @Override //overrides Unit method
+        public void death() {
+            if (isAlive) {
+              selfPrint("Revanton will return!");
+              print("You spit on the elf's corpse.");
+            }
+            super.death();
+        }
+        //begin implementation of Interacter methods defined as abstract in FighterUnit
+        @Override
+        public boolean matches(String name) {
+          return matchRef(REVANTON, name);
+        }
+
+        @Override
+        public Event interact(Commands trigger) {
+            if (!isAlive) return null;
+
+            return trigger == FIGHT ? fight(this, HIGH)
+                : (trigger == APPROACH ? announce(this, LOW, inspect())
+                : (trigger == MOVE ? announce(this, DEFAULT, "You see something moving in the "
+                        + "shadows.")
+                :  null));
+        }
+    }
+
     public static class Rat extends Monster {
         public static final int classId = RAT.classId;
 

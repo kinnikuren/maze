@@ -16,6 +16,7 @@ import maze.MazeFactory;
 import maze.Parade;
 import maze.Player;
 import maze.Priority;
+import maze.Statistics;
 
 public class EncounterTest {
 
@@ -28,6 +29,8 @@ public class EncounterTest {
         openSet.add(new Coordinate(0,1));
         Maze coolMaze = MazeFactory.buildMaze(openSet, 30, center);
 
+        Statistics.initialize();
+
         //Maze coolMaze = MazeFactory.buildMaze(30);
         coolMaze.populateRooms();
 
@@ -39,7 +42,7 @@ public class EncounterTest {
         you.setName(name);
 
         Parade Parade = new Parade();
-        Parade.gym(you, "gym");
+        Parade.fineas(you, "fineas");
     }
 
 }

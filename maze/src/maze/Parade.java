@@ -6,6 +6,7 @@ import java.lang.reflect.*;
 
 import static util.Print.*;
 import static maze.References.*;
+import static maze.Priority.*;
 
 //Parade of Horribles
 public class Parade {
@@ -17,6 +18,112 @@ public class Parade {
         System.out.println("Hello!");
     }
     */
+
+    public void rogueEncounter(Player player, String encounterName) {
+        player.tracker().track(encounterName);
+        wordWrapPrint("As you walk through the room, you are suddenly struck in the head. You are "
+                + "dazed and feel sapped in strength.");
+        wordWrapPrint("A) Try to fight through it.");
+        wordWrapPrint("B) Wait and see what happens.");
+
+        boolean canFight = false;
+
+        input = MultipleChoiceInputHandler.run(2);
+
+        if (input.equals("A")) {
+            if (!player.skillCheck(STR, 0, 2)) {
+                wordWrapPrint("You can't shake the cobwebs from your head and are still "
+                        + "incapacitated.");
+            } else {
+                wordWrapPrint("You manage to regain your senses.");
+                canFight = true;
+            }
+        }
+
+        if (!canFight) {
+            wordWrapPrint("In your sapped state, you still manage to catch a glimpse of a lithe, "
+                    + "elven form in the shadows. Suddenly, you are hit hard in the family jewels. "
+                    + "What a cheap shot! Now, you can't move at all...");
+            wordWrapPrint("The shadowy form ambushes you and you feel two daggers slide easily and "
+                    + "painfully into your back.");
+            player.loseHP(10);
+            if (player.isAlive) {
+                wordWrapPrint("A) Try to dodge the next blow.");
+                wordWrapPrint("B) Wait and see what happens.");
+
+                input = MultipleChoiceInputHandler.run(2);
+
+                if (input.equals("A")) {
+                    if (!player.skillCheck(DEX,2,3)) {
+                        wordWrapPrint("Too slow! You can't dodge the next hit.");
+                    } else {
+                        wordWrapPrint("You manage to sidestep out of the way!");
+                        canFight = true;
+                    }
+                }
+            }
+        }
+
+        if (!canFight && player.isAlive) {
+            wordWrapPrint("With a growing welt on your head, two gaping wounds in your back, and "
+                    + "crushed nuts, you think of your own mortality.");
+            wordWrapPrint("The elf has shown himself at this point. He is fully armored and his "
+                    + "two daggers have a sickly, green glow. You can only wonder why he decided "
+                    + "to pick a fight with you.");
+            wordWrapPrint("The elf quickly lunges and punches you in the kidney. You really, "
+                    + "really can't move anymore...");
+            wordWrapPrint("One dagger cuts through the darkness and eviscerates you. You stare, "
+                    + "fascinated, as your intestines slide to the floor in an undignified heap.");
+
+            wordWrapPrint("As you lay dying, the elf stands over you and sneers. 'I am Revanton.'");
+            wordWrapPrint("Your eyes dim and slowly close. The last image you see is the elf "
+                    + "preparing to sit on your face.");
+
+            player.death();
+        }
+
+        if (canFight && player.isAlive) {
+            wordWrapPrint("You can move! You prepare to fight the dastardly rogue.");
+            InteractionHandler.run(new Bestiary.Revanton(), player, new Module.Fight());
+            //Events.fight(new Bestiary.Revanton(), HIGH);
+        }
+    }
+
+    public void fineas(Player player, String encounterName) {
+        player.tracker().track(encounterName);
+        wordWrapPrint("A dark-skinned man with long blonde hair and a handlebar moustache is "
+                + "casually leaning against the wall.");
+        wordWrapPrint("'Sup. I'm Fineas, the rogue.'");
+        wordWrapPrint("'There's another rogue wandering around this maze. He's not very nice. I "
+                + "can teach you some tricks of the trade in case you run into him.'");
+        wordWrapPrint("'But it'll cost you. Ten bronze coins.'");
+        wordWrapPrint("Fineas sticks his hand out.");
+        wordWrapPrint("A) Pay up.");
+        wordWrapPrint("B) Slap his hand away.");
+
+        input = MultipleChoiceInputHandler.run(2);
+
+        if (input.equals("A")) {
+            if (player.getInventory().howMany("bronze coin") >= 10) {
+                wordWrapPrint("You pay the rogue ten bronze coins.");
+                for (int i = 0; i < 10; i++) {
+                    player.getInventory().remove("bronze coin");
+                }
+                wordWrapPrint("Fineas shows you some moves.");
+                player.skillChange(DEX, 2);
+                wordWrapPrint("'Thanks, buddy.' The rogue melts into the shadows.");
+            } else {
+                wordWrapPrint("'Not enough coins, huh? Maybe next time.'");
+                wordWrapPrint("The rogue vanishes from sight.");
+            }
+        } else if (input.equals("B")) {
+            wordWrapPrint("Before you make contact, the rogue pulls his hand away and swiftly "
+                    + "kicks you in the groin.");
+            player.loseHP(1);
+            wordWrapPrint("The rogue vanishes and a skeleton suddenly appears in his place!");
+            InteractionHandler.run(new Bestiary.Skeleton(), player, new Module.Fight());
+        }
+    }
 
     public void zombieEncounter(Player player, String encounterName) {
         player.tracker().track(encounterName);

@@ -12,6 +12,7 @@ public enum References {
 
     //180-199 Boss Monsters
     RATKING(180,new String[] {"rat king"}),
+    REVANTON(181,new String[] {"Revanton"}),
 
     //200-299 Fixtures
     IDOL(200, new String[] {"idol"}),

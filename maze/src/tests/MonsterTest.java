@@ -76,7 +76,7 @@ public class MonsterTest {
          do {
              print("\nPlease enter a command: ");
              input = scanner.nextLine();
-             GameInputHandler.run(input, you, coolMaze, path);
+             GameInputHandler.run(input, you, coolMaze);
          } while(Commands.get(input) != Commands.EXITMAZE);
 
          print("\nHere is your path: ");

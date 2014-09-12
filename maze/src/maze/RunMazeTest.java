@@ -61,9 +61,6 @@ public class RunMazeTest {
         //EncounterGenerator.run(you);
         //}
         //you.tracker().printMap();
-        //you.setStatus("rabies");
-        //you.setStatus("the zombie virus");
-        //you.setStatus("dysentery");
 
         print("\nType 'commands' for a list of commands.");
 

@@ -204,7 +204,6 @@ public final class Events {
     public static Event fight(final Monster enemy, final Priority priority) {
         Event event = new Event(enemy, priority) {
           @Override public ResultMessage fire(Player player) {
-              print(enemy.battlecry());
               InteractionHandler.run(enemy, player, new Module.Fight());
             return null;
           }

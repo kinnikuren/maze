@@ -125,7 +125,9 @@ public final class GameInputHandler {
                   if (you.getInventory().contains("Enc-None")) {
                       print("\nRandom encounters begone! Enc-None shields you.\n");
                   } else {
-                      EncounterGenerator.run(you);
+                      //EncounterGenerator.run(you);
+                      Parade parade = new Parade();
+                      parade.rogueEncounter(you, "rogueEncounter");
                   }
 
                   Events.run(you, MOVE, room);

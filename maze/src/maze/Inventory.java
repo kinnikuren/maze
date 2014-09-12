@@ -85,6 +85,11 @@ public class Inventory implements Stage {
         return manager.contains(itemName);
     }
 
+    public int howMany(String itemName) {
+        List<Portable> items = inventory.get(itemName);
+        return items.size();
+    }
+
     public boolean isEmpty() {
         if (inventory.size() == 0) {
             print("There is nothing to interact with in your inventory.");

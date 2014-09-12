@@ -11,6 +11,7 @@ public final class InteractionHandler {
 
     public static void run(Monster enemy, Player player, Module.Fight ft) {
         print("Starting fight!!...");
+        print(enemy.battlecry());
         String playerMove;
         String enemyMove;
         String[] moves = {"attack", "block", "kill", "kill all"}; //kill cheat for easier testing
