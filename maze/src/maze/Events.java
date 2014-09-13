@@ -5,7 +5,11 @@ import static util.Loggers.*;
 import static util.Print.print;
 import static util.Utilities.checkNullArg;
 import static util.Utilities.checkNullArgs;
+
+import java.util.Iterator;
+import java.util.List;
 import java.util.PriorityQueue;
+
 import maze.Bestiary.Monster;
 
 public final class Events {
@@ -116,7 +120,7 @@ public final class Events {
         }
         else {
             stage.getCurrentEvents(trigger, object);
-            response = run(player, stage, Token.MULTIPLE);
+            response = run(player, stage, Token.SINGLE);
         }
       return response;
     }
@@ -181,9 +185,18 @@ public final class Events {
     }
 
     public static void clearNonSticky(PriorityQueue<Event> currentEvents) {
+        /*
         for (Event e : currentEvents) {
           if (!e.isSticky())
             currentEvents.remove(e);
+        }
+        */
+
+        for (Iterator<Event> itr = currentEvents.iterator(); itr.hasNext();) {
+            Event i = itr.next();
+            if (!i.isSticky()) {
+                itr.remove();
+            }
         }
     }
 
@@ -211,6 +224,18 @@ public final class Events {
       return event;
     }
 
+    public static Event fightAll(List<Monster> monsterParty, final Interacter actor,
+            final Priority priority) {
+        Event event = new Event(monsterParty, actor, priority) {
+          @Override public ResultMessage fire(Player player) {
+              InteractionHandler.run(monsterParty, player, new Module.Fight());
+              ResultMessage rm = new ResultMessage(EventActions.CLEAR_FORCED);
+            return rm;
+          }
+        };
+      return event;
+    }
+
     public static Event fightSkeletonTwice(final Bestiary.Skeleton sk1, final Priority priority) {
         Event event = new Event(sk1, priority) {
           @Override public ResultMessage fire(Player player) {
@@ -223,7 +248,7 @@ public final class Events {
               final Priority p = MAX;
               Event reanimateEvent = new Event(sk2, p) {
                 @Override public ResultMessage fire(Player player) {
-                    print("the skeleton magically re-animates itself and ATTACKS YOU AGAIN!");
+                    print("The skeleton magically re-animates itself and ATTACKS YOU AGAIN!");
                     //print(sk2.battlecry());
                     InteractionHandler.run(sk2, player, new Module.Fight());
                   return null;

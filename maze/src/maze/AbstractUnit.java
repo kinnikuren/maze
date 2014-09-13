@@ -59,6 +59,7 @@ public abstract class AbstractUnit {
 
     public void loseHP(int hp) {
         int newHP = this.hitPoints - hp;
+        if (newHP < 0) newHP = 0;
         this.setHP(newHP);
     }
 

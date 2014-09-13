@@ -132,6 +132,9 @@ public class PaperDoll implements Stage {
         return manager.getCurrentEvents(trigger, objectName);
     }
 
+    @Override
+    public List<Interacter> getInteracters() { return interactions; };
+
     //Testing
     public static void main(String[] args) {
         PaperDoll pd = new PaperDoll();

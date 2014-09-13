@@ -107,6 +107,9 @@ public abstract class AbstractRoom implements Stage {
     @Override
     public String getName() { return "the room"; }
 
+    @Override
+    public List<Interacter> getInteracters() { return contents; };
+
     public void addToRoom() { }
 
     public List<Interacter> contents() { return contents; }

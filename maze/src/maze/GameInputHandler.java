@@ -60,7 +60,7 @@ public final class GameInputHandler {
         Commands leadCmd = get(leadInput); //first word, delimited by space, for checking transitive actions (that allow or require arguments)
 
 
-        if (check(leadCmd).in(APPROACH, FIGHT, PICKUP, TALK)) {
+        if (check(leadCmd).in(APPROACH, TALK)) {
             if (arg == null) {
                 if (check(leadCmd).in(TALK)) {
                     print("\nYou talk to yourself.  You find the conversation unstimulating.");
@@ -71,6 +71,20 @@ public final class GameInputHandler {
             }
             else {
               performAction(you, leadCmd, arg, you.getRoom());
+            }
+        }
+        else if (leadCmd == FIGHT) {
+            if (arg == null || arg.equals("all")) {
+                performAction(you, leadCmd, you.getRoom());
+            } else {
+                performAction(you, leadCmd, arg, you.getRoom());
+            }
+        }
+        else if (leadCmd == PICKUP) {
+            if (arg == null || arg.equals("all")) {
+                performAction(you, leadCmd, you.getRoom());
+            } else {
+                performAction(you, leadCmd, arg, you.getRoom());
             }
         }
         else if (check(leadCmd).in(EQUIP, DROP, CONSUME, USE)) {
@@ -217,20 +231,69 @@ public final class GameInputHandler {
             print("\nThank you for playing in the Maze.");
         }
         else if(fullCmd == COMMANDS) {
+
+            /*
             print("\nList of commands:");
+            int size = printList().length;
+
+            int cols = 3;
+            int rows = 0;
+            int index = 0;
+
+            do {
+                rows++;
+                size -= cols;
+            } while (size % cols > 0);
+
+            for (int i = 0; i < cols; i++) {
+                printnb("--------------------------------------------");
+                //print("|                  |");
+            }
+            print("");
+
+            for (int i = 0; i < rows; i++) {
+
+                print("");
+                for (int j = 0; j < cols; j++) {
+                    //printnb("|                  |");
+                    printnb("| " + printList()[index] + " |");
+                    index++;
+                }
+                print("");
+                for (int j = 0; j < cols; j++) {
+                    printnb("--------------------------------------------");
+                }
+                print("");
+            }
+
             for(String str : printList()) print(str);
+            */
+            printList();
         }
         else print("\nThis instruction is invalid. Type 'commands' for a list of commands.");
     }
 
-    public static void performAction(Player you, Commands action, String object, Stage stage) {
+    public static boolean performAction(Player you, Commands action, String object, Stage stage) {
         //Boolean result = r.respondsTo(you, trigger, arg);
         Boolean result = Events.run(you, action, object, stage);
         String preposition = action.getPreposition() == null ? "" : action.getPreposition();
         //Grammar correction
-        if (result == null) print("There isn't a " + object + " to " + action + preposition + " in " + stage.getName() + ".");
+        if (result == null) {
+            print("There isn't a " + object + " to " + action + preposition + " in " +
+                    stage.getName() + ".");
+            return false;
+        }
         else if (result == false) {
             print("You can't " + action + preposition + " the " + object + ".");
+            return false;
+        } else return true;
+    }
+
+    public static boolean performAction(Player you, Commands action, Stage stage) {
+        Boolean result = Events.run(you, action, stage);
+        if (result == false) {
+            print("There is nothing to " + action + " here.");
         }
+        return true;
     }
 }

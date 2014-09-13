@@ -18,6 +18,7 @@ implements Fighter {
     private Maze maze;
     private Narrator narrator;
     private EncounterTracker tracker;
+    private SpellBook spellBook;
     private List<Coordinate> path = new ArrayList<Coordinate>();
 
     private Random rand = new Random();
@@ -34,6 +35,8 @@ implements Fighter {
 
     public EncounterTracker tracker() { return this.tracker; }
 
+    public SpellBook getSpellBook() { return this.spellBook; }
+
     public List<Coordinate> getPath() { return path; }
 
     public int getDex() { return this.dexterity; }
@@ -47,6 +50,7 @@ implements Fighter {
         this.maze = maze;
         this.narrator = new Narrator();
         this.tracker = new EncounterTracker();
+        this.spellBook = new SpellBook();
         this.path.add(maze.center());
     }
 
@@ -128,10 +132,36 @@ implements Fighter {
         }
     }
 
+    @Override
+    public int getDamage() {
+        //base damage is 1 to strength value
+        int baseDamage = rand.nextInt(this.strength) + 1;
+        int damage;
+
+        //retrieve weapon
+        Equippable weapon = paperDoll.getWeapon();
+
+        int plusDmg = 0;
+
+        if (weapon != null) {
+            HashMap<References, Integer> stats = weapon.getStats();
+            plusDmg = rand.nextInt(stats.get(WDHIGH)-stats.get(WDLOW)) + stats.get(WDLOW);
+            log(weapon + " increased attack damage by " + plusDmg + "...");
+        }
+
+        damage = baseDamage + plusDmg;
+
+        return damage;
+    }
+
+    public boolean getCrit() {
+        return skillCheck(DEX, 0, 2);
+    }
+
     @Override //overrides AbstractFighterUnit method
     public void defineTypeDefaultValues() {
         super.defineTypeDefaultValues();
-        this.defaultHitPoints = 20;
+        this.defaultHitPoints = 1000;
         this.defaultAttackVal = 2;
         this.defaultDefenseVal = 0;
         this.dexterity = 4;

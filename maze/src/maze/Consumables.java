@@ -29,7 +29,7 @@ public final class Consumables {
         @Override public void consumedBy(Player player) {
             int healed = min(healing, player.getDefaultHP() - player.hp());
             player.addHP(healed);
-            printnb("Refreshing!");
+            print("Refreshing!\n");
         }
     }
 
@@ -44,7 +44,7 @@ public final class Consumables {
         @Override public void consumedBy(Player player) {
             int healed = min(healing, player.getDefaultHP() - player.hp());
             player.addHP(healed);
-            printnb("Yum!");
+            print("Yum!\n");
         }
     }
 }

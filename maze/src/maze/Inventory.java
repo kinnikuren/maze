@@ -6,11 +6,13 @@ import java.util.PriorityQueue;
 import java.util.Random;
 
 import static util.Loggers.*;
+import util.GrammarGuy;
 import util.NullArgumentException;
 
 import com.google.common.collect.ArrayListMultimap;
 
 import static util.Print.print;
+import static util.Print.wordWrapPrint;
 import static util.Utilities.*;
 
 public class Inventory implements Stage {
@@ -26,7 +28,7 @@ public class Inventory implements Stage {
     //@throws[NullArgumentException]
     public void add(Portable item) throws NullArgumentException {
         checkNullArg(item);
-        inventory.put(item.name().toLowerCase(), item);
+        inventory.put(item.name(), item);
         interactions.add(item);
         log("Item added to inventory interactions: " + interactions);
     }
@@ -90,6 +92,10 @@ public class Inventory implements Stage {
         return items.size();
     }
 
+    public int size() {
+        return inventory.size();
+    }
+
     public boolean isEmpty() {
         if (inventory.size() == 0) {
             print("There is nothing to interact with in your inventory.");
@@ -101,12 +107,29 @@ public class Inventory implements Stage {
     public String toString() {
         int count = 0;
         String inventoryContents = "Inventory contents: ";
-        for (String itemName : inventory.keySet()) {
-            count = inventory.get(itemName).size();
-            String addDescription= "\n" + itemName + " (" + count + ")";
-            inventoryContents += addDescription;
-        }
+        if (!inventory.isEmpty()) {
+            for (String itemName : inventory.keySet()) {
+                count = inventory.get(itemName).size();
+                String addDescription= "\n" + itemName + " (" + count + ")";
+                inventoryContents += addDescription;
+            }
+        } else inventoryContents += "\n" + "(Empty)";
       return inventoryContents;
+    }
+
+    public void printInventory() {
+        int count = 0;
+
+        if(interactions.size() > 0) {
+            List<String> list = new ArrayList<String>();
+            for (String thing : inventory.keySet()) {
+              count = inventory.get(thing).size();
+              String addDescription= thing + " (" + count + ")";
+
+              list.add(addDescription);
+          }
+          wordWrapPrint(GrammarGuy.oxfordCommify(list));
+        }
     }
 
     @Override
@@ -156,4 +179,7 @@ public class Inventory implements Stage {
         log("testing");
         return manager.getCurrentEvents(trigger, objectName);
     }
+
+    @Override
+    public List<Interacter> getInteracters() { return interactions; };
 }

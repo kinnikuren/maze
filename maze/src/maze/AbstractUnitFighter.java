@@ -2,6 +2,7 @@ package maze;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public abstract class AbstractUnitFighter extends AbstractUnit
 implements Fighter {
@@ -9,6 +10,12 @@ implements Fighter {
     int attackVal;
     int defaultDefenseVal;
     int defenseVal;
+
+    int damageLow;
+    int damageHigh;
+
+    private Random rand = new Random();
+
     List<String> status = new ArrayList<String>();
     String statusEffect;
 
@@ -32,12 +39,19 @@ implements Fighter {
         return this.statusEffect;
     }
 
+    public int getDamage() {
+        return (rand.nextInt(damageHigh-damageLow) + damageLow);
+    }
+
     @Override //overrides Unit method
     public void defineTypeDefaultValues() {
         this.defaultHitPoints = 0;
         this.defaultAttackVal = 0;
         this.defaultDefenseVal = 0;
         this.statusEffect = null;
+
+        this.damageLow = 1;
+        this.damageHigh = 2;
     }
     //begin Interacter methods, abstract
     @Override public abstract boolean matches(String name);

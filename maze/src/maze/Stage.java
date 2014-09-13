@@ -1,5 +1,6 @@
 package maze;
 
+import java.util.List;
 import java.util.PriorityQueue;
 
 public interface Stage {
@@ -20,4 +21,6 @@ public interface Stage {
     public boolean isBarren();
 
     public String getName();
+
+    public List<Interacter> getInteracters();
 }

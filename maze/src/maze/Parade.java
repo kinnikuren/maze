@@ -93,11 +93,11 @@ public class Parade {
         player.tracker().track(encounterName);
         wordWrapPrint("A dark-skinned man with long blonde hair and a handlebar moustache is "
                 + "casually leaning against the wall.");
-        wordWrapPrint("'Sup. I'm Fineas, the rogue.'");
+        wordWrapPrint("'Sup. I'm Müller, the rogue.'");
         wordWrapPrint("'There's another rogue wandering around this maze. He's not very nice. I "
                 + "can teach you some tricks of the trade in case you run into him.'");
         wordWrapPrint("'But it'll cost you. Ten bronze coins.'");
-        wordWrapPrint("Fineas sticks his hand out.");
+        wordWrapPrint("Müller sticks his hand out.");
         wordWrapPrint("A) Pay up.");
         wordWrapPrint("B) Slap his hand away.");
 
@@ -109,7 +109,7 @@ public class Parade {
                 for (int i = 0; i < 10; i++) {
                     player.getInventory().remove("bronze coin");
                 }
-                wordWrapPrint("Fineas shows you some moves.");
+                wordWrapPrint("Müller shows you some moves.");
                 player.skillChange(DEX, 2);
                 wordWrapPrint("'Thanks, buddy.' The rogue melts into the shadows.");
             } else {

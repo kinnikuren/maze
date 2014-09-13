@@ -2,6 +2,8 @@ package maze;
 
 import java.util.*;
 
+import static util.Print.*;
+
 public enum Commands {
     MOVE(new String[] {"move", "mv", "go"},
         "move/mv/go usage: move <direction> to move your character in the specified direction."
@@ -104,7 +106,17 @@ public enum Commands {
 
         public String toString() { return matchInputs.get(0); }
 
-        public static String[] printList() {
+        public static void printList() {
+            print("List of Commands:");
+            print("-----------------------------------------------------------------------------");
+            print("| move (mv) (go) + <<direction>> | where can i go? (go?) | where am i? (am?)|");
+            print("| fight (f) | approach (appr) + <<object>> | describe (desc) + <<object>>   |");
+            print("| talk + <<object>> | pickup item (pkup) | use item | consume item (consume)|");
+            print("| equip item | unequip item | inventory (got?) | equipped | status (status) |");
+            print("| attributes (attrib | statistics (stats) | exit maze (xx) | help           |");
+            print("-----------------------------------------------------------------------------");
+
+            /*
             return new String[] { "move (mv) (go) + <<direction>>",
                     "where can i go? (go?)", "where am i? (am?)",
                     "fight (f)",
@@ -119,7 +131,7 @@ public enum Commands {
                     "my attributes (attrib)",
                     "statistics (stats)",
                     "exit maze (xx)", "help"
-            };
+            }; */
         }
 
         public static Commands get(String str) {
