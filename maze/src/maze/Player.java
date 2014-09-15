@@ -3,13 +3,15 @@ package maze;
 import static util.Print.*;
 import static util.Loggers.*;
 import static maze.References.*;
-
+import static util.Utilities.check;
+import static util.Utilities.sign;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 import maze.Maze.Room;
+import maze.PaperDoll.EquipSlots;
 import util.GrammarGuy;
 import util.View;
 
@@ -20,6 +22,8 @@ implements Fighter {
     private EncounterTracker tracker;
     private SpellBook spellBook;
     private List<Coordinate> path = new ArrayList<Coordinate>();
+    private Inventory inventory = new Inventory();
+    private PaperDoll paperDoll = new PaperDoll();
 
     private Random rand = new Random();
 
@@ -271,70 +275,63 @@ implements Fighter {
             inventory.put(s,inventory.get(s)+1);
         }
     }*/
-    private Inventory inventory = new Inventory();
-    private PaperDoll paperDoll = new PaperDoll();
 
     public boolean equip(Equippable item) {
+        //checkNullArg(item);
         if (!inventory.contains(item)) {
             print("You do not have " + item + " in your inventory.");
-            return false;
+          return false;
         }
         else {
-            Equippable oldItem = null;
-            oldItem = paperDoll.add(item);
-
-            HashMap<References, Integer> equipmentStats;
-            equipmentStats = item.getStats();
-
-            for (References key : equipmentStats.keySet()) {
-                if (key == STR || key == DEX || key == INT) {
-                    skillChange(key, equipmentStats.get(key));
-                }
-            }
-
-            log("Removing " + item + " from inventory...");
+            EquipSlots slot = item.type();
+            Equippable oldItem = unequip(slot);
+                    log("Removing " + item + " from inventory...");
             inventory.remove(item);
+            paperDoll.add(item);
+
             if (oldItem != null) {
-                log("Returning " + oldItem + " to inventory...");
-                inventory.add(oldItem);
+                    log("Returning " + oldItem + " to inventory...");
+              inventory.add(oldItem);
             }
-            //inventory.removeActor(item);
-            //this.defaultAttackVal = item.getWeaponDamage()[0];
-            //this.defaultAttackVal += item.getWeaponDamage();
-            //print("Attack value: " + this.defaultAttackVal);
-            return true;
+
+            alterSkillsFromItem(item, 1);
+
+          return true;
         }
     }
 
-    public boolean unequip(Equippable item) {
-        if (!paperDoll.contains(item)) {
-            print("You do not have " + item + " equipped.");
-            return false;
-        }
+    public Equippable unequip(Equippable item) {
+        if (!paperDoll.contains(item)) return null;
         else {
-            paperDoll.removeActor(item);
+            paperDoll.remove(item);
 
-            HashMap<References, Integer> equipmentStats;
-            equipmentStats = item.getStats();
-            for (References key : equipmentStats.keySet()) {
-                skillChange(key, (-equipmentStats.get(key)));
-            }
+            alterSkillsFromItem(item, -1);
 
             log("Returning " + item + " to inventory...");
             inventory.add(item);
-            //inventory.removeActor(item);
-            //this.defaultAttackVal = item.getWeaponDamage()[0];
-            //this.defaultAttackVal += item.getWeaponDamage();
-            //print("Attack value: " + this.defaultAttackVal);
-            return true;
+          return item;
         }
     }
 
+    public Equippable unequip(EquipSlots slot) {
+        Equippable item = paperDoll.getEquippedForSlot(slot);
+        if (item != null) unequip(item);
+      return item;
+    }
+
+    public void alterSkillsFromItem(Equippable item, int i) {
+        HashMap<References, Integer> itemStats = item.getStats();
+        int sign = sign(i);
+         for (References key : itemStats.keySet()) {
+             int changeVal = sign * itemStats.get(key); //positive or negative to reflect taking item on or off
+             skillChange(key, changeVal);
+         }
+    }
 
     public void addToInventory(Portable item) { inventory.add(item); }
 
     public boolean deleteFromInventory(Portable item) {
-      return inventory.remove(item) != null ? true : false;
+      return (inventory.remove(item) != null);
     }
 
     public Portable dropFromInventory(Portable item) { return inventory.remove(item); }

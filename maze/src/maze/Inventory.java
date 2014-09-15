@@ -17,7 +17,6 @@ import static util.Utilities.*;
 
 public class Inventory implements Stage {
     private ArrayListMultimap<String, Portable> inventory = ArrayListMultimap.create();
-    ArrayList<Interacter> contents = new ArrayList<Interacter>();
     ArrayList<Interacter> interactions = new ArrayList<Interacter>();
     EventManager manager;
 
@@ -37,9 +36,7 @@ public class Inventory implements Stage {
         String itemName = item.name();
         Portable removed = null;
         for (Portable i : inventory.get(itemName)) {
-          if (i == item) {
-            removed = i;
-          }
+          if (i.equals(item)) removed = i;
         }
         if (removed != null) {
             inventory.remove(itemName, removed);
@@ -154,7 +151,7 @@ public class Inventory implements Stage {
     @Override
     public boolean isBarren() {
         // TODO Auto-generated method stub
-        return interactions.size() == 0 ? true : false;
+        return (interactions.size() == 0);
     }
 
     @Override
@@ -181,5 +178,5 @@ public class Inventory implements Stage {
     }
 
     @Override
-    public List<Interacter> getInteracters() { return interactions; };
+    public List<Interacter> getActors() { return interactions; };
 }

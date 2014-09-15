@@ -17,6 +17,7 @@ public class Maze {
             RoomMapMaker.roomify(maze);
             //maze.populateRooms();
             if (maze.exit() == null) maze.findExit();
+            maze.setAstarPathToExit();
             print("Mazification complete.");
         } else throw new IllegalArgumentException("MAZIFY ERROR: "
                     + "CANNOT MAZIFY WITH NO OPEN POSITION SET.");
@@ -29,7 +30,7 @@ public class Maze {
         @Override
         public void populateRoom() {
             //for testing
-            tests.PopulateRoomTest.fillerUp(position, center, this);
+            //tests.PopulateRoomTest.fillerUp(position, center, this);
         }
         public View<Coordinate> viewNeighbors() {
           return Maze.this.viewNeighborsOf(position);
@@ -187,5 +188,13 @@ public class Maze {
         for (Room room : map.viewAllRooms()) {
           room.populateRoom();
         }
+    }
+
+    private void setAstarPathToExit() {
+        this.path = AStar.discover(this);
+    }
+
+    public LinkedList<Coordinate> getAstarPathToExit() {
+        return this.path;
     }
 }

@@ -1,8 +1,6 @@
 package maze;
 
-import java.lang.reflect.*;
 import java.util.*;
-
 import static util.Loggers.*;
 import static util.Print.*;
 
@@ -26,7 +24,13 @@ public class RunMazeTest {
         Statistics.initialize();
 
         //Maze coolMaze = MazeFactory.buildMaze(30);
-        coolMaze.populateRooms();
+        //coolMaze.populateRooms();
+        Maze.Room room = coolMaze.getRoom(center);
+        room.addActor(new Consumables.HealingPotion());
+        room.addActor(new Trinkets.BronzeCoin());
+        room.addActor(new Weapons.Dagger());
+        room.addActor(new Weapons.LongSword());
+        room.addActor(new Armor.BrownFedora());
 
         //coolMaze.setExit(new Coordinate(1,1));
         log("Exit location => " + coolMaze.exit());
@@ -34,7 +38,7 @@ public class RunMazeTest {
         log("Final size: " + coolMaze.size());
 
 
-        AStar.discover(coolMaze);
+        //AStar.discover(coolMaze);
         print("\nMaze Run Test 3.0 :: Maze project.");
         print("Ready for user input.");
 

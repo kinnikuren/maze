@@ -88,7 +88,7 @@ public class AStar {
               path = solvePath(paths,goal,start);
               log("A*: success: path found.");
 
-              for (Iterator<Coordinate> i = path.descendingIterator(); i.hasNext();) {
+              for (Iterator<Coordinate> i = path.iterator(); i.hasNext();) {
                 Coordinate c = i.next();
                 if (i.hasNext()) pathline.append(c + " -> ");
                 else pathline.append(c);
@@ -110,6 +110,7 @@ public class AStar {
             current = paths.get(current);
         }
         path.add(start);
+        path = reverseLinkedList(path);
       return path;
     }
 

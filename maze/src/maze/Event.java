@@ -11,12 +11,14 @@ import java.util.List;
 import maze.Bestiary.Monster;
 
 public abstract class Event implements Comparable<Event> {
+
     //comparable implementation is intentionally not consistent with equals
     private Interacter actor;
     private List<Monster> actors = new ArrayList<Monster>();
     //private Stage stage;
     private Priority priority;
     private boolean isSticky = false;
+    public boolean cleanupActor = false;
 
     public Event(Interacter actor, Priority priority) {
         this.actor = actor;
@@ -56,6 +58,8 @@ public abstract class Event implements Comparable<Event> {
         }
     }
 
+    //public void setCleanup(Stage stage) {
+
     public void cleanup(Stage stage) {
         log("checking if " + actor + " is done...");
         if (actor.isDone(stage)) {
@@ -71,7 +75,7 @@ public abstract class Event implements Comparable<Event> {
                     }
                 }*/
 
-                for (Iterator<Interacter> itr = stage.getInteracters().iterator(); itr.hasNext();) {
+                for (Iterator<Interacter> itr = stage.getActors().iterator(); itr.hasNext();) {
                     Interacter i = itr.next();
                     printnb(i + " ");
                     if (i instanceof Bestiary.Monster) {

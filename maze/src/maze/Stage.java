@@ -22,5 +22,5 @@ public interface Stage {
 
     public String getName();
 
-    public List<Interacter> getInteracters();
+    public Iterable<Interacter> getActors();
 }

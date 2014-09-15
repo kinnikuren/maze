@@ -15,9 +15,9 @@ implements Useable {
     public Event interact(Commands trigger) {
         Event event = super.interact(trigger);
         if (event == null) {
-            return trigger == Commands.USE ? use(this) : null;
+          if (trigger == Commands.USE) event = use(this);
         }
-        else return event;
+      return event;
     }
 
     @Override public abstract void usedBy(Player player);

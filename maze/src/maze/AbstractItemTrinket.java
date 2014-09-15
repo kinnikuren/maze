@@ -21,15 +21,6 @@ public abstract class AbstractItemTrinket extends AbstractItemPortable {
     public Event interact(Commands trigger, Stage stage) {
       return trigger == Commands.PICKUP ? pickup(this) : null;
     } */
-    @Override
-    public boolean isDone(Stage stage) {
-        if (stage instanceof AbstractRoom) return pickedUp;
-        else return !pickedUp;
-    }
-    @Override
-    public void pickedUp() { pickedUp = true; }
-    @Override
-    public void dropped() { pickedUp = false; }
     @Override public abstract String details();
     @Override public abstract int weight();
 }

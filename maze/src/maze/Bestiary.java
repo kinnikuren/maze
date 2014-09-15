@@ -48,25 +48,24 @@ public final class Bestiary {
 
         @Override
         public Event interact(Commands trigger) {
-            if (!isAlive) return null;
-
-            if (trigger == FIGHT) {
+            Event event = null;
+            if (isAlive) {
+              if (trigger == FIGHT) {
                 monsterParty.add(this);
                 log("Adding " + this + " to monster party..");
                 log(monsterParty.toString());
 
                 Monster partyRep = new PartyRep();
-                return Events.fightAll(monsterParty, partyRep, HIGH);
-            }
-
+                event = Events.fightAll(monsterParty, partyRep, HIGH);
+              }
             /*
             return trigger == FIGHT ? fight(this, HIGH)
                 : (trigger == APPROACH ? announce(this, LOW, inspect())
                 :  null);
                 */
-
-            return trigger == APPROACH ? announce(this, LOW, inspect())
-                    :  null;
+              else if (trigger == APPROACH) event = announce(this, LOW, inspect());
+            }
+          return event;
         }
     }
 
@@ -142,12 +141,13 @@ public final class Bestiary {
 
         @Override
         public Event interact(Commands trigger) {
-            Event result = super.interact(trigger);
+            Event event = super.interact(trigger);
 
-            if (result == null && !isAlive) {
-                if (trigger == MOVE) result = announce(this, DEFAULT, "You hear a rattle of bones");
+            if (event == null && isAlive) {
+              if (trigger == MOVE)
+                event = announce(this, DEFAULT, "You hear a rattle of bones");
             }
-            return result;
+          return event;
         }
     }
 
@@ -199,14 +199,13 @@ public final class Bestiary {
 
         @Override
         public Event interact(Commands trigger) {
-            Event result = super.interact(trigger);
+            Event event = super.interact(trigger);
 
-            if (result == null && !isAlive) {
-                if (trigger == MOVE) result = announce(this, DEFAULT, "You see something moving in "
-                        + "the "
-                        + "shadows.");
+            if (event == null && isAlive) {
+              if (trigger == MOVE)
+                event = announce(this, DEFAULT, "You see something moving in the shadows.");
             }
-            return result;
+          return event;
         }
     }
 
@@ -241,7 +240,7 @@ public final class Bestiary {
 
         @Override
         public String inspect() {
-            return ("It's one of those rats you first encounter when you're just starting out in a dungeon.");
+          return ("It's one of those rats you first encounter when you're just starting out in a dungeon.");
         }
 
         @Override //overrides Unit method
@@ -260,13 +259,13 @@ public final class Bestiary {
 
         @Override
         public Event interact(Commands trigger) {
-            Event result = super.interact(trigger);
+            Event event = super.interact(trigger);
 
-            if (result == null && !isAlive) {
-                if (trigger == MOVE) result = announce(this, DEFAULT, "You hear squeaking of a "
-                        + "non-mechanical nature");
+            if (event == null && isAlive) {
+              if (trigger == MOVE)
+                event = announce(this, DEFAULT, "You hear squeaking of a non-mechanical nature");
             }
-            return result;
+          return event;
         }
     }
 
@@ -282,8 +281,6 @@ public final class Bestiary {
             super(c);
             this.name = "Rabid Rat";
         }
-
-        private void selfPrint(String input) { print(name + ">> " + input); }
 
         @Override //overrides AbstractFighterUnit method
         public void defineTypeDefaultValues() {
@@ -302,30 +299,10 @@ public final class Bestiary {
         public String inspect() {
             return ("The rat is foaming at the mouth.");
         }
-
-        @Override //overrides Unit method
-        public void death() {
-            if (isAlive) {
-              selfPrint("The rat king will have his revenge!");
-              print("The tiny rat collapses. You feel bad.");
-            }
-            this.isAlive = false;
-        }
         //begin implementation of Interacter methods defined as abstract in FighterUnit
         @Override
         public boolean matches(String name) {
           return matchRef(RABIDRAT, name);
-        }
-
-        @Override
-        public Event interact(Commands trigger) {
-            Event result = super.interact(trigger);
-
-            if (result == null && !isAlive) {
-                if (trigger == MOVE) result = announce(this, DEFAULT, "You hear squeaking of a "
-                        + "non-mechanical nature.");
-            }
-            return result;
         }
     }
 
@@ -343,8 +320,6 @@ public final class Bestiary {
             super(c);
             this.name = "Rat King";
         }
-
-        private void selfPrint(String input) { print(name + ">> " + input); }
 
         @Override
         public void buff() { //buffs stats based on # rats dead
@@ -405,14 +380,14 @@ public final class Bestiary {
 
         @Override
         public Event interact(Commands trigger) {
-            Event result = super.interact(trigger);
+            Event event = super.interact(trigger);
 
-            if (result == null && !isAlive) {
-                if (trigger == MOVE) result = announce(this, DEFAULT, "You hear a chorus of "
-                        + "squeaking, "
-                        + "spanning a spectrum from bass to soprano.");
+            if (event == null && isAlive) {
+              if (trigger == MOVE)
+                event = announce(this, DEFAULT, "You hear a chorus of "
+                            + "squeaking, panning a spectrum from bass to soprano.");
             }
-            return result;
+          return event;
         }
     }
 }

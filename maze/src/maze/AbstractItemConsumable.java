@@ -15,9 +15,9 @@ implements Consumable {
     public Event interact(Commands trigger) {
         Event event = super.interact(trigger);
         if (event == null) {
-            return trigger == Commands.CONSUME ? consume(this) : null;
+          if (trigger == Commands.CONSUME) event = consume(this);
         }
-        else return event;
+      return event;
     }
 
     @Override public abstract void consumedBy(Player player);

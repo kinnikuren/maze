@@ -352,8 +352,6 @@ public class MazeMap {
         }
         @Override
         public Event interact(Commands trigger) {
-
-
           return isLocked() && trigger == WHEREGO ? announce(this, LOW, "You see a locked door.") : null;
         }
         @Override

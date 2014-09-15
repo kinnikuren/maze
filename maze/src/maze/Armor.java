@@ -3,8 +3,11 @@ package maze;
 import static maze.Events.equip;
 import static maze.References.*;
 import static util.Print.*;
+import static maze.PaperDoll.EquipSlots.*;
 
 import java.util.HashMap;
+
+import maze.PaperDoll.EquipSlots;
 
 public final class Armor  {
 
@@ -13,8 +16,8 @@ public final class Armor  {
         private Helmet(Coordinate c) { super(c); }
 
         @Override
-        public String type() {
-            return "Head";
+        public EquipSlots type() {
+            return HEAD;
         }
     }
 
@@ -62,8 +65,8 @@ public final class Armor  {
         private ChestArmor(Coordinate c) { super(c); }
 
         @Override
-        public String type() {
-            return "Body";
+        public EquipSlots type() {
+            return CHEST;
         }
     }
 

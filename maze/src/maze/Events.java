@@ -224,7 +224,7 @@ public final class Events {
       return event;
     }
 
-    public static Event fightAll(List<Monster> monsterParty, final Interacter actor,
+    public static Event fightAll(final List<Monster> monsterParty, final Interacter actor,
             final Priority priority) {
         Event event = new Event(monsterParty, actor, priority) {
           @Override public ResultMessage fire(Player player) {
@@ -275,9 +275,21 @@ public final class Events {
     public static Event pickup(final Portable item) {
         Event event = new Event(item, LOW) {
           @Override public ResultMessage fire(Player player) {
+              player.getRoom().removeActor(item);
               player.addToInventory(item);
-              item.pickedUp();
               print("You have picked up the " + item.name() + ".");
+            return null;
+          }
+        };
+      return event;
+    }
+
+    public static Event drop(final Portable item) {
+        Event event = new Event(item, LOW) {
+          @Override public ResultMessage fire(Player player) {
+              player.getInventory().removeActor(item);
+              player.getRoom().addActor(item);
+              print("You have dropped the " + item.name() + ".");
             return null;
           }
         };
@@ -300,7 +312,6 @@ public final class Events {
         Event event = new Event(item, LOW) {
           @Override public ResultMessage fire(Player player) {
               if (player.equip(item)) {
-                item.equipped();
                 print("You have equipped the " + item + ".");
               }
             return null;
@@ -312,10 +323,9 @@ public final class Events {
     public static Event unequip(final Equippable item) {
         Event event = new Event(item, LOW) {
           @Override public ResultMessage fire(Player player) {
-              if (player.unequip(item)) {
-                  item.unequipped();
+              if (player.unequip(item) != null) {
                   print("You have unequipped the " + item + ".");
-              }
+              } else print("You don't have " + item  + " equipped.");
             return null;
           }
         };
@@ -343,15 +353,5 @@ public final class Events {
       return event;
     }
 
-    public static Event drop(final Portable item) {
-        Event event = new Event(item, LOW) {
-          @Override public ResultMessage fire(Player player) {
-              player.getInventory().removeActor(item);
-              item.dropped();
-              player.getRoom().addActor(item);
-            return null;
-          }
-        };
-      return event;
-    }
+
 }

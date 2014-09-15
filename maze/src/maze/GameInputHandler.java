@@ -136,13 +136,13 @@ public final class GameInputHandler {
 
                   Room room = maze.getRoom(you.location());
 
-                  if (you.getInventory().contains("Enc-None")) {
+                  /* if (you.getInventory().contains("Enc-None")) {
                       print("\nRandom encounters begone! Enc-None shields you.\n");
                   } else {
                       //EncounterGenerator.run(you);
-                      Parade parade = new Parade();
-                      parade.rogueEncounter(you, "rogueEncounter");
-                  }
+                      //Parade parade = new Parade();
+                      //parade.rogueEncounter(you, "rogueEncounter");
+                  } */
 
                   Events.run(you, MOVE, room);
 
@@ -206,6 +206,15 @@ public final class GameInputHandler {
                   }
                   else print("that priority level is not recognized.");
                 }
+              }
+              else if (inputs[1].equals("exitloc")) {
+                print("Exit location=> " + you.maze().exit());
+              }
+              else if (inputs[1].equals("centerloc")) {
+                print("Center location=> " + you.maze().center());
+              }
+              else if (inputs[1].equals("astar")) {
+                print("Astar shortest path=> " + you.maze().getAstarPathToExit());
               }
             }
         }
