@@ -299,6 +299,9 @@ public class MazeMap {
         final Coordinates.Paired g;
         boolean locked = false;
         Key key;
+        int maxSpawn;
+        String rarity;
+
         private Gate(Coordinate c1, Coordinate c2) {
             g = new Coordinates.Paired(c1, c2);
             this.key = null;
@@ -354,7 +357,25 @@ public class MazeMap {
         public Event interact(Commands trigger) {
           return isLocked() && trigger == WHEREGO ? announce(this, LOW, "You see a locked door.") : null;
         }
+
+        @Override
+        public Event interact(Commands trigger, String prep, Interacter interactee) { return null; }
+
         @Override
         public boolean isDone(Stage stage) { return false; }
+
+        @Override
+        public int getMaxSpawn() {
+            return maxSpawn;
+        }
+
+        @Override
+        public void setMaxSpawn(int maxSpawn) {
+            this.maxSpawn = maxSpawn;
+        }
+        @Override
+        public String getRarity() { return rarity; }
+        @Override
+        public void setRarity(String rarity) { this.rarity = rarity; }
     }
 }

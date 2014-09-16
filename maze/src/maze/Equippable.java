@@ -6,6 +6,6 @@ public interface Equippable extends Portable {
 
     public PaperDoll.EquipSlots type();
 
-    public HashMap<References, Integer> getStats();
+    public HashMap<Attributes, Integer> getStats();
 
 }

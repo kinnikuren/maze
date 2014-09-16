@@ -16,6 +16,9 @@ public interface Stage {
 
     public PriorityQueue<Event> getCurrentEvents(Commands trigger, String objectName);
 
+    public PriorityQueue<Event> getCurrentEvents(Commands trigger, String objectName, String prep,
+            String secondObjectName);
+
     public boolean contains(String objectName);
 
     public boolean isBarren();

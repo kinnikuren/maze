@@ -45,6 +45,20 @@ public final class Useables {
         }
     }
 
+    public static class Matches extends AbstractItemUseable{
+        public Matches() { super(); }
+
+        @Override public String name() { return "Matches"; }
+        @Override public boolean matches(String name) { return matchRef(MATCHES, name); }
+        @Override public String details() { return "It's a book of matches."; }
+        @Override public int weight() { return 1; }
+
+        @Override
+        public void usedBy(Player player) {
+            print("You light a match. It briefly lights up the room before burning out.");
+        }
+    }
+
     public static class WarpWhistle extends AbstractItemUseable{
         public WarpWhistle() { super(); }
         public WarpWhistle(Coordinate c) { super(c); }

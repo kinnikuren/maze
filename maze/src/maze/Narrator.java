@@ -83,6 +83,15 @@ public class Narrator {
 
             log(("Number of interactions: " + ((Integer)interactions.size()).toString()),LOW);
 
+            if (interactions.size() == 0) {
+                quantity = "zero";
+            }
+            if (interactions.size() == 1) {
+                quantity = "one";
+            }
+            if (interactions.size() == 2) {
+                quantity = "a couple";
+            }
             if (interactions.size() > 5) {
                 quantity = "some";
             }
@@ -110,13 +119,37 @@ public class Narrator {
             items = util.GrammarGuy.oxfordCommify(itemArray);
             fixtures = util.GrammarGuy.oxfordCommify(fixtureArray);
 
-            speech = leadIn(player) + player.name() + " notices " + quantity + " things in the room.  He sees " +
-                    monsters + "!!!" + " " + "He also sees " + items + "!!! ";
+            List<String> genericArray = new ArrayList<String>();
+            //genericArray.add("");
+            genericArray.addAll(monsterArray);
+            genericArray.addAll(itemArray);
+            genericArray.addAll(fixtureArray);
+
+            String generics = util.GrammarGuy.oxfordCommify(genericArray);
+
+            String[] verbs = new String[]{"observes","astutely notes the things in","glances around",
+                    "looks around","surveys"};
+
+
+            speech = leadIn(player) + player.name() + " " + verbs[rand.nextInt(verbs.length)] +
+                    " the room. " + "He sees " + generics + ".";
+
+            /*
+            if (monsterArray.size()>0) {
+                speech += monsters + "! ";
+            } else if (itemArray.size()>0) {
+                speech += items + ". ";
+            } else if (fixtureArray.size()>0) {
+                speech += fixtures + ". ";
+            } else {
+                speech += "nothing...";
+            }
 
             String fixtureComment = "";
             if (fixtureArray.size() > 0) fixtureComment = "Finally, he sees " + fixtures + "...";
 
             speech += fixtureComment;
+            */
 
             if (trinketCount > 8) speech = speech + " So many trinkets!  Glittering prizes!";
 

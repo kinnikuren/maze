@@ -1,6 +1,7 @@
 package maze;
 
 import java.util.*;
+
 import static util.Utilities.checkNullArg;
 import static util.Print.*;
 
@@ -13,6 +14,8 @@ public abstract class AbstractUnit {
     //optional members
     String name; //populated via getClass by default
     HashSet<String> statusList = new HashSet<String>();
+    private int maxSpawn = 5;
+    String rarity="common";
 
     public AbstractUnit() {
         this.name = this.getClass().getSimpleName();
@@ -72,4 +75,16 @@ public abstract class AbstractUnit {
     public void printLocation() { print("Current Position: " + location); }
     @Override
     public String toString() { return this.name(); }
+
+    public int getMaxSpawn() {
+        return maxSpawn;
+    }
+
+    public void setMaxSpawn(int maxSpawn) {
+        this.maxSpawn = maxSpawn;
+    }
+
+    public String getRarity() { return rarity; }
+
+    public void setRarity(String rarity) { this.rarity = rarity; }
 }

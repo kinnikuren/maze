@@ -145,37 +145,9 @@ public class PaperDoll implements Stage {
       return manager.getCurrentEvents(trigger, objectName);
     }
 
-    //Testing
-    public static void main(String[] args) {
-        PaperDoll pd = new PaperDoll();
-        Weapons.Dagger dg = new Weapons.Dagger();
-        Weapons.Dagger dg1 = new Weapons.Dagger();
-        Armor.BrownFedora fed = new Armor.BrownFedora();
-        Armor.SuperSuit ss = new Armor.SuperSuit();
-        print(fed.type());
-        Equippable oldItem = null;
-
-        print(pd.toString());
-
-        print("Adding items...");
-        oldItem = pd.add(dg);
-        pd.add(fed);
-        pd.add(ss);
-
-        print("Dropped " + oldItem);
-        print(pd.toString());
-
-        print("Replacing dagger...");
-        oldItem = pd.add(dg1);
-
-        print("Dropped " + oldItem);
-        print(pd.toString());
-        print("Interactions " + pd.manager.interactions());
-
-        print("Removing items...");
-        pd.removeActor(dg1);
-        pd.removeActor(fed);
-        pd.removeActor(ss);
-        print(pd.toString());
+    @Override
+    public PriorityQueue<Event> getCurrentEvents(Commands trigger, String objectName, String prep,
+            String secondObjectName) {
+        return manager.getCurrentEvents(trigger, objectName, prep, secondObjectName);
     }
 }

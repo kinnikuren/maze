@@ -6,6 +6,7 @@ import java.lang.reflect.*;
 
 import static util.Print.*;
 import static maze.References.*;
+import static maze.Attributes.*;
 import static maze.Priority.*;
 
 //Parade of Horribles

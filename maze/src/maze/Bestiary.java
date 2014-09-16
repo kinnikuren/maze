@@ -67,6 +67,9 @@ public final class Bestiary {
             }
           return event;
         }
+
+        @Override
+        public Event interact(Commands trigger, String prep, Interacter interactee) { return null; }
     }
 
     public static class PartyRep extends Monster {
@@ -148,6 +151,62 @@ public final class Bestiary {
                 event = announce(this, DEFAULT, "You hear a rattle of bones");
             }
           return event;
+        }
+    }
+
+    public static class Goblin extends Monster {
+        public static final int classId = GOBLIN.classId;
+        public static final References ref = GOBLIN;
+
+        public Goblin() {
+            super();
+            this.damageLow = 3;
+            this.damageHigh = 6;
+        }
+
+        private void selfPrint(String input) { print(name + ">> " + input); }
+
+        public String message;
+
+        public void setMessage(String message){
+            this.message  = message;
+        }
+
+        public void getMessage(){
+           System.out.println("Your Message : " + message);
+        }
+
+        private int maxSpawn;
+
+        @Override //overrides AbstractFighterUnit method
+        public String battlecry() {
+          return "The goblin says, 'Hello.'";
+        }
+
+        @Override
+        public String inspect() {
+            return ("It's a tiny orc.");
+        }
+
+        @Override //overrides Unit method
+        public void death() {
+            if (isAlive) {
+              selfPrint("Aiyee!");
+              print("The goblin is dead.");
+            }
+            super.death();
+        }
+        //begin implementation of Interacter methods defined as abstract in FighterUnit
+        @Override
+        public boolean matches(String name) {
+          return matchRef(GOBLIN, name);
+        }
+
+        @Override
+        public Event interact(Commands trigger) {
+            Event result = super.interact(trigger);
+
+            return result;
         }
     }
 
@@ -313,7 +372,7 @@ public final class Bestiary {
         public RatKing() { //sets values to default
             super();
             this.name = "Rat King";
-            this.ratBuff = 2 * Statistics.globalGet("ratKillCount"); //initially 0
+            this.ratBuff = 0; //initially 0
         }
 
         public RatKing(Coordinate c) {

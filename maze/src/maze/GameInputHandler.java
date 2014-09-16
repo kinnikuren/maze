@@ -17,44 +17,14 @@ public final class GameInputHandler {
         ParsedCommand cmd = parseCommand(input);
         String leadInput = cmd.command;
         String arg = cmd.object;
+        String prep = cmd.preposition;
+        String secondObject = cmd.secondObject;
             log("Lead Input: " + leadInput, Priority.LOW);
             log("Argument: " + arg, Priority.LOW);
+            log("Preposition: " + prep, Priority.LOW);
+            log("Second Object: " + secondObject, Priority.LOW);
 
         String[] inputs = input.split("\\s+");
-
-        /*
-        int numSpaces = 0;
-        int prevSpacePos = 0;
-        int nextSpacePos = 0;
-
-        //finds number of spaces between words
-        do {
-            prevSpacePos = nextSpacePos;
-            nextSpacePos = input.indexOf(' ',prevSpacePos+1);
-            //print("Next space position: " + nextSpacePos);
-            //print("Previous space position: " + prevSpacePos);
-            if (nextSpacePos != -1 && (nextSpacePos-prevSpacePos != 1)) {
-                numSpaces++;
-            }
-        } while(nextSpacePos != -1);
-
-        print("Number of spaces: " + numSpaces);
-        String[] inputs = input.split("\\s+");
-        String leadInput = input.split("\\s+", numSpaces+1)[0];
-        print("Lead Input = " + leadInput);
-        //print("Input = " + inputs);
-        String arg = null;
-        if (inputs.length > 1) {
-            //arg = inputs[1];
-            arg = "";
-            for (int i = 1; i < inputs.length; i++) {
-                //print(inputs[i]);
-                arg += inputs[i];
-            }
-        }
-        print("Arg = " + arg);
-
-        */
 
         Commands fullCmd = get(input); //entire trimmed input, for checking intransitive actions
         Commands leadCmd = get(leadInput); //first word, delimited by space, for checking transitive actions (that allow or require arguments)
@@ -83,15 +53,29 @@ public final class GameInputHandler {
         else if (leadCmd == PICKUP) {
             if (arg == null || arg.equals("all")) {
                 performAction(you, leadCmd, you.getRoom());
-            } else {
+            }
+            else {
                 performAction(you, leadCmd, arg, you.getRoom());
             }
         }
-        else if (check(leadCmd).in(EQUIP, DROP, CONSUME, USE)) {
+        else if (leadCmd == USE) {
             if (arg == null) {
                 print("What do you want to " + leadCmd + "?");
+            } else if (prep != null) {
+                if (secondObject == null) {
+                    print("What do you want to " + leadCmd + " " + arg + " " + prep + "?");
+                }
+                else {
+                    performAction(you, leadCmd, arg, prep, secondObject, you.getInventory());
+                }
+            } else {
+                performAction(you, leadCmd, arg, you.getInventory());
             }
-            else {
+        }
+        else if (check(leadCmd).in(EQUIP, DROP, CONSUME)) {
+            if (arg == null) {
+                print("What do you want to " + leadCmd + "?");
+            } else {
                 performAction(you, leadCmd, arg, you.getInventory());
             }
         }
@@ -136,13 +120,11 @@ public final class GameInputHandler {
 
                   Room room = maze.getRoom(you.location());
 
-                  /* if (you.getInventory().contains("Enc-None")) {
+                  if (you.getInventory().contains("Enc-None")) {
                       print("\nRandom encounters begone! Enc-None shields you.\n");
                   } else {
-                      //EncounterGenerator.run(you);
-                      //Parade parade = new Parade();
-                      //parade.rogueEncounter(you, "rogueEncounter");
-                  } */
+                      EncounterGenerator.run(you);
+                  }
 
                   Events.run(you, MOVE, room);
 
@@ -296,6 +278,12 @@ public final class GameInputHandler {
             print("You can't " + action + preposition + " the " + object + ".");
             return false;
         } else return true;
+    }
+
+    public static boolean performAction(Player you, Commands action, String object, String prep,
+            String secondObject, Stage stage) {
+        Boolean result = Events.run(you, action, object, prep, secondObject, stage);
+        return true;
     }
 
     public static boolean performAction(Player you, Commands action, Stage stage) {

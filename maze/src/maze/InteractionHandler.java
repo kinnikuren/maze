@@ -10,6 +10,7 @@ import maze.Spells.Spell;
 import static util.Print.*;
 import static util.TextParser.parseCommand;
 import static maze.References.*;
+import static maze.Attributes.*;
 import static maze.Commands.*;
 
 public final class InteractionHandler {

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import maze.PaperDoll.EquipSlots;
 
 public abstract class AbstractItemWeapon extends AbstractItemEquippable {
-    protected HashMap<References, Integer> stats = new HashMap<References, Integer>();
+    protected HashMap<Attributes, Integer> stats = new HashMap<Attributes, Integer>();
 
     public AbstractItemWeapon() {
         super();
@@ -23,7 +23,7 @@ public abstract class AbstractItemWeapon extends AbstractItemEquippable {
     }
 
     @Override
-    public HashMap<References, Integer> getStats() {
+    public HashMap<Attributes, Integer> getStats() {
         return this.stats;
     }
 }

@@ -42,6 +42,16 @@ public abstract class AbstractItemPortable extends AbstractItem implements Porta
       return event;
     }
 
+    public Event interact(Commands trigger, String prep, Interacter interactee) {
+        if (trigger == USE) {
+            if (prep.equals("with")) {
+                return Events.combine(this, (Portable)interactee);
+            } else return null;
+        } else {
+            return null;
+        }
+    }
+
     @Override public abstract boolean matches(String name);
     @Override
     public boolean canInteract(AbstractUnit unit) {

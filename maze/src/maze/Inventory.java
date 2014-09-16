@@ -179,4 +179,9 @@ public class Inventory implements Stage {
 
     @Override
     public List<Interacter> getActors() { return interactions; };
+
+    public PriorityQueue<Event> getCurrentEvents(Commands trigger, String objectName, String prep,
+            String secondObjectName) {
+        return manager.getCurrentEvents(trigger, objectName, prep, secondObjectName);
+    }
 }

@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
 
+import util.GrammarGuy;
 import maze.Bestiary.Monster;
 
 public final class Events {
@@ -123,6 +124,26 @@ public final class Events {
             response = run(player, stage, Token.SINGLE);
         }
       return response;
+    }
+
+    public static Boolean run(Player player, Commands trigger, String object, String prep,
+            String secondObject, Stage stage) {
+        Boolean response = false;
+        log("responding to..." + player + " " + trigger + " " + object + " " + prep + " " +
+                secondObject + " in " + stage.getName(), LOW);
+
+        if(!stage.contains(object)) {
+            response = null;
+            log(stage.getName() + " does not contain " + object);
+        } else if (!stage.contains(secondObject)) {
+            response = null;
+            log(stage.getName() + " does not contain " + secondObject);
+        } else {
+            stage.getCurrentEvents(trigger, object, prep, secondObject);
+            response = run(player, stage, Token.SINGLE);
+        }
+
+        return response;
     }
 
     private static boolean run(Player player, Stage stage, Token token) {
@@ -353,5 +374,24 @@ public final class Events {
       return event;
     }
 
-
+    public static Event combine(final Portable firstItem, final Portable secondItem) {
+        Event event = new Event(firstItem, LOW) {
+            @Override public ResultMessage fire(Player player) {
+                Portable newItem = Combinations.combine(firstItem, secondItem);
+                if (newItem != null) {
+                    player.getInventory().removeActor(firstItem);
+                    player.getInventory().removeActor(secondItem);
+                    player.getInventory().add(newItem);
+                    print("You have combined the " + firstItem.name() + " and the " +
+                            secondItem.name() +
+                            " to make " + GrammarGuy.addArticle(newItem.name()) + ".");
+                } else {
+                    print("You cannot combine " + firstItem.name() + " and " + secondItem.name()
+                            + ".");
+                }
+                return null;
+            }
+        };
+        return event;
+    }
 }

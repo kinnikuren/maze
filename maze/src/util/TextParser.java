@@ -2,6 +2,7 @@ package util;
 
 import java.util.*;
 import static util.GrammarGuy.*;
+import static util.Loggers.*;
 
 public class TextParser {
 
@@ -30,6 +31,7 @@ public class TextParser {
         input = input.toLowerCase().trim();
 
         String[] inputs = input.split("\\s+");
+        //log("Splitting input..");
 
         command = inputs[0];
         if (inputs.length > 1) {
@@ -54,10 +56,23 @@ public class TextParser {
             int index = 0;
 
             for (int i = 1; i < inputs.length; ++i) {
+                //log(i + " " + inputs[i]);
                 index = i;
 
                 if (isPreposition(inputs[i])) {
                     preposition = inputs[i];
+                    index++;
+
+                    if (index < inputs.length) {
+                        String tempObject = "";
+                        while (index < inputs.length) {
+                            tempObject += " " + inputs[index];
+                            ++index;
+                        }
+                        //if (object == null) object = tempObject;
+                        //else secondObject = tempObject;
+                        secondObject = tempObject;
+                    }
                     break;
                 }
                 else {
@@ -65,16 +80,6 @@ public class TextParser {
                 }
             }
 
-            if (index < inputs.length) {
-                String tempObject = "";
-                while (index < inputs.length) {
-                    tempObject += " " + inputs[index];
-                    ++index;
-                }
-                //if (object == null) object = tempObject;
-                //else secondObject = tempObject;
-                secondObject = tempObject;
-            }
         }
         ParsedCommand parsedCmds = new ParsedCommand(command, object, preposition, secondObject);
 
@@ -110,7 +115,7 @@ public class TextParser {
     public static void main(String[] args) {
         // TODO Auto-generated method stub
         //String toParse = "use red potion on goblin goon";
-        String toParse = "use red potion on";
+        String toParse = "use red potion on goblin";
         ParsedCommand cmd = parseCommand(toParse);
 
         System.out.println("parsed command is => ");

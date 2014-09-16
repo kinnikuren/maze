@@ -3,6 +3,9 @@ package maze;
 import java.util.*;
 import static util.Loggers.*;
 import static util.Print.*;
+import static maze.Trinkets.*;
+import static maze.Useables.*;
+import static maze.Weapons.*;
 
 public class RunMazeTest {
     public static void main(String[] args) {
@@ -24,13 +27,15 @@ public class RunMazeTest {
         Statistics.initialize();
 
         //Maze coolMaze = MazeFactory.buildMaze(30);
-        //coolMaze.populateRooms();
+        coolMaze.populateRooms();
         Maze.Room room = coolMaze.getRoom(center);
+        /*
         room.addActor(new Consumables.HealingPotion());
         room.addActor(new Trinkets.BronzeCoin());
         room.addActor(new Weapons.Dagger());
         room.addActor(new Weapons.LongSword());
         room.addActor(new Armor.BrownFedora());
+        */
 
         //coolMaze.setExit(new Coordinate(1,1));
         log("Exit location => " + coolMaze.exit());
@@ -51,6 +56,16 @@ public class RunMazeTest {
         you.setName(name);
 
         print("\nWelcome to the Maze, " + you.name() + "!");
+
+        /*
+        you.getInventory().add(new BronzeCoin());
+        you.getInventory().add(new GoldenStatue());
+        you.getInventory().add(new RedKey());
+        you.getInventory().add(new BlueKey());
+        you.getInventory().add(new Matches());
+        you.getInventory().add(new WoodenStick());
+        you.getInventory().add(new OilyRag());
+        */
 
         you.getRoom().visitedBy(you);
 

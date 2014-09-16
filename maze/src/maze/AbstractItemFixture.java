@@ -23,4 +23,7 @@ implements Interacter {
     @Override public abstract boolean canInteract(AbstractUnit unit);
     @Override public abstract Event interact(Commands trigger);
     @Override public abstract boolean isDone(Stage stage);
+
+    @Override
+    public Event interact(Commands trigger, String prep, Interacter interactee) { return null; }
 }

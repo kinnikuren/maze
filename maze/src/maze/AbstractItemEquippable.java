@@ -6,6 +6,7 @@ import static maze.Events.unequip;
 public abstract class AbstractItemEquippable extends AbstractItemPortable implements Equippable {
     public AbstractItemEquippable() {
         super();
+        this.maxSpawn = 1;
      }
 
     public AbstractItemEquippable(Coordinate c) {

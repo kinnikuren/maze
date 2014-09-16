@@ -5,6 +5,8 @@ import static util.Loggers.*;
 import static maze.References.*;
 import static util.Utilities.check;
 import static util.Utilities.sign;
+import static maze.Attributes.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -68,7 +70,7 @@ implements Fighter {
         super.setLocation(c);
     }
 
-    public boolean skillCheck(References ref,int dmg, int difficulty) {
+    public boolean skillCheck(Attributes ref,int dmg, int difficulty) {
         int roll;
         int successes = 0;
         int playerSkill = 0;
@@ -101,7 +103,7 @@ implements Fighter {
         }
     }
 
-    public void skillChange(References ref, int amt) {
+    public void skillChange(Attributes ref, int amt) {
         switch(ref) {
         case DEX:
             this.dexterity += amt;
@@ -148,7 +150,7 @@ implements Fighter {
         int plusDmg = 0;
 
         if (weapon != null) {
-            HashMap<References, Integer> stats = weapon.getStats();
+            HashMap<Attributes, Integer> stats = weapon.getStats();
             plusDmg = rand.nextInt(stats.get(WDHIGH)-stats.get(WDLOW)) + stats.get(WDLOW);
             log(weapon + " increased attack damage by " + plusDmg + "...");
         }
@@ -184,7 +186,7 @@ implements Fighter {
         int plusDmg = 0;
         if (weapon != null) {
             print("You attack with the " + weapon + ".");
-            HashMap<References, Integer> stats = weapon.getStats();
+            HashMap<Attributes, Integer> stats = weapon.getStats();
             plusDmg = rand.nextInt(stats.get(WDHIGH)-stats.get(WDLOW)) + stats.get(WDLOW);
             log(weapon + " increased attack damage by " + plusDmg + "...");
         } else {
@@ -261,6 +263,10 @@ implements Fighter {
       //dummy method, potential future use for player-to-player interaction
       return null;
     }
+
+    @Override
+    public Event interact(Commands trigger, String prep, Interacter interactee) { return null; }
+
     @Override
     public boolean isDone(Stage stage) {
       return false; //dummy method
@@ -286,6 +292,19 @@ implements Fighter {
             EquipSlots slot = item.type();
             Equippable oldItem = unequip(slot);
                     log("Removing " + item + " from inventory...");
+
+            HashMap<Attributes, Integer> equipmentStats;
+            equipmentStats = item.getStats();
+
+            /*
+            for (Attributes key : equipmentStats.keySet()) {
+                if (key == STR || key == DEX || key == INT) {
+                    skillChange(key, equipmentStats.get(key));
+                }
+            }
+            */
+
+            log("Removing " + item + " from inventory...");
             inventory.remove(item);
             paperDoll.add(item);
 
@@ -307,6 +326,15 @@ implements Fighter {
 
             alterSkillsFromItem(item, -1);
 
+            HashMap<Attributes, Integer> equipmentStats;
+            equipmentStats = item.getStats();
+
+            /*
+            for (Attributes key : equipmentStats.keySet()) {
+                skillChange(key, (-equipmentStats.get(key)));
+            }
+            */
+
             log("Returning " + item + " to inventory...");
             inventory.add(item);
           return item;
@@ -320,11 +348,13 @@ implements Fighter {
     }
 
     public void alterSkillsFromItem(Equippable item, int i) {
-        HashMap<References, Integer> itemStats = item.getStats();
+        HashMap<Attributes, Integer> itemStats = item.getStats();
         int sign = sign(i);
-         for (References key : itemStats.keySet()) {
-             int changeVal = sign * itemStats.get(key); //positive or negative to reflect taking item on or off
-             skillChange(key, changeVal);
+         for (Attributes key : itemStats.keySet()) {
+             if (key == STR || key == DEX || key == INT) {
+                 int changeVal = sign * itemStats.get(key); //positive or negative to reflect taking item on or off
+                 skillChange(key, changeVal);
+             }
          }
     }
 

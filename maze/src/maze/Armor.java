@@ -2,6 +2,7 @@ package maze;
 
 import static maze.Events.equip;
 import static maze.References.*;
+import static maze.Attributes.*;
 import static util.Print.*;
 import static maze.PaperDoll.EquipSlots.*;
 
@@ -22,7 +23,7 @@ public final class Armor  {
     }
 
     public static class BrownFedora extends Helmet {
-        protected HashMap<References, Integer> stats = new HashMap<References, Integer>();
+        protected HashMap<Attributes, Integer> stats = new HashMap<Attributes, Integer>();
 
         public BrownFedora() {
             super();
@@ -54,7 +55,7 @@ public final class Armor  {
         }
 
         @Override
-        public HashMap<References, Integer> getStats() {
+        public HashMap<Attributes, Integer> getStats() {
             return stats;
         }
 
@@ -71,7 +72,7 @@ public final class Armor  {
     }
 
     public static class SuperSuit extends ChestArmor {
-        protected HashMap<References, Integer> stats = new HashMap<References, Integer>();
+        protected HashMap<Attributes, Integer> stats = new HashMap<Attributes, Integer>();
 
         public SuperSuit() {
             super();
@@ -94,7 +95,7 @@ public final class Armor  {
         }
 
         @Override
-        public HashMap<References, Integer> getStats() {
+        public HashMap<Attributes, Integer> getStats() {
             return stats;
         }
     }

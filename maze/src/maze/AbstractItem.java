@@ -13,6 +13,8 @@ public abstract class AbstractItem {
     Coordinate location;
     String name; //populated via getClass by default
     boolean canCarry = true;
+    int maxSpawn = 1;
+    String rarity="common";
 
     public AbstractItem() {
         this.location = null;
@@ -36,5 +38,17 @@ public abstract class AbstractItem {
     public void printLocation() { print("Current Position: " + location); }
     @Override
     public String toString() { return this.name(); }
+
+    public int getMaxSpawn() {
+        return maxSpawn;
+    }
+
+    public void setMaxSpawn(int maxSpawn) {
+        this.maxSpawn = maxSpawn;
+    }
+
+    public String getRarity() { return rarity; }
+
+    public void setRarity(String rarity) { this.rarity = rarity; }
 
 }

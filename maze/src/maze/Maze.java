@@ -2,12 +2,9 @@ package maze;
 
 import java.util.*;
 
-import static maze.Weapons.*;
 import util.View;
 import static util.Print.*;
-import static maze.Trinkets.*;
-import static maze.Consumables.*;
-import static maze.Bestiary.*;
+import static util.Loggers.*;
 
 public class Maze {
     public static void mazify(Maze maze) { // Maze only generates if openSet exists
@@ -119,6 +116,18 @@ public class Maze {
         for (Coordinate c : map.viewAllNodes()) print(c + " -> " + map.viewNeighborsOf(c));
     }
 
+    public void printMazeContents() {
+        log("\nMaze Contents: ");
+        for (Room r : map.viewAllRooms()) {
+            log(r + " -> " + r.contents);
+            /* check for uniqueness
+            for (Interacter i : r.contents) {
+                print(i.hashCode());
+            }
+            */
+         }
+    }
+
     public boolean setCenter(Coordinate c) {
         if (openSet.contains(c) || map.contains(c)) {
             center = c;
@@ -140,23 +149,10 @@ public class Maze {
     }
 
     private void findExit() {
-        HashMap<Coordinate,Double> distanceMap = new HashMap<Coordinate,Double>();
         HashSet<Coordinate> exitSet = new HashSet<Coordinate>();
-        Coordinate origin = new Coordinate();
-        Double maxDistance = new Double(0);
 
-        for (Coordinate c : map.viewLinkedNodes()) {
-            if (map.viewNeighborsOf(c).size() < 4) {
-                Double distance = c.getDistanceTo(origin);
-                maxDistance = (distance > maxDistance) ? distance : maxDistance;
-                distanceMap.put(c, distance);
-            }
-        }
-            //print(maxDistance); print(distanceMap);
-        for (Map.Entry<Coordinate,Double> entry : distanceMap.entrySet()) {
-            if (entry.getValue() >= maxDistance*exitFactor)
-                exitSet.add(entry.getKey());
-        }
+        exitSet = getExitSet(exitFactor);
+
             //print("Exit set => "); print(exitSet);
         if (exitSet.size() >= 1) {
             Coordinate[] exits = exitSet.toArray(new Coordinate[exitSet.size()]);
@@ -165,6 +161,48 @@ public class Maze {
         }
         else print("No exit found.");
     }
+
+    public HashSet<Coordinate> getExitSet(Double distanceFactor) {
+         HashMap<Coordinate,Double> distanceMap = new HashMap<Coordinate,Double>();
+         HashSet<Coordinate> coordinateSet = new HashSet<Coordinate>();
+         Coordinate origin = new Coordinate();
+         Double maxDistance = new Double(0);
+
+         for (Coordinate c : map.viewLinkedNodes()) {
+             if (map.viewNeighborsOf(c).size() < 4) {
+                 Double distance = c.getDistanceTo(origin);
+                 maxDistance = (distance > maxDistance) ? distance : maxDistance;
+                 distanceMap.put(c, distance);
+             }
+         }
+             print(maxDistance); print(distanceMap);
+         for (Map.Entry<Coordinate,Double> entry : distanceMap.entrySet()) {
+             if (entry.getValue() >= maxDistance*distanceFactor)
+                 coordinateSet.add(entry.getKey());
+         }
+
+         return coordinateSet;
+    }
+
+    public HashSet<Coordinate> getCoordinateSet(Double distanceFactor, Coordinate refPoint) {
+        HashMap<Coordinate,Double> distanceMap = new HashMap<Coordinate,Double>();
+        HashSet<Coordinate> coordinateSet = new HashSet<Coordinate>();
+        //Coordinate origin = new Coordinate();
+        Double maxDistance = new Double(0);
+
+        for (Coordinate c : map.viewLinkedNodes()) {
+            Double distance = c.getDistanceTo(refPoint);
+            maxDistance = (distance > maxDistance) ? distance : maxDistance;
+            distanceMap.put(c, distance);
+        }
+            //print(maxDistance); print(distanceMap);
+        for (Map.Entry<Coordinate,Double> entry : distanceMap.entrySet()) {
+            if (entry.getValue() <= maxDistance*distanceFactor)
+                coordinateSet.add(entry.getKey());
+        }
+
+        return coordinateSet;
+   }
 
     private boolean buildCenterAtOrigin() {
         boolean built = false;
@@ -185,6 +223,7 @@ public class Maze {
 
     //private
     public void populateRooms() {
+        PopulateRoom.run(this);
         for (Room room : map.viewAllRooms()) {
           room.populateRoom();
         }
