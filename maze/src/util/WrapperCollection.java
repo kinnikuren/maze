@@ -22,7 +22,7 @@ public class WrapperCollection<T> implements Collection<T> {
     } */
 
     public WrapperCollection(final Iterable<? extends T> originalSet) {
-        this.collection = Collections.flatten(originalSet);
+        this.collection = RmViews.flatten(originalSet);
     }
 
     public boolean contains(final Object o) {

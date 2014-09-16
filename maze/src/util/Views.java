@@ -43,7 +43,7 @@ public final class Views {
       };
     }
 
-    public static <K, V> Iterable<Entry<K,V>> flattenMap(
+    public static <K, V> Iterable<Entry<K,V>> flattenMapReadOnly(
             final Map<? extends K, ? extends V> fromMap) {
         checkNotNull(fromMap);
         final Iterable<? extends Entry<? extends K, ? extends V>> fromItr = fromMap.entrySet();
@@ -51,6 +51,16 @@ public final class Views {
           @Override
           public Iterator<Entry<K,V>> iterator() {
             return ViewIterators.flattenMapIterator(fromItr.iterator());
+          }
+      };
+    }
+
+    public static <T> Iterable<T> flatten(final Iterable<? extends T> fromIterable) {
+        checkNotNull(fromIterable);
+      return new FluentIterable<T>() {
+          @Override
+          public Iterator<T> iterator() {
+            return RmViewIterators.flatten(fromIterable.iterator());
           }
       };
     }
