@@ -223,10 +223,10 @@ public class Maze {
 
     //private
     public void populateRooms() {
-        PopulateRoom.run(this);
-        for (Room room : map.viewAllRooms()) {
-          room.populateRoom();
-        }
+        //PopulateRoom.run(this);
+        //for (Room room : map.viewAllRooms()) {
+        //  room.populateRoom();
+        // }
     }
 
     private void setAstarPathToExit() {

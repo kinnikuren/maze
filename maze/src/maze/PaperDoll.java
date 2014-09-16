@@ -35,9 +35,6 @@ public class PaperDoll implements Stage {
         this.manager = new EventManager(paperDoll.values());
     }
 
-    @Override
-    public Iterable<Interacter> getActors() { return null; };
-
     public View<Equippable> viewAllEquipped() {
       return equipments;
     }

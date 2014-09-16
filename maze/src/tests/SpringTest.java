@@ -19,8 +19,8 @@ import maze.References;
 import maze.Statistics;
 import maze.Bestiary.*;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+//import org.springframework.context.ApplicationContext;
+//import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import util.View;
 import util.Views;
@@ -79,7 +79,7 @@ public class SpringTest {
         return c;
     }
 
-    public static void main(String[] args) {
+    /* public static void main(String[] args) {
           ApplicationContext context =
                  new ClassPathXmlApplicationContext("beans.xml");
 
@@ -160,7 +160,7 @@ public class SpringTest {
               System.out.println("");
 
               for (int i=0;i < maxSpawn;i++) {
-
+            */
                   /*
                   randCoordinate = getRandCoordinate(coolMaze);
                   log("Getting random coordinate... " + randCoordinate);
@@ -176,7 +176,7 @@ public class SpringTest {
 
                   //coolMaze.getRoom(randCoordinate).
                   //coolMaze.getRoom(randCoordinate).addActor(new Rat());
-
+                /*
                   int rand = new Random().nextInt(coordinateSet.size());
                   spawnPoint = spawnPoints[rand];
 
@@ -199,6 +199,6 @@ public class SpringTest {
 
           //print("Random coordinate: " + getRandCoordinate(coolMaze));
 
-       }
+       } */
 
 }

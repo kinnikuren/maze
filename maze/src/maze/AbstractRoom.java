@@ -12,14 +12,6 @@ import static maze.Priority.*;
 
 public abstract class AbstractRoom implements Stage {
 
-    public static AbstractRoom testRoom(Coordinate c) {
-        return new AbstractRoom(c) {
-            @Override
-            public void populateRoom() { }
-        };
-    }
-
-
     public final Coordinate position;
     List<Interacter> contents;
     ArrayListMultimap<String, Interacter> interactionMap;
@@ -114,9 +106,6 @@ public abstract class AbstractRoom implements Stage {
     @Override
     public String getName() { return "the room"; }
 
-    @Override
-    public Iterable<Interacter> getActors() { return contents; };
-
     public void addToRoom() { }
 
     public List<Interacter> contents() { return contents; }
@@ -125,5 +114,10 @@ public abstract class AbstractRoom implements Stage {
       return interactionMap.values();
     }
 
-    //public ArrayListMultiMap interactionMap
+    public static AbstractRoom testRoom(Coordinate c) {
+        return new AbstractRoom(c) {
+            @Override
+            public void populateRoom() { }
+        };
+    }
 }

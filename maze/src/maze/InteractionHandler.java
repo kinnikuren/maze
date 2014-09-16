@@ -449,7 +449,7 @@ public final class InteractionHandler {
             }
             player.narrator().postFightCommentary(player, enemy);
 
-            if (!enemy.getInventory().isBarren()) {
+            /* if (!enemy.getInventory().isBarren()) {
                 print("Here is your loot:");
                 enemy.getInventory().printInventory();
                 ArrayList<Interacter> interactions = enemy.getInventory().interactions;
@@ -459,7 +459,7 @@ public final class InteractionHandler {
                     player.getInventory().add((Portable)i);
                     itr.remove();
                 }
-            }
+            } */
 
         }
         else if(player.hp() == 0) {

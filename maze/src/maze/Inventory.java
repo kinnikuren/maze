@@ -8,6 +8,7 @@ import java.util.Random;
 import static util.Loggers.*;
 import util.GrammarGuy;
 import util.NullArgumentException;
+import util.View;
 
 import com.google.common.collect.ArrayListMultimap;
 
@@ -17,19 +18,23 @@ import static util.Utilities.*;
 
 public class Inventory implements Stage {
     private ArrayListMultimap<String, Portable> inventory = ArrayListMultimap.create();
-    ArrayList<Interacter> interactions = new ArrayList<Interacter>();
+    private View<Portable> portables;
     EventManager manager;
 
     public Inventory() {
-        this.manager = new EventManager(interactions);
+        this.portables = new View<Portable>(inventory.values());
+        this.manager = new EventManager(inventory.values());
     }
+
+    public View<Portable> viewAllInventory() {
+        return portables;
+     }
 
     //@throws[NullArgumentException]
     public void add(Portable item) throws NullArgumentException {
         checkNullArg(item);
         inventory.put(item.name(), item);
-        interactions.add(item);
-        log("Item added to inventory interactions: " + interactions);
+        log("Item added to inventory interactions: " + portables);
     }
 
     public Portable remove(Portable item) {
@@ -40,8 +45,7 @@ public class Inventory implements Stage {
         }
         if (removed != null) {
             inventory.remove(itemName, removed);
-            interactions.remove(removed);
-            log(removed + " removed from inventory interactions: " + interactions);
+            log(removed + " removed from inventory interactions: " + portables);
         }
         return removed;
     }
@@ -59,9 +63,8 @@ public class Inventory implements Stage {
             //creates an array from the list of Portables
             Portable[] itemsArr = items.toArray(new Portable[items.size()]);
             Portable candidate = itemsArr[index];
-            log("Removing " + itemName + " from inventory...");
+                    log("Removing " + itemName + " from inventory...");
             removed = inventory.remove(itemName, candidate);
-            interactions.remove(candidate);
         }
       return removed;
     }
@@ -117,7 +120,7 @@ public class Inventory implements Stage {
     public void printInventory() {
         int count = 0;
 
-        if(interactions.size() > 0) {
+        if(portables.size() > 0) {
             List<String> list = new ArrayList<String>();
             for (String thing : inventory.keySet()) {
               count = inventory.get(thing).size();
@@ -131,27 +134,24 @@ public class Inventory implements Stage {
 
     @Override
     public void removeActor(Interacter actor) {
-        try {
-            Portable item = (Portable)actor;
-            remove(item);
-        } catch (ClassCastException cce) {
-            log("This is not a valid actor to remove from inventory!");
-        }
+        for (Portable item : portables) {
+            if (item.equals(actor)) remove(item);
+          }
     }
 
 
     @Override
     public void cleanupActors() {
         // TODO Auto-generated method stub
-        for (Interacter actor : interactions) {
-            if (actor.isDone(this)) removeActor(actor);
+        for (Portable item : portables) {
+            if (item.isDone(this)) removeActor(item);
         }
     }
 
     @Override
     public boolean isBarren() {
         // TODO Auto-generated method stub
-        return (interactions.size() == 0);
+        return (portables.size() == 0);
     }
 
     @Override
@@ -176,9 +176,6 @@ public class Inventory implements Stage {
         log("testing");
         return manager.getCurrentEvents(trigger, objectName);
     }
-
-    @Override
-    public List<Interacter> getActors() { return interactions; };
 
     public PriorityQueue<Event> getCurrentEvents(Commands trigger, String objectName, String prep,
             String secondObjectName) {

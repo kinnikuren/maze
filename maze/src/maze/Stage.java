@@ -24,6 +24,4 @@ public interface Stage {
     public boolean isBarren();
 
     public String getName();
-
-    public Iterable<Interacter> getActors();
 }

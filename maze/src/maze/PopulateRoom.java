@@ -9,8 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+//import org.springframework.context.ApplicationContext;
+//import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import maze.BestiaryGenerator;
 import maze.Coordinate;
@@ -28,7 +28,7 @@ import maze.Armor.*;
 public class PopulateRoom {
     private static Random rand = new Random();
 
-    public static void run(Maze maze) {
+    /* public static void run(Maze maze) {
         ApplicationContext context =
             new ClassPathXmlApplicationContext("beans.xml");
 
@@ -62,7 +62,7 @@ public class PopulateRoom {
 
             Coordinate[] spawnPoints =
                     coordinateSet.toArray(new Coordinate[coordinateSet.size()]);
-
+                */
             /*
             System.out.print("Possible spawn points: ");
             for (Coordinate c : spawnPoints) {
@@ -70,7 +70,7 @@ public class PopulateRoom {
             }
 
             System.out.println(""); */
-
+            /*
             for (int i=0;i < maxSpawn;i++) {
                 int rand = new Random().nextInt(coordinateSet.size());
                 spawnPoint = spawnPoints[rand];
@@ -81,5 +81,5 @@ public class PopulateRoom {
         log("Done spawning!");
         maze.printMazeContents();
 
-    }
+    } */
 }
