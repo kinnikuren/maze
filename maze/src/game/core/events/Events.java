@@ -8,7 +8,7 @@ import static util.Utilities.checkNullArgs;
 import game.core.events.Module.Fight;
 import game.core.inputs.Commands;
 import game.core.inputs.GrammarGuy;
-import game.objects.general.Combinations;
+import game.objects.general.Combiner;
 import game.objects.items.Consumable;
 import game.objects.items.Equippable;
 import game.objects.items.Portable;
@@ -264,11 +264,12 @@ public final class Events {
       return event;
     }
 
-    public static Event fightAll(final List<Monster> monsterParty, final Interacter actor,
+    public static Event fightAll(final List<Monster> monsterParty,
             final Priority priority) {
-        Event event = new Event(monsterParty, actor, priority) {
+        Event event = new Event(monsterParty, priority) {
           @Override public ResultMessage fire(Player player) {
               InteractionHandler.run(monsterParty, player, new Module.Fight());
+              Bestiary.monsterParty.clear();
               ResultMessage rm = new ResultMessage(EventActions.CLEAR_FORCED);
             return rm;
           }
@@ -406,7 +407,7 @@ public final class Events {
     public static Event combine(final Portable firstItem, final Portable secondItem) {
         Event event = new Event(firstItem, LOW) {
             @Override public ResultMessage fire(Player player) {
-                Portable newItem = Combinations.combine(firstItem, secondItem);
+                Portable newItem = Combiner.combine(firstItem, secondItem);
                 if (newItem != null) {
                     player.inventory().removeActor(firstItem);
                     player.inventory().removeActor(secondItem);
@@ -424,7 +425,7 @@ public final class Events {
         return event;
     }
 
-    public static Event useOn(final Useable item, final Interacter target, Stage secondStage) {
+    public static Event useOn(final Useable item, final Interacter target, final Stage secondStage) {
         Event event = new Event(item, LOW) {
             @Override public ResultMessage fire(Player player) {
                 log("You use " + item + " on " + target + ".");

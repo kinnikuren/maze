@@ -74,6 +74,12 @@ public abstract class AbstractRoom implements Stage {
         interactionMap.put(actor.name(), actor);
     }
 
+    public void addActors(Collection<? extends Interacter> actors) {
+        for (Interacter actor : actors) {
+            addActor(actor);
+        }
+    }
+
     @Override
     public void removeActor(Interacter actor) {
         if (actor instanceof AbstractUnit || actor instanceof AbstractItem) {

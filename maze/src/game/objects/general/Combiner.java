@@ -5,7 +5,7 @@ import game.objects.items.Trinkets.*;
 import game.objects.items.Useables.*;
 import game.objects.items.Weapons.*;
 
-public class Combinations {
+public class Combiner {
 
     public static Portable combine(Portable firstItem, Portable secondItem) {
         if ((firstItem instanceof RedKey && secondItem instanceof BlueKey) ||
@@ -19,5 +19,19 @@ public class Combinations {
             return new LitTorch();
         } else return null;
     }
+
+   /* public enum Combinations implements Combineable {
+        C01 {
+            public Portable combine(Portable firstItem, Portable secondItem) {
+
+            }
+        },
+        C02,
+        C03;
+
+        private final firstItem;
+        private final secondItem;
+
+    } */
 
 }

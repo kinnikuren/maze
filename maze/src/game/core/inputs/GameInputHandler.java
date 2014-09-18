@@ -80,6 +80,18 @@ public final class GameInputHandler {
                 performAction(you, leadCmd, arg, you.inventory());
             }
         }
+        else if (leadCmd == COMBINE) {
+            if (arg == null) {
+                print("What do you want to " + leadCmd + "?");
+            } else if (prep != null) {
+                if (secondObject == null) {
+                    print("What do you want to " + leadCmd + " " + arg + " " + prep + "?");
+                }
+                else {
+                    performAction(you, leadCmd, arg, prep, secondObject, you.inventory(), you.inventory());
+                }
+            }
+        }
         else if (check(leadCmd).in(EQUIP, DROP, CONSUME)) {
             if (arg == null) {
                 print("What do you want to " + leadCmd + "?");
@@ -289,7 +301,7 @@ public final class GameInputHandler {
     public static boolean performAction(Player you, Commands action, String object, String prep,
             String secondObject, Stage stage, Stage secondStage) {
         Boolean result = Events.run(you, action, object, prep, secondObject, stage, secondStage);
-        return true;
+        return result;
     }
 
     public static boolean performAction(Player you, Commands action, Stage stage) {
@@ -297,6 +309,6 @@ public final class GameInputHandler {
         if (result == false) {
             print("There is nothing to " + action + " here.");
         }
-        return true;
+      return result;
     }
 }

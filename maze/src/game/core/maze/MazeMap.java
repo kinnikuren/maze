@@ -3,7 +3,6 @@ package game.core.maze;
 import static game.core.events.Events.*;
 import static game.core.events.Priority.*;
 import static game.core.inputs.Commands.*;
-import static util.Print.print;
 import static util.Utilities.*;
 import static util.Loggers.*;
 import game.core.events.Event;
@@ -22,6 +21,7 @@ import game.objects.general.References;
 import game.objects.items.Trinkets;
 import game.objects.items.Trinkets.Key;
 import game.objects.units.AbstractUnit;
+import util.Paired;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -296,8 +296,8 @@ public class MazeMap {
     }
 
     public Key addLockedGate(Gate gate) throws IllegalArgumentException {
-        Coordinate c1 = gate.g.c1;
-        Coordinate c2 = gate.g.c2;
+        Coordinate c1 = gate.g.o1;
+        Coordinate c2 = gate.g.o2;
 
         checkLegalArgs(c1, c2);
         Key key = null;
@@ -307,7 +307,7 @@ public class MazeMap {
 
         if (!gates.contains(gate)) {
           if (gate.lock()) {
-              log("Adding locked gate to " + gate.g.c1 + " and " + gate.g.c2 + "...");
+              log("Adding locked gate to " + gate.g.o1 + " and " + gate.g.o2 + "...");
             gates.add(gate);
             r1.addActor(gate);
             r2.addActor(gate);
@@ -318,8 +318,7 @@ public class MazeMap {
     }
 
     public class Gate implements Interacter {
-        protected Coordinates.Paired g;
-        boolean locked = false;
+        final Paired<Coordinate> g;
         Key key;
         int maxSpawn = 1;
         String rarity = "rare";
@@ -334,14 +333,14 @@ public class MazeMap {
         }
 
         public Gate(Coordinate c1, Coordinate c2) {
-            g = new Coordinates.Paired(c1, c2);
+            g = new Paired<Coordinate>(c1, c2);
             this.key = new Trinkets.PlainKey();
-            diff = Coordinates.diff(this.g.c1, this.g.c2);
+            diff = Coordinates.diff(this.g.o1, this.g.o2);
             this.name = "Locked Gate";
             this.desc = "This locked gate bars your path to the " + Cardinals.get(diff) + ".";
         }
         private Gate(Coordinate c1, Coordinate c2, Key key) {
-            g = new Coordinates.Paired(c1, c2);
+            g = new Paired<Coordinate>(c1, c2);
             this.key = key;
         }
         /* private void setKey(Key key) {
@@ -358,12 +357,12 @@ public class MazeMap {
         }
 
         public boolean isLocked() {
-            boolean lock1 = !MazeMap.this.viewNeighborsOf(g.c1).contains(g.c2);
-            boolean lock2 = !MazeMap.this.viewNeighborsOf(g.c2).contains(g.c1);
+            boolean lock1 = !MazeMap.this.viewNeighborsOf(g.o1).contains(g.o2);
+            boolean lock2 = !MazeMap.this.viewNeighborsOf(g.o2).contains(g.o1);
           return lock1 && lock2;
         }
         public boolean lock() {
-          return MazeMap.this.deleteLinkDouble(g.c1, g.c2);
+          return MazeMap.this.deleteLinkDouble(g.o1, g.o2);
         }
         public boolean unlock(Key key) {
             boolean result = false;
@@ -372,13 +371,16 @@ public class MazeMap {
             } else if (!this.key.equals(key)) {
                 result = false;
             } else {
-                result = MazeMap.this.linkDouble(g.c1, g.c2);
+                result = MazeMap.this.linkDouble(g.o1, g.o2);
                 if (result) {
                     this.name = "Unlocked Gate";
                     setDescription();
                 }
             }
-            return result;
+          return result;
+          /* return this.key == null ? false
+             : (!this.key.equals(key) ? false
+             : MazeMap.this.linkDouble(g.o1, g.o2)); */
         }
         public boolean matches(Coordinate c1, Coordinate c2) {
           return this.g.matches(c1, c2);
@@ -456,13 +458,11 @@ public class MazeMap {
         public final References ref = RED_DOOR;
 
         public RedDoor() {
-            g = null;
+            super();
         }
 
         public RedDoor(Coordinate c1, Coordinate c2) {
-            g = new Coordinates.Paired(c1, c2);
-            this.key = new Trinkets.RedKey();
-            diff = Coordinates.diff(this.g.c1, this.g.c2);
+            super(c1, c2);
             this.name = "Locked Red Door";
             this.desc = "This red door bars your path to the " + Cardinals.get(diff) + ".";
         }

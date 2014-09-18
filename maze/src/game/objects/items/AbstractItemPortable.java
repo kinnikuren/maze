@@ -50,7 +50,7 @@ public abstract class AbstractItemPortable extends AbstractItem implements Porta
     }
 
     public Event interact(Commands trigger, String prep, Interacter interactee) {
-        if (trigger == USE) {
+        if (trigger == COMBINE) {
             if (prep.equals("with")) {
                 return Events.combine(this, (Portable)interactee);
             } else return null;

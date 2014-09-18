@@ -1,24 +1,10 @@
 package game.core.maze;
 
-import static util.Print.print;
 import static util.Loggers.*;
-import static game.core.events.Priority.*;
-import game.content.alerts.EerieChimeSound;
 import game.content.general.SpawningPool;
 import game.core.events.Interacter;
 import game.core.positional.Coordinate;
-import game.objects.general.BestiaryGenerator;
-import game.objects.items.Idol;
-import game.objects.items.Armor.*;
-import game.objects.items.Consumables.*;
-import game.objects.items.Trinkets.*;
-import game.objects.items.Useables.*;
-import game.objects.items.Weapons.*;
-import game.objects.units.Bestiary.*;
-
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 
 import org.springframework.context.ApplicationContext;
@@ -82,6 +68,5 @@ public class PopulateRoom {
 
         log("Done spawning!");
         maze.printMazeContents();
-
     }
 }

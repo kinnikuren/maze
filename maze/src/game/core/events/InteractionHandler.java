@@ -6,6 +6,7 @@ import game.core.inputs.GameInputHandler;
 import game.core.inputs.GrammarGuy;
 import game.objects.general.Spells;
 import game.objects.general.Spells.Spell;
+import game.objects.inventory.Inventory;
 import game.objects.items.Portable;
 import game.objects.units.Bestiary;
 import game.objects.units.Player;
@@ -23,9 +24,21 @@ import static game.objects.general.References.*;
 import static game.player.util.Attributes.*;
 
 public final class InteractionHandler {
+
+    private static class Combat {
+        private final List<Monster> enemies;
+        private final Player player;
+        private final Inventory loot = new Inventory();
+
+        private Combat(List<Monster> enemies, Player player) {
+            this.enemies = enemies;
+            this.player = player;
+        }
+    }
+
     private static boolean playerTurn;
     private static boolean enemyTurn;
-    private static boolean combatDone;
+    private static boolean combatHalted;
     private static Scanner scanner = new Scanner(System.in);
     private static String input;
     private static Random rand = new Random();
@@ -39,51 +52,16 @@ public final class InteractionHandler {
     private InteractionHandler() { } //no instantiation
 
     public static void run(Monster enemy, Player player, Module.Fight ft) {
-
         //oldCombatEngine(enemy, player);
-
-        setUpFight();
-
-        print("Starting fight!!...");
-        print(enemy.battlecry());
-        enemy.buff();
-
-        List<Monster> singleEnemy = new ArrayList<Monster>();
-        singleEnemy.add(enemy);
-
-        while(enemy.hp() > 0 && player.hp() > 0 && !combatDone) {
-            print("Your HP: "+player.hp());
-            printnb("Enemy: ");
-            printnb("[1]" + " " + enemy.name() + " (" + enemy.hp() + "/"
-                        + enemy.getDefaultHP() + ") ");
-
-            while (playerTurn && !combatDone) {
-                playerGo(singleEnemy, player);
-            }
-
-            enemyTurn = true;
-
-            if (!combatDone && enemy.isAlive()) {
-                while (enemyTurn && player.isAlive()) {
-                    enemyGo(enemy, player);
-
-                    enemyTurn = false;
-                }
-            }
-            //enemyCleanUp(enemy, player);
-            playerTurn = true;
-        }
-
-        checkPlayerDeath(player);
+        List<Monster> enemies = new ArrayList<Monster>();
+        enemies.add(enemy);
+        run(enemies, player, ft);
     }
 
     public static boolean run(List<Monster> enemies, Player player, Module.Fight ft) {
-
-        //oldCombatEngine(enemy, player);
-
         setUpFight();
-
         print("Starting fight!!...");
+        Combat combat = new Combat(enemies, player);
 
         HashMap<Integer, Monster> monsterMap = new HashMap<Integer, Monster>();
         int key=1;
@@ -94,7 +72,7 @@ public final class InteractionHandler {
         }
         //print(monsterMap);
 
-        while(enemies.size()>0 && player.hp() > 0 && !combatDone) {
+        while(enemies.size()>0 && player.isAlive() && !combatHalted) {
             print("Your HP: "+player.hp());
             printnb("Enemies: ");
 
@@ -120,15 +98,15 @@ public final class InteractionHandler {
 
             //Monster enemy = enemies.get(rand.nextInt(enemies.size()));
 
-            while (playerTurn && !combatDone) {
+            while (playerTurn && !combatHalted) {
 
                 //attack random monster in a group
-                playerGo(enemies, player);
+                playerGo(combat);
 
             }
             enemyTurn = true;
 
-            if (!combatDone && enemies.size()>0) {
+            if (!combatHalted && enemies.size()>0) {
                 while (enemyTurn && player.isAlive()) {
 
                     for (Monster m : enemies) {
@@ -143,17 +121,29 @@ public final class InteractionHandler {
             playerTurn = true;
         }
 
-        checkPlayerDeath(player);
-        return true;
+        if (!checkPlayerLoses(player)) {
+          if (!combatHalted) {
+            print("You looted:");
+            combat.loot.printout();
+            player.inventory().addAll(combat.loot.removeAll());
+          }
+          else {
+            player.getRoom().addActors(combat.loot.removeAll());
+          }
+        }
+      return true;
     }
 
     private static void setUpFight() {
         playerTurn = true;
         enemyTurn = false;
-        combatDone = false;
+        combatHalted = false;
     }
 
-    private static void playerGo(List<Monster> enemies, Player player) {
+    private static void playerGo(Combat combat) {
+        List<Monster> enemies = combat.enemies;
+        Player player = combat.player;
+
         wordWrapPrint("\nPlease input a move:");
         wordWrapPrint(Arrays.toString(moves));
 
@@ -166,7 +156,6 @@ public final class InteractionHandler {
         Monster enemy = null;
 
         if (leadInput.equals("attack") || leadInput.equals("a")) {
-            //
             boolean validArg = false;
 
             if (arg == null) {
@@ -194,14 +183,9 @@ public final class InteractionHandler {
                 }
 
                 print("You did "+playerDamage+" damage.\n");
-
                 enemy.loseHP(playerDamage);
 
                 playerTurn = false;
-
-                if(enemyCleanUp(enemy, player)) {
-                    enemies.remove(enemy);
-                }
             } else {
                 print("What are you trying to attack? (Enter the # to attack a specific enemy)");
             }
@@ -229,10 +213,6 @@ public final class InteractionHandler {
                         int spellDamage = spell.getDamage();
                         print(spell.toString() + " hits " + m + " for " + spellDamage + " damage.");
                         m.loseHP(spellDamage);
-
-                        if(enemyCleanUp(m, player)) {
-                            itr.remove();
-                        }
                     }
 
                     playerTurn = false;
@@ -241,9 +221,9 @@ public final class InteractionHandler {
                 }
             }
         } else if (leadInput.equals("flee") || leadInput.equals("f")) {
-            if (player.skillCheck(DEX, 0, 1)) {
+            if (player.skillCheck(DEX, 0, 0)) { //set to 0 to allow fleeing for testing
                 print("You successfully ran away!");
-                combatDone = true;
+                combatHalted = true;
             } else {
                 print("You failed to run away.");
                 playerTurn = false;
@@ -274,22 +254,12 @@ public final class InteractionHandler {
             print("**Kill cheat invoked.  Cheater.**");
             //boolean validArg = false;
             if (arg == null || arg.equals("all") || leadInput.equals("ka")) {
-                //enemy = enemies.get(rand.nextInt(enemies.size()));
 
-                while (enemies.size() > 0) {
-                    enemy = enemies.get(0);
-                    enemy.setHP(0);
-                    if(enemyCleanUp(enemy, player)) {
-                        enemies.remove(enemy);
-                    }
-                }
+                for (Monster m : enemies) m.setHP(0);
 
             } else if (Integer.parseInt(arg) < enemies.size()+1) {
                 enemy = enemies.get(Integer.parseInt(arg)-1);
                 enemy.setHP(0);
-                if(enemyCleanUp(enemy, player)) {
-                    enemies.remove(enemy);
-                }
             }
 
             playerTurn = false;
@@ -297,12 +267,7 @@ public final class InteractionHandler {
             print("Invalid Move!");
         }
 
-        for (Iterator<Monster> itr = enemies.iterator(); itr.hasNext();) {
-            Monster m = itr.next();
-            if(enemyCleanUp(m, player)) {
-                enemies.remove(m);
-            }
-        }
+        enemyCleanUp(combat);
     }
 
     private static void enemyGo(Monster enemy, Player player) {
@@ -336,41 +301,37 @@ public final class InteractionHandler {
         print("");
     }
 
-    private static boolean enemyCleanUp(Monster enemy, Player player) {
-        if(enemy.hp() == 0) {
+    private static void enemyCleanUp(Combat cm) {
+        Player player = cm.player;
+        List<Monster> enemies = cm.enemies;
+
+        for (Iterator<Monster> itr = enemies.iterator(); itr.hasNext();) {
+          Monster enemy = itr.next();
+
+          if(!enemy.isAlive()) {
             print("\nYou have defeated the " + enemy + ".");
 
             player.getRoom().removeActor(enemy);
+            itr.remove();
 
             Statistics.globalUpdate("monsterKillCount");
-            if (enemy instanceof Rat) {
-                Statistics.globalUpdate("ratKillCount");
-            }
+            if (enemy instanceof Rat) { Statistics.globalUpdate("ratKillCount"); }
             player.narrator().postFightCommentary(player, enemy);
 
             if (!enemy.inventory().isBarren()) {
-                print("You looted:");
-                enemy.inventory().printout();
-
-                List<Portable> loot = enemy.inventory().removeAll();
-                player.inventory().addAll(loot);
-
-                /* ArrayList<Interacter> interactions = enemy.getInventory().interactions;
-                for (Iterator<Interacter> itr = interactions.iterator(); itr.hasNext();) {
-                    Interacter i = itr.next();
-                    player.getInventory().add((Portable)i);
-                    itr.remove();
-                } */
+                cm.loot.addAll(enemy.inventory().removeAll());
+                //player.inventory().addAll(loot); //disabled, looting now happens at end of combat
             }
-            print("");
-            return true;
-        } else return false;
+          }
+        }
     }
 
-    private static void checkPlayerDeath(Player player) {
-        if (player.hp() == 0) {
+    private static boolean checkPlayerLoses(Player player) {
+        if (!player.isAlive()) {
             print("\nYou have been defeated...");
+          return true;
         }
+      return false;
     }
 
     private static void oldCombatEngine(Monster enemy, Player player) {

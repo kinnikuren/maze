@@ -46,7 +46,7 @@ public class KeyMaster {
     }
 
     public static void insertKey(Maze maze, Gate gate) {
-        Coordinate c = getKeyCoord(maze, gate.g.c1, gate.g.c2);
+        Coordinate c = getKeyCoord(maze, gate.g.o1, gate.g.o2);
 
         insertKey(maze, c, gate.getKey());
     }

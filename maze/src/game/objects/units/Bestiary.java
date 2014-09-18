@@ -62,8 +62,7 @@ public final class Bestiary {
                 log("Adding " + this + " to monster party..");
                 log(monsterParty.toString());
 
-                Monster partyRep = new PartyRep();
-                event = Events.fightAll(monsterParty, partyRep, HIGH);
+                event = Events.fightAll(monsterParty, HIGH);
               }
             /*
             return trigger == FIGHT ? fight(this, HIGH)
@@ -81,21 +80,6 @@ public final class Bestiary {
         @Override
         public Event interact(Commands trigger, String prep, Interacter interactee, Stage secondStage) {
             return null;
-        }
-    }
-
-    public static class PartyRep extends Monster {
-
-        @Override
-        public boolean matches(String name) { return false; }
-
-        @Override
-        public String battlecry() { return null; }
-
-        @Override
-        public boolean isDone(Stage stage) {
-          if (monsterParty.size() == 0) return true;
-          else return false;
         }
     }
 

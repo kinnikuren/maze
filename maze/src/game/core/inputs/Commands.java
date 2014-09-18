@@ -54,6 +54,9 @@ public enum Commands {
     USE( new String[] {"use", "u"},
         "use item in inventory."
         ),
+    COMBINE( new String[] {"combine", "comb"},
+        "combine items in inventory."
+        ),
     CONSUME( new String[] {"consume", "drink", "eat"},
         "consume item in inventory."
         ),
@@ -114,6 +117,7 @@ public enum Commands {
             print("| move (mv) (go) + <<direction>> | where can i go? (go?) | where am i? (am?)|");
             print("| fight (f) | approach (appr) + <<object>> | describe (desc) + <<object>>   |");
             print("| talk + <<object>> | pickup item (pkup) | use item | consume item (consume)|");
+            print("| combine <<item1>> with <<item2>> (comb)                                   |");
             print("| equip item | unequip item | inventory (got?) | equipped | status (status) |");
             print("| attributes (attrib | statistics (stats) | exit maze (xx) | help           |");
             print("-----------------------------------------------------------------------------");
