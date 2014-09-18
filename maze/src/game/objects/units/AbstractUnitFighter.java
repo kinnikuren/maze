@@ -6,6 +6,7 @@ import game.core.events.Interacter;
 import game.core.events.Stage;
 import game.core.inputs.Commands;
 import game.core.positional.Coordinate;
+import game.objects.inventory.Inventory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +22,9 @@ implements Fighter {
     int damageLow;
     int damageHigh;
 
-    private Random rand = new Random();
+    Inventory inventory = new Inventory();
 
+    private Random rand = new Random();
 
     public AbstractUnitFighter() {
         super();
@@ -36,6 +38,8 @@ implements Fighter {
         this.resetDefense();
     }
 
+    public Inventory inventory() { return inventory; }
+
     public Set<String> getStatusList() { return statusList; }
 
     public boolean addStatus(String status) {
@@ -43,11 +47,11 @@ implements Fighter {
     }
 
     public String getStatusEffect() {
-        return this.statusEffect;
+      return this.statusEffect;
     }
 
     public int getDamage() {
-        return (rand.nextInt(damageHigh-damageLow) + damageLow);
+      return (rand.nextInt(damageHigh-damageLow) + damageLow);
     }
 
     @Override //overrides Unit method
@@ -77,7 +81,7 @@ implements Fighter {
             damage *= 2;
         }
         int result = damage - enemyDefense;
-        return result < 0 ? 0 : result;
+      return result < 0 ? 0 : result;
     }
     @Override
     public int getAttack() { return this.attackVal; }
@@ -95,6 +99,6 @@ implements Fighter {
     public abstract String battlecry();
     @Override
     public String inspect() {
-        return ("The " + this.name() + " does nothing.");
+      return ("The " + this.name() + " does nothing.");
     }
 }

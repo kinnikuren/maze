@@ -104,9 +104,9 @@ implements Questioner {
 
                 if (input.equals("A")) {
                     log("checking for coins...");
-                    if (player.getInventory().contains("gold coin")) {
+                    if (player.inventory().contains("gold coin")) {
                         log("player has a coin, now removing...");
-                        player.getInventory().remove("gold coin");
+                        player.inventory().remove("gold coin");
                         coinInserted = true;
 
                         selfPrint(question);
@@ -124,7 +124,7 @@ implements Questioner {
                             print("A plain whistle pops out of the console and you put it in "
                                     + "your pocket.");
 
-                            player.getInventory().add(new Useables.WarpWhistle());
+                            player.inventory().add(new Useables.WarpWhistle());
 
                             visitedBy(player);
                         } else {

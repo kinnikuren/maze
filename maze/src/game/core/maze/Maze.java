@@ -31,7 +31,7 @@ public class Maze {
         @Override
         public void populateRoom() {
             //for testing
-            //tests.PopulateRoomTest.fillerUp(position, center, this);
+            tests.PopulateRoomTest.fillerUp(position, center, this);
         }
         public View<Coordinate> viewNeighbors() {
           return Maze.this.viewNeighborsOf(position);

@@ -9,9 +9,13 @@ import game.core.inputs.GrammarGuy;
 import game.objects.items.Portable;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Random;
+import java.util.Set;
 
 import static util.Loggers.*;
 import util.NullArgumentException;
@@ -37,11 +41,23 @@ public class Inventory implements Stage {
         return portables;
      }
 
-    //@throws[NullArgumentException]
+    //@throwsNullArgumentException
     public void add(Portable item) throws NullArgumentException {
         checkNullArg(item);
         inventory.put(item.name(), item);
-        log("Item added to inventory interactions: " + portables);
+        log("Item added to inventory interactions: " + item);
+    }
+
+    public void addAll(Collection<? extends Portable> items) {
+        for (Portable item : items) {
+          add(item);
+        }
+    }
+
+    public void addAll(Portable... items) {
+        for (Portable item : items) {
+            add(item);
+        }
     }
 
     public Portable remove(Portable item) {
@@ -52,9 +68,9 @@ public class Inventory implements Stage {
         }
         if (removed != null) {
             inventory.remove(itemName, removed);
-            log(removed + " removed from inventory interactions: " + portables);
+            log(removed + " removed from inventory interactions: " + item);
         }
-        return removed;
+      return removed;
     }
 
     public boolean remove(String itemName) {
@@ -78,15 +94,26 @@ public class Inventory implements Stage {
 
 
     public List<Portable> removeAll(Portable item) {
-        return inventory.removeAll(item.name());
+      return inventory.removeAll(item.name());
     }
 
     public List<Portable> removeAll(String itemName) {
-        return inventory.removeAll(itemName);
+      return inventory.removeAll(itemName);
+    }
+
+    public List<Portable> removeAll() {
+        List<Portable> loot = new ArrayList<Portable>();
+
+        for (Iterator<Portable> itr = inventory.values().iterator(); itr.hasNext();) {
+            Portable item = itr.next();
+            loot.add(item);
+            itr.remove();
+        }
+      return loot;
     }
 
     public boolean contains(Portable item) {
-        return inventory.containsValue(item);
+      return inventory.containsValue(item);
     }
 
     @Override
@@ -124,7 +151,7 @@ public class Inventory implements Stage {
       return inventoryContents;
     }
 
-    public void printInventory() {
+    public void printout() {
         int count = 0;
 
         if(portables.size() > 0) {
@@ -142,23 +169,21 @@ public class Inventory implements Stage {
     @Override
     public void removeActor(Interacter actor) {
         for (Portable item : portables) {
-            if (item.equals(actor)) remove(item);
-          }
+          if (item.equals(actor)) remove(item);
+        }
     }
 
 
     @Override
     public void cleanupActors() {
-        // TODO Auto-generated method stub
         for (Portable item : portables) {
-            if (item.isDone(this)) removeActor(item);
+          if (item.isDone(this)) removeActor(item);
         }
     }
 
     @Override
     public boolean isBarren() {
-        // TODO Auto-generated method stub
-        return (portables.size() == 0);
+      return (portables.size() == 0);
     }
 
     @Override
@@ -166,26 +191,23 @@ public class Inventory implements Stage {
 
     @Override
     public PriorityQueue<Event> getCurrentEvents() {
-        // TODO Auto-generated method stub
-        return manager.getCurrentEvents();
+      return manager.getCurrentEvents();
     }
 
     @Override
     public PriorityQueue<Event> getCurrentEvents(Commands trigger) {
-        // TODO Auto-generated method stub
-        return manager.getCurrentEvents(trigger);
+      return manager.getCurrentEvents(trigger);
     }
 
     @Override
     public PriorityQueue<Event> getCurrentEvents(Commands trigger,
             String objectName) {
-        // TODO Auto-generated method stub
         log("testing");
-        return manager.getCurrentEvents(trigger, objectName);
+      return manager.getCurrentEvents(trigger, objectName);
     }
 
     public PriorityQueue<Event> getCurrentEvents(Commands trigger, String objectName, String prep,
             String secondObjectName) {
-        return manager.getCurrentEvents(trigger, objectName, prep, secondObjectName);
+      return manager.getCurrentEvents(trigger, objectName, prep, secondObjectName);
     }
 }

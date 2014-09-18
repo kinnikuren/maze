@@ -73,17 +73,17 @@ public final class GameInputHandler {
                     print("What do you want to " + leadCmd + " " + arg + " " + prep + "?");
                 }
                 else {
-                    performAction(you, leadCmd, arg, prep, secondObject, you.getInventory());
+                    performAction(you, leadCmd, arg, prep, secondObject, you.inventory());
                 }
             } else {
-                performAction(you, leadCmd, arg, you.getInventory());
+                performAction(you, leadCmd, arg, you.inventory());
             }
         }
         else if (check(leadCmd).in(EQUIP, DROP, CONSUME)) {
             if (arg == null) {
                 print("What do you want to " + leadCmd + "?");
             } else {
-                performAction(you, leadCmd, arg, you.getInventory());
+                performAction(you, leadCmd, arg, you.inventory());
             }
         }
         else if (leadCmd == UNEQUIP) {
@@ -91,7 +91,7 @@ public final class GameInputHandler {
                 print("What do you want to " + leadCmd + "?");
             }
             else {
-                performAction(you, leadCmd, arg, you.getPaperDoll());
+                performAction(you, leadCmd, arg, you.paperDoll());
             }
         }
         else if (leadCmd == DESCRIBE) {
@@ -103,9 +103,9 @@ public final class GameInputHandler {
                 log("Room contains " + arg);
                 performAction(you, leadCmd, arg, you.getRoom());
             }
-            else if (you.getInventory().contains(arg)){
+            else if (you.inventory().contains(arg)){
                 log("Inventory contains " + arg);
-                performAction(you, leadCmd, arg, you.getInventory());
+                performAction(you, leadCmd, arg, you.inventory());
             }
         }
         else if (leadCmd == MOVE) {
@@ -127,7 +127,7 @@ public final class GameInputHandler {
 
                   Room room = maze.getRoom(you.location());
 
-                  if (you.getInventory().contains("Enc-None")) {
+                  if (you.inventory().contains("Enc-None")) {
                       print("\nRandom encounters begone! Enc-None shields you.\n");
                   } else {
                       //EncounterGenerator.run(you);
@@ -206,11 +206,11 @@ public final class GameInputHandler {
             }
         }
         else if(fullCmd == INVENTORY) {
-            if(you.getInventory().isEmpty()) { print("You have nothing in your inventory."); }
-            else you.printInventory();
+            if(you.inventory().isEmpty()) { print("You have nothing in your inventory."); }
+            else you.inventory().printout();
         }
         else if(fullCmd == EQUIPPED) {
-            you.printPaperDoll();
+            you.paperDoll().printout();
         }
         else if (fullCmd == WHEREGO) {
             print("\nYou can go in the following directions: ");

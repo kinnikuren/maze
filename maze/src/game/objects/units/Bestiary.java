@@ -27,24 +27,19 @@ public final class Bestiary {
     public static List<Monster> monsterParty = new ArrayList<Monster>();
 
     public static abstract class Monster extends AbstractUnitFighter {
-        Inventory inventory = new Inventory();
         private Random rand = new Random();
 
         public Monster() {
             super();
-            fillInventory();
+            addCoinsToInventory();
         }
         public Monster(Coordinate c) { super(c); }
 
-        private void fillInventory() {
+        private void addCoinsToInventory() {
             int x = rand.nextInt(4);
             for (int i = 0; i < x; i++) {
                 this.inventory.add(new Trinkets.BronzeCoin());
             }
-        }
-
-        public Inventory getInventory() {
-            return inventory;
         }
 
         @Override
@@ -87,22 +82,15 @@ public final class Bestiary {
     public static class PartyRep extends Monster {
 
         @Override
-        public boolean matches(String name) {
-            // TODO Auto-generated method stub
-            return false;
-        }
+        public boolean matches(String name) { return false; }
 
         @Override
-        public String battlecry() {
-            // TODO Auto-generated method stub
-            return null;
-        }
+        public String battlecry() { return null; }
 
         @Override
         public boolean isDone(Stage stage) {
-          if (monsterParty.size() == 0)
-              return true;
-          return false;
+          if (monsterParty.size() == 0) return true;
+          else return false;
         }
     }
 
@@ -134,12 +122,10 @@ public final class Bestiary {
         public String battlecry() {
           return "The skeleton flashes you a toothy grin as it slowly raises a rusty sword.";
         }
-
         @Override
         public String inspect() {
-            return ("This reanimated skeleton is poorly constructed.  You are confident you could defeat it in battle.");
+          return ("This reanimated skeleton is poorly constructed.  You are confident you could defeat it in battle.");
         }
-
         @Override //overrides Unit method
         public void death() {
             if (isAlive) {
@@ -153,7 +139,6 @@ public final class Bestiary {
         public boolean matches(String name) {
           return matchRef(SKELETON, name);
         }
-
         @Override
         public Event interact(Commands trigger) {
             Event event = super.interact(trigger);
@@ -169,6 +154,7 @@ public final class Bestiary {
     public static class Goblin extends Monster {
         public static final int classId = GOBLIN.classId;
         public static final References ref = GOBLIN;
+        private int maxSpawn;
 
         public Goblin() {
             super();
@@ -188,17 +174,13 @@ public final class Bestiary {
            System.out.println("Your Message : " + message);
         }
 
-        private int maxSpawn;
-
         @Override //overrides AbstractFighterUnit method
         public String battlecry() {
           return "The goblin says, 'Hello.'";
         }
 
         @Override
-        public String inspect() {
-            return ("It's a tiny orc.");
-        }
+        public String inspect() { return ("It's a tiny orc."); }
 
         @Override //overrides Unit method
         public void death() {
@@ -210,15 +192,12 @@ public final class Bestiary {
         }
         //begin implementation of Interacter methods defined as abstract in FighterUnit
         @Override
-        public boolean matches(String name) {
-          return matchRef(GOBLIN, name);
-        }
+        public boolean matches(String name) { return matchRef(GOBLIN, name); }
 
         @Override
         public Event interact(Commands trigger) {
             Event result = super.interact(trigger);
-
-            return result;
+          return result;
         }
     }
 
@@ -251,7 +230,7 @@ public final class Bestiary {
 
         @Override
         public String inspect() {
-            return ("All you see are shadows.");
+          return ("All you see are shadows.");
         }
 
         @Override //overrides Unit method
@@ -368,7 +347,7 @@ public final class Bestiary {
 
         @Override
         public String inspect() {
-            return ("The rat is foaming at the mouth.");
+          return ("The rat is foaming at the mouth.");
         }
         //begin implementation of Interacter methods defined as abstract in FighterUnit
         @Override
@@ -430,7 +409,7 @@ public final class Bestiary {
 
         @Override
         public String inspect() {
-            return ("A disgusting mass of rats, both alive and dead, writhes in front of you. The "
+          return ("A disgusting mass of rats, both alive and dead, writhes in front of you. The "
                     + "shape constantly changes but there is a uniformity in movement that makes "
                     + "you believe that the thing acts as one unit.");
         }

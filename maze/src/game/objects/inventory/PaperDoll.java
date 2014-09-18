@@ -96,6 +96,8 @@ public class PaperDoll implements Stage {
       return manager.contains(itemName);
     }
 
+    public void printout() { print(this); }
+
     public String toString() {
         String inventoryContents = "Equipment Loadout: ";
         for (EquipSlots slot : paperDoll.keySet()) {

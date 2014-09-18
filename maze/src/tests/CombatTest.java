@@ -44,10 +44,10 @@ public class CombatTest {
         Player you = new Player(coolMaze);
         you.setName(name);
 
-        you.getInventory().add(new HealingPotion());
-        you.getInventory().add(new HealingPotion());
+        you.inventory().add(new HealingPotion());
+        you.inventory().add(new HealingPotion());
 
-        you.getPaperDoll().add(new LongSword());
+        you.paperDoll().add(new LongSword());
 
         List<Monster> monsters = new ArrayList<Monster>();
         monsters.add(new Rat());

@@ -6,6 +6,7 @@ import game.core.inputs.GameInputHandler;
 import game.core.inputs.GrammarGuy;
 import game.objects.general.Spells;
 import game.objects.general.Spells.Spell;
+import game.objects.items.Portable;
 import game.objects.units.Bestiary;
 import game.objects.units.Player;
 import game.objects.units.Bestiary.Monster;
@@ -180,9 +181,9 @@ public final class InteractionHandler {
                 int playerDamage = player.getDamage();
                 boolean playerCrit = player.getCrit();
 
-                if (player.getPaperDoll().getWeapon() != null) {
+                if (player.paperDoll().getWeapon() != null) {
                     print("You attack the " + enemy + " with the " +
-                            player.getPaperDoll().getWeapon() + ".");
+                            player.paperDoll().getWeapon() + ".");
                 } else {
                     print("You attack the " + enemy + " with your bare hands.");
                 }
@@ -248,14 +249,14 @@ public final class InteractionHandler {
                 playerTurn = false;
             }
         } else if (leadInput.equals("inventory") || leadInput.equals("i")) {
-            print(player.getInventory());
+            print(player.inventory());
         } else if (leadInput.equals("use") || leadInput.equals("u")) {
             if (arg == null) {
                 print("What do you want to use?");
             }
             else {
                 if (GameInputHandler.performAction(player, USE, arg,
-                        player.getInventory())) {
+                        player.inventory())) {
                     playerTurn = false;
                 }
             }
@@ -265,7 +266,7 @@ public final class InteractionHandler {
             }
             else {
                 if (GameInputHandler.performAction(player, CONSUME, arg,
-                        player.getInventory())) {
+                        player.inventory())) {
                     playerTurn = false;
                 }
             }
@@ -347,9 +348,12 @@ public final class InteractionHandler {
             }
             player.narrator().postFightCommentary(player, enemy);
 
-            if (!enemy.getInventory().isBarren()) {
+            if (!enemy.inventory().isBarren()) {
                 print("You looted:");
-                enemy.getInventory().printInventory();
+                enemy.inventory().printout();
+
+                List<Portable> loot = enemy.inventory().removeAll();
+                player.inventory().addAll(loot);
 
                 /* ArrayList<Interacter> interactions = enemy.getInventory().interactions;
                 for (Iterator<Interacter> itr = interactions.iterator(); itr.hasNext();) {

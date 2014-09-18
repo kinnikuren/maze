@@ -40,7 +40,6 @@ implements Fighter {
     private EncounterTracker tracker;
     private SpellBook spellBook;
     private List<Coordinate> path = new ArrayList<Coordinate>();
-    private Inventory inventory = new Inventory();
     private PaperDoll paperDoll = new PaperDoll();
 
     private Random rand = new Random();
@@ -383,13 +382,7 @@ implements Fighter {
 
     public Portable dropFromInventory(Portable item) { return inventory.remove(item); }
 
-    public Inventory getInventory() { return inventory; }
-
-    public PaperDoll getPaperDoll() { return paperDoll; }
-
-    public void printInventory() { print(inventory); }
-
-    public void printPaperDoll() { print(paperDoll); }
+    public PaperDoll paperDoll() { return paperDoll; }
 
     public void printStatusList() {
         String printStatus;

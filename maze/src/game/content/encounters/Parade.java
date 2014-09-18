@@ -117,10 +117,10 @@ public class Parade {
         input = MultipleChoiceInputHandler.run(2);
 
         if (input.equals("A")) {
-            if (player.getInventory().howMany("bronze coin") >= 10) {
+            if (player.inventory().howMany("bronze coin") >= 10) {
                 wordWrapPrint("You pay the rogue ten bronze coins.");
                 for (int i = 0; i < 10; i++) {
-                    player.getInventory().remove("bronze coin");
+                    player.inventory().remove("bronze coin");
                 }
                 wordWrapPrint("Müller shows you some moves.");
                 player.skillChange(DEX, 2);

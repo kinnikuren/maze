@@ -317,7 +317,7 @@ public final class Events {
     public static Event drop(final Portable item) {
         Event event = new Event(item, LOW) {
           @Override public ResultMessage fire(Player player) {
-              player.getInventory().removeActor(item);
+              player.inventory().removeActor(item);
               player.getRoom().addActor(item);
               print("You have dropped the " + item.name() + ".");
             return null;
@@ -388,9 +388,9 @@ public final class Events {
             @Override public ResultMessage fire(Player player) {
                 Portable newItem = Combinations.combine(firstItem, secondItem);
                 if (newItem != null) {
-                    player.getInventory().removeActor(firstItem);
-                    player.getInventory().removeActor(secondItem);
-                    player.getInventory().add(newItem);
+                    player.inventory().removeActor(firstItem);
+                    player.inventory().removeActor(secondItem);
+                    player.inventory().add(newItem);
                     print("You have combined the " + firstItem.name() + " and the " +
                             secondItem.name() +
                             " to make " + GrammarGuy.addArticle(newItem.name()) + ".");

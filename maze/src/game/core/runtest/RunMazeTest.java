@@ -9,6 +9,7 @@ import game.core.maze.Win;
 import game.core.positional.Coordinate;
 import game.objects.units.Player;
 import game.objects.units.Bestiary.Skeleton;
+import game.objects.units.Bestiary.Rat;
 import game.player.util.Statistics;
 
 import java.util.*;
@@ -21,7 +22,6 @@ import static game.objects.items.Weapons.*;
 
 public class RunMazeTest {
     public static void main(String[] args) {
-        //Logger logger = Loggers.programLog;
         programLog.setLevel(Priority.DORMANT);
 
         Scanner scanner = new Scanner(System.in);
@@ -39,15 +39,6 @@ public class RunMazeTest {
         Statistics.initialize();
 
         //Maze coolMaze = MazeFactory.buildMaze(30);
-        coolMaze.populateRooms();
-        Maze.Room room = coolMaze.getRoom(center);
-        /*
-        room.addActor(new Consumables.HealingPotion());
-        room.addActor(new Trinkets.BronzeCoin());
-        room.addActor(new Weapons.Dagger());
-        room.addActor(new Weapons.LongSword());
-        room.addActor(new Armor.BrownFedora());
-        */
 
         //coolMaze.setExit(new Coordinate(1,1));
         log("Exit location => " + coolMaze.exit());
@@ -56,7 +47,7 @@ public class RunMazeTest {
 
 
         //AStar.discover(coolMaze);
-        print("\nMaze Run Test 3.0 :: Maze project.");
+        print("\nMaze Run Test 4.0 :: Maze project.");
         print("Ready for user input.");
 
         print("------------------");
@@ -80,7 +71,15 @@ public class RunMazeTest {
         */
 
         you.getRoom().setVisitedTrue(you);
-        you.getRoom().addActor(new Skeleton());
+            Skeleton sk1 = new Skeleton();
+            sk1.inventory().add(new BronzeCoin());
+            Skeleton sk2 = new Skeleton();
+            sk2.inventory().add(new BronzeCoin());
+            sk2.inventory().add(new BronzeCoin());
+            sk2.inventory().add(new GoldenStatue());
+        you.getRoom().addActor(sk1);
+        you.getRoom().addActor(sk2);
+        you.getRoom().addActor(new Rat());
 
         you.narrator().speakIntro(you);
         you.narrator().talksAboutRoom(you, you.getRoom());
