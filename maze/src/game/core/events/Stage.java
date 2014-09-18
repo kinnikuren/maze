@@ -12,6 +12,8 @@ public interface Stage {
 
     public void cleanupActors();
 
+    public Iterable<? extends Interacter> getActors();
+
     public PriorityQueue<Event> getCurrentEvents();
 
     public PriorityQueue<Event> getCurrentEvents(Commands trigger);
@@ -20,6 +22,9 @@ public interface Stage {
 
     public PriorityQueue<Event> getCurrentEvents(Commands trigger, String objectName, String prep,
             String secondObjectName);
+
+    public PriorityQueue<Event> getCurrentEvents(Commands trigger, String objectName, String prep,
+            String secondObjectName, Stage secondStage);
 
     public boolean contains(String objectName);
 

@@ -155,4 +155,15 @@ public class PaperDoll implements Stage {
             String secondObjectName) {
         return manager.getCurrentEvents(trigger, objectName, prep, secondObjectName);
     }
+
+    @Override
+    public PriorityQueue<Event> getCurrentEvents(Commands trigger, String objectName, String prep,
+            String secondObjectName, Stage secondStage) {
+        return manager.getCurrentEvents(trigger, objectName, prep, secondObjectName, secondStage);
+    }
+
+    @Override
+    public Iterable<Equippable> getActors() {
+        return equipments;
+    }
 }

@@ -59,6 +59,11 @@ public abstract class AbstractItemPortable extends AbstractItem implements Porta
         }
     }
 
+    @Override
+    public Event interact(Commands trigger, String prep, Interacter interactee, Stage secondStage) {
+        return null;
+    }
+
     @Override public abstract boolean matches(String name);
     @Override
     public boolean canInteract(AbstractUnit unit) {

@@ -6,6 +6,7 @@ import java.util.Set;
 
 public class RoomPopulator {
     private Set<Spawner> spawnSet;
+    private Set<Spawner> gateSet;
 
     public Set<Spawner> getSpawnSet() {
         return spawnSet;

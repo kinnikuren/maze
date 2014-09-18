@@ -92,6 +92,39 @@ public class EventManager {
         return currentEvents;
     }
 
+    public PriorityQueue<Event> getCurrentEvents(Commands trigger, String objectName, String prep,
+            String secondObjectName, Stage secondStage) {
+        boolean firstObjectExists = false;
+        boolean secondObjectExists = false;
+        Interacter interacter = null;
+        Interacter interactee = null;
+        for (Interacter i: interactions) {
+            if (i.matches(objectName)) {
+                firstObjectExists = true;
+                interacter = i;
+            }
+        }
+
+        for (Interacter i : secondStage.getActors()) {
+            if (i.matches(secondObjectName)) {
+                secondObjectExists = true;
+                interactee = i;
+            }
+        }
+
+        if (firstObjectExists && secondObjectExists) {
+            log("Both interacters, " + interacter.name() + " and " + interactee.name() + " found!");
+            Event event = interacter.interact(trigger, prep, interactee, secondStage);
+            if (event != null) currentEvents.add(event);
+        }
+
+        log("Event manager on trigger, " + trigger + ", on object, "
+                + objectName + ", and on second object, " + secondObjectName +
+                ", returns " + currentEvents, LOW);
+
+        return currentEvents;
+    }
+
     public boolean contains(String objectName) {
         boolean objectExists = false;
         for (Interacter actor : interactions) {

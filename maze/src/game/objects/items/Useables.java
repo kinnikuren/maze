@@ -3,12 +3,15 @@ package game.objects.items;
 import static util.Print.*;
 import static game.objects.general.References.*;
 import static java.lang.Math.*;
+import game.core.events.Interacter;
+import game.core.events.Stage;
 import game.core.maze.Maze;
 import game.core.maze.Win;
 import game.core.pathfinding.AStar;
 import game.core.positional.Cardinals;
 import game.core.positional.Coordinate;
 import game.core.positional.Coordinates;
+import game.objects.units.AbstractUnit;
 import game.objects.units.Player;
 
 import java.util.LinkedList;
@@ -63,6 +66,33 @@ public final class Useables {
         @Override
         public void usedBy(Player player) {
             print("You light a match. It briefly lights up the room before burning out.");
+        }
+    }
+
+    public static class DissolvingPotion extends AbstractItemUseable{
+        public DissolvingPotion() { super(); }
+
+        @Override public String name() { return "Dissolving Potion"; }
+        @Override public boolean matches(String name) { return matchRef(DISSOLVING_POTION, name); }
+        @Override public String details() { return "The potion is a dark color and smells acidic."; }
+        @Override public int weight() { return 1; }
+
+        @Override
+        public void usedBy(Player player) {
+            print("You use the dissolving potion.");
+        }
+
+        @Override
+        public boolean usedBy(Player player, Interacter target, Stage targetStage) {
+            print("You attempt to use the dissolving potion on the " + target + ".");
+            if (target instanceof AbstractUnit) {
+                ((AbstractUnit)target).setHP(0);
+                print("The " + target + " dissolves into a puddle.");
+                return true;
+            } else {
+                print("You can't dissolve the " + target + ".");
+                return false;
+            }
         }
     }
 

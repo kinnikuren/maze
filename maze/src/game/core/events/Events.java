@@ -17,6 +17,7 @@ import game.objects.units.Bestiary;
 import game.objects.units.Player;
 import game.objects.units.Bestiary.Monster;
 import game.objects.units.Bestiary.Skeleton;
+import game.core.maze.MazeMap.Gate;
 
 import java.util.Iterator;
 import java.util.List;
@@ -136,7 +137,7 @@ public final class Events {
     }
 
     public static Boolean run(Player player, Commands trigger, String object, String prep,
-            String secondObject, Stage stage) {
+            String secondObject, Stage stage, Stage secondStage) {
         Boolean response = false;
         log("responding to..." + player + " " + trigger + " " + object + " " + prep + " " +
                 secondObject + " in " + stage.getName(), LOW);
@@ -145,8 +146,17 @@ public final class Events {
             response = null;
             log(stage.getName() + " does not contain " + object);
         } else if (!stage.contains(secondObject)) {
-            response = null;
             log(stage.getName() + " does not contain " + secondObject);
+
+            //check if other stage (room) has second object
+            if (!secondStage.contains(secondObject)) {
+                log(secondStage.getName() + " also does not contain " + secondObject);
+                response = null;
+            } else {
+                log(secondStage.getName() + " contains " + secondObject);
+                stage.getCurrentEvents(trigger, object, prep, secondObject, secondStage);
+                response = run(player, stage, Token.SINGLE);
+            }
         } else {
             stage.getCurrentEvents(trigger, object, prep, secondObject);
             response = run(player, stage, Token.SINGLE);
@@ -383,6 +393,16 @@ public final class Events {
       return event;
     }
 
+    public static Event describe(final Gate gate) {
+        Event event = new Event(gate, LOW) {
+          @Override public ResultMessage fire(Player player) {
+              print(gate.inspect());
+            return null;
+          }
+        };
+      return event;
+    }
+
     public static Event combine(final Portable firstItem, final Portable secondItem) {
         Event event = new Event(firstItem, LOW) {
             @Override public ResultMessage fire(Player player) {
@@ -397,6 +417,19 @@ public final class Events {
                 } else {
                     print("You cannot combine " + firstItem.name() + " and " + secondItem.name()
                             + ".");
+                }
+                return null;
+            }
+        };
+        return event;
+    }
+
+    public static Event useOn(final Useable item, final Interacter target, Stage secondStage) {
+        Event event = new Event(item, LOW) {
+            @Override public ResultMessage fire(Player player) {
+                log("You use " + item + " on " + target + ".");
+                if (item.usedBy(player, target, secondStage)) {
+                    secondStage.removeActor(target);
                 }
                 return null;
             }

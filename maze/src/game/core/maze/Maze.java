@@ -123,7 +123,8 @@ public class Maze {
     public void printMazeContents() {
         log("\nMaze Contents: ");
         for (Room r : map.viewAllRooms()) {
-            log(r + " -> " + r.contents());
+            log(r + " -> " + r.interactionMap.values());
+            //r.describeRoom();
             /* check for uniqueness
             for (Interacter i : r.contents) {
                 print(i.hashCode());
@@ -227,7 +228,7 @@ public class Maze {
 
     //private
     public void populateRooms() {
-        //PopulateRoom.run(this);
+        PopulateRoom.run(this);
         //for (Room room : map.viewAllRooms()) {
         //  room.populateRoom();
         // }

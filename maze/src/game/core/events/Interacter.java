@@ -15,6 +15,8 @@ public interface Interacter {
 
     public Event interact(Commands trigger, String prep, Interacter interactee);
 
+    public Event interact(Commands trigger, String prep, Interacter interactee, Stage secondStage);
+
     public boolean isDone(Stage stage);
 
     public int getMaxSpawn();

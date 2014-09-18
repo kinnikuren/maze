@@ -45,6 +45,8 @@ public class RunMazeTest {
         log("Center location => " + coolMaze.center());
         log("Final size: " + coolMaze.size());
 
+        coolMaze.populateRooms();
+
 
         //AStar.discover(coolMaze);
         print("\nMaze Run Test 4.0 :: Maze project.");
@@ -69,6 +71,8 @@ public class RunMazeTest {
         you.getInventory().add(new WoodenStick());
         you.getInventory().add(new OilyRag());
         */
+        you.inventory().add(new DissolvingPotion());
+        you.getRoom().addActor(new Rat());
 
         you.getRoom().setVisitedTrue(you);
             Skeleton sk1 = new Skeleton();

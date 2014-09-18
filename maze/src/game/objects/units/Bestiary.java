@@ -77,6 +77,11 @@ public final class Bestiary {
 
         @Override
         public Event interact(Commands trigger, String prep, Interacter interactee) { return null; }
+
+        @Override
+        public Event interact(Commands trigger, String prep, Interacter interactee, Stage secondStage) {
+            return null;
+        }
     }
 
     public static class PartyRep extends Monster {

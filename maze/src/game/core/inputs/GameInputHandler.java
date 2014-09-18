@@ -73,7 +73,8 @@ public final class GameInputHandler {
                     print("What do you want to " + leadCmd + " " + arg + " " + prep + "?");
                 }
                 else {
-                    performAction(you, leadCmd, arg, prep, secondObject, you.inventory());
+                    performAction(you, leadCmd, arg, prep, secondObject, you.inventory(),
+                            you.getRoom());
                 }
             } else {
                 performAction(you, leadCmd, arg, you.inventory());
@@ -286,8 +287,8 @@ public final class GameInputHandler {
     }
 
     public static boolean performAction(Player you, Commands action, String object, String prep,
-            String secondObject, Stage stage) {
-        Boolean result = Events.run(you, action, object, prep, secondObject, stage);
+            String secondObject, Stage stage, Stage secondStage) {
+        Boolean result = Events.run(you, action, object, prep, secondObject, stage, secondStage);
         return true;
     }
 

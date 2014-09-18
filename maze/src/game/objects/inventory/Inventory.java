@@ -206,8 +206,20 @@ public class Inventory implements Stage {
       return manager.getCurrentEvents(trigger, objectName);
     }
 
+    @Override
     public PriorityQueue<Event> getCurrentEvents(Commands trigger, String objectName, String prep,
             String secondObjectName) {
       return manager.getCurrentEvents(trigger, objectName, prep, secondObjectName);
+    }
+
+    @Override
+    public PriorityQueue<Event> getCurrentEvents(Commands trigger, String objectName, String prep,
+            String secondObjectName, Stage secondStage) {
+        return manager.getCurrentEvents(trigger, objectName, prep, secondObjectName, secondStage);
+    }
+
+    @Override
+    public Iterable<Portable> getActors() {
+        return portables;
     }
 }

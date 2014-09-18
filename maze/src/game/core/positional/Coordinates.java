@@ -1,7 +1,7 @@
 package game.core.positional;
 
 import game.core.maze.MazeMap.Gate;
-import game.core.maze.MazeMap.Key;
+import game.objects.items.Trinkets.Key;
 
 import java.util.EnumSet;
 import java.util.Set;
@@ -9,6 +9,7 @@ import java.util.Collections;
 
 import static util.Utilities.*;
 import static game.core.positional.Cardinals.*;
+
 import util.BinaryFunction;
 
 public final class Coordinates {

@@ -34,4 +34,9 @@ implements Interacter {
 
     @Override
     public Event interact(Commands trigger, String prep, Interacter interactee) { return null; }
+
+    @Override
+    public Event interact(Commands trigger, String prep, Interacter interactee, Stage secondStage) {
+        return null;
+    }
 }

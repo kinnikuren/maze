@@ -73,6 +73,9 @@ implements Fighter {
     @Override
     public abstract Event interact(Commands trigger, String prep, Interacter interactee);
 
+    @Override
+    public abstract Event interact(Commands trigger, String prep, Interacter interactee, Stage secondStage);
+
     //begin fighter methods
     @Override
     public int attack(int enemyDefense, boolean crit) {

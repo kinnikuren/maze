@@ -107,6 +107,12 @@ public abstract class AbstractRoom implements Stage {
     }
 
     @Override
+    public PriorityQueue<Event> getCurrentEvents(Commands trigger, String objectName, String prep,
+            String secondObjectName, Stage secondStage) {
+        return manager.getCurrentEvents(trigger, objectName, prep, secondObjectName, secondStage);
+    }
+
+    @Override
     public boolean contains(String objectName) {
       return manager.contains(objectName);
     }
@@ -120,6 +126,8 @@ public abstract class AbstractRoom implements Stage {
     public void addToRoom() { }
 
     public List<Interacter> contents() { return contents; }
+
+    public Iterable<Interacter> getActors() { return contents; }
 
     public Collection<Interacter> interactions() {
       return interactionMap.values();

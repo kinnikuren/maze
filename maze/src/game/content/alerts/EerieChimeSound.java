@@ -33,6 +33,11 @@ public class EerieChimeSound implements Interacter {
     public Event interact(Commands trigger, String prep, Interacter interactee) { return null; }
 
     @Override
+    public Event interact(Commands trigger, String prep, Interacter interactee, Stage secondStage) {
+        return null;
+    }
+
+    @Override
     public boolean isDone(Stage stage) { return true; }
     @Override
     public String toString() { return "EerieChimeSound"; }

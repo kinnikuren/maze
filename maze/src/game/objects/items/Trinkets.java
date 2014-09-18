@@ -58,14 +58,6 @@ public final class Trinkets {
         @Override public int weight() { return 16; }
     }
 
-    public static class RedKey extends AbstractItemTrinket {
-        public RedKey() { }
-        @Override public String name() { return "Red Key"; }
-        @Override public boolean matches(String name) { return matchRef(RED_KEY, name); }
-        @Override public String details() { return "It's a red key."; }
-        @Override public int weight() { return 1; }
-    }
-
     public static class OilyRag extends AbstractItemTrinket {
         public OilyRag() { }
         @Override public String name() { return "Oily Rag"; }
@@ -74,7 +66,53 @@ public final class Trinkets {
         @Override public int weight() { return 1; }
     }
 
-    public static class BlueKey extends AbstractItemTrinket {
+    public static abstract class Key extends AbstractItemTrinket {
+
+        /*
+
+        final String id;
+
+
+        private Key(String id) {
+            this.id = id;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == this) return true;
+
+            if (o instanceof Key) {
+              Key k = (Key)o;
+              if (k.id.equals(id)) return true;
+            }
+          return false;
+        }
+        @Override
+        public int hashCode() { return id.hashCode(); }
+
+
+        @Override
+        public String toString() { return this.id; }
+        */
+    }
+
+    public static class PlainKey extends Key {
+        public PlainKey() { }
+        @Override public String name() { return "Plain Key"; }
+        @Override public boolean matches(String name) { return matchRef(PLAIN_KEY, name); }
+        @Override public String details() { return "It's a plain, old key."; }
+        @Override public int weight() { return 1; }
+    }
+
+    public static class RedKey extends Key {
+        public RedKey() { }
+        @Override public String name() { return "Red Key"; }
+        @Override public boolean matches(String name) { return matchRef(RED_KEY, name); }
+        @Override public String details() { return "It's a red key."; }
+        @Override public int weight() { return 1; }
+    }
+
+    public static class BlueKey extends Key {
         public BlueKey() { }
         @Override public String name() { return "Blue Key"; }
         @Override public boolean matches(String name) { return matchRef(BLUE_KEY, name); }
@@ -82,7 +120,7 @@ public final class Trinkets {
         @Override public int weight() { return 1; }
     }
 
-    public static class PurpleKey extends AbstractItemTrinket {
+    public static class PurpleKey extends Key {
         public PurpleKey() { }
         @Override public String name() { return "Purple Key"; }
         @Override public boolean matches(String name) { return matchRef(PURPLE_KEY, name); }

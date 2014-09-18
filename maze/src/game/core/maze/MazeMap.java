@@ -5,7 +5,9 @@ import static game.core.events.Priority.*;
 import static game.core.inputs.Commands.*;
 import static util.Print.print;
 import static util.Utilities.*;
+import static util.Loggers.*;
 import game.core.events.Event;
+import game.core.events.Events;
 import game.core.events.Interacter;
 import game.core.events.Stage;
 import game.core.inputs.Commands;
@@ -15,6 +17,10 @@ import game.core.positional.Coordinate;
 import game.core.positional.Coordinates;
 import game.core.positional.Node;
 import game.core.positional.Node.Filter;
+import static game.objects.general.References.*;
+import game.objects.general.References;
+import game.objects.items.Trinkets;
+import game.objects.items.Trinkets.Key;
 import game.objects.units.AbstractUnit;
 
 import java.util.HashMap;
@@ -174,6 +180,10 @@ public class MazeMap {
       return roomMap.get(c);
     }
 
+    public Set<Gate> getGates() {
+        return gates;
+    }
+
     public void build(Room room) {
         checkNullArg(room);
         Node node = getNode(room.position);
@@ -265,14 +275,15 @@ public class MazeMap {
 
         if (!gates.contains(gate)) {
           if (gate.lock()) {
-            key = new Key("pseudokey" + ++keyCounter);
-            gate.key = key;
+            //key = new Key("pseudokey" + ++keyCounter);
+            //gate.key = key;
             gates.add(gate);
             r1.addActor(gate);
             r2.addActor(gate);
+            return gate.key;
           }
         }
-      return key;
+      return null;
     }
 
     public boolean unlockGate(Coordinate c1, Coordinate c2, Key key) {
@@ -284,37 +295,50 @@ public class MazeMap {
       return false;
     }
 
-    public class Key {
-        final String id;
-        private Key(String id) {
-            this.id = id;
-        }
-        @Override
-        public boolean equals(Object o) {
-            if (o == this) return true;
+    public Key addLockedGate(Gate gate) throws IllegalArgumentException {
+        Coordinate c1 = gate.g.c1;
+        Coordinate c2 = gate.g.c2;
 
-            if (o instanceof Key) {
-              Key k = (Key)o;
-              if (k.id.equals(id)) return true;
-            }
-          return false;
+        checkLegalArgs(c1, c2);
+        Key key = null;
+        Room r1 = getRoom(c1);
+        Room r2 = getRoom(c2);
+        if (anyNullObjects(r1, r2)) return key;
+
+        if (!gates.contains(gate)) {
+          if (gate.lock()) {
+              log("Adding locked gate to " + gate.g.c1 + " and " + gate.g.c2 + "...");
+            gates.add(gate);
+            r1.addActor(gate);
+            r2.addActor(gate);
+            return gate.key;
+          }
         }
-        @Override
-        public int hashCode() { return id.hashCode(); }
-        @Override
-        public String toString() { return this.id; }
+      return null;
     }
 
     public class Gate implements Interacter {
-        final Coordinates.Paired g;
+        protected Coordinates.Paired g;
         boolean locked = false;
         Key key;
-        int maxSpawn;
-        String rarity;
+        int maxSpawn = 1;
+        String rarity = "rare";
+        String name;
+        String desc;
+        Coordinate diff;
+        public final int classId = GATE.classId;
+        public final References ref = GATE;
 
-        private Gate(Coordinate c1, Coordinate c2) {
+        public Gate() {
+            g = null;
+        }
+
+        public Gate(Coordinate c1, Coordinate c2) {
             g = new Coordinates.Paired(c1, c2);
-            this.key = null;
+            this.key = new Trinkets.PlainKey();
+            diff = Coordinates.diff(this.g.c1, this.g.c2);
+            this.name = "Locked Gate";
+            this.desc = "This locked gate bars your path to the " + Cardinals.get(diff) + ".";
         }
         private Gate(Coordinate c1, Coordinate c2, Key key) {
             g = new Coordinates.Paired(c1, c2);
@@ -323,6 +347,16 @@ public class MazeMap {
         /* private void setKey(Key key) {
             this.key = key;
         } */
+
+        public Key getKey() {
+            return key;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+
         public boolean isLocked() {
             boolean lock1 = !MazeMap.this.viewNeighborsOf(g.c1).contains(g.c2);
             boolean lock2 = !MazeMap.this.viewNeighborsOf(g.c2).contains(g.c1);
@@ -332,13 +366,32 @@ public class MazeMap {
           return MazeMap.this.deleteLinkDouble(g.c1, g.c2);
         }
         public boolean unlock(Key key) {
-          return this.key == null ? false
-             : (!this.key.equals(key) ? false
-             : MazeMap.this.linkDouble(g.c1, g.c2));
+            boolean result = false;
+            if (this.key == null) {
+                result = false;
+            } else if (!this.key.equals(key)) {
+                result = false;
+            } else {
+                result = MazeMap.this.linkDouble(g.c1, g.c2);
+                if (result) {
+                    this.name = "Unlocked Gate";
+                    setDescription();
+                }
+            }
+            return result;
         }
         public boolean matches(Coordinate c1, Coordinate c2) {
           return this.g.matches(c1, c2);
         }
+
+        public void setDescription() {
+            this.desc = "This gate is now unlocked and the path " + Cardinals.get(diff) + " is clear.";
+        }
+
+        public String inspect() {
+            return desc;
+        }
+
         @Override
         public boolean equals(Object o) {
             if (o == this) return true;
@@ -354,10 +407,10 @@ public class MazeMap {
         public int hashCode() { return g.hashCode(); }
 
         @Override
-        public String name() { return "Gate"; }
+        public String name() { return name; }
         @Override
         public boolean matches(String name) {
-          return name().equalsIgnoreCase(name);
+          return matchRef(GATE, name);
         }
         @Override
         public boolean canInteract(AbstractUnit unit) {
@@ -365,11 +418,20 @@ public class MazeMap {
         }
         @Override
         public Event interact(Commands trigger) {
-          return isLocked() && trigger == WHEREGO ? announce(this, LOW, "You see a locked door.") : null;
+          //return isLocked() && trigger == WHEREGO ? announce(this, LOW, "You see a locked door.") : null;
+            Event event = null;
+            if (trigger == DESCRIBE)
+                event = Events.describe(this);
+            return event;
         }
 
         @Override
         public Event interact(Commands trigger, String prep, Interacter interactee) { return null; }
+
+        @Override
+        public Event interact(Commands trigger, String prep, Interacter interactee, Stage secondStage) {
+            return null;
+        }
 
         @Override
         public boolean isDone(Stage stage) { return false; }
@@ -387,5 +449,27 @@ public class MazeMap {
         public String getRarity() { return rarity; }
         @Override
         public void setRarity(String rarity) { this.rarity = rarity; }
+    }
+
+    public class RedDoor extends Gate {
+        public final int classId = RED_DOOR.classId;
+        public final References ref = RED_DOOR;
+
+        public RedDoor() {
+            g = null;
+        }
+
+        public RedDoor(Coordinate c1, Coordinate c2) {
+            g = new Coordinates.Paired(c1, c2);
+            this.key = new Trinkets.RedKey();
+            diff = Coordinates.diff(this.g.c1, this.g.c2);
+            this.name = "Locked Red Door";
+            this.desc = "This red door bars your path to the " + Cardinals.get(diff) + ".";
+        }
+
+        @Override
+        public boolean matches(String name) {
+          return matchRef(RED_DOOR, name);
+        }
     }
 }

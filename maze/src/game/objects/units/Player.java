@@ -15,6 +15,7 @@ import game.core.inputs.Commands;
 import game.core.inputs.GrammarGuy;
 import game.core.maze.Maze;
 import game.core.maze.Maze.Room;
+import game.core.maze.MazeMap.Gate;
 import game.core.positional.Cardinals;
 import game.core.positional.Coordinate;
 import game.objects.general.SpellBook;
@@ -284,6 +285,11 @@ implements Fighter {
     public Event interact(Commands trigger, String prep, Interacter interactee) { return null; }
 
     @Override
+    public Event interact(Commands trigger, String prep, Interacter interactee, Stage secondStage) {
+        return null;
+    }
+
+    @Override
     public boolean isDone(Stage stage) {
       return false; //dummy method
     }
@@ -373,6 +379,14 @@ implements Fighter {
              }
          }
     }
+
+    /*
+    public void unlockGate() {
+        Interacter g = this.getRoom().interactionMap.get("Locked Gate").get(0);
+        print(((Gate)g).inspect());
+        this.getRoom().interactionMap.removeAll("Locked Gate");
+        this.getRoom().interactionMap.put(g.name(), g);
+    }*/
 
     public void addToInventory(Portable item) { inventory.add(item); }
 

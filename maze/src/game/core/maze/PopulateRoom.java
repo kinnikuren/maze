@@ -4,6 +4,8 @@ import static util.Print.print;
 import static util.Loggers.*;
 import static game.core.events.Priority.*;
 import game.content.alerts.EerieChimeSound;
+import game.content.general.SpawningPool;
+import game.core.events.Interacter;
 import game.core.positional.Coordinate;
 import game.objects.general.BestiaryGenerator;
 import game.objects.items.Idol;
@@ -19,32 +21,22 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
-//import org.springframework.context.ApplicationContext;
-//import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-
-
-
-
-
-
-
-
-
-
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class PopulateRoom {
     private static Random rand = new Random();
 
-    /* public static void run(Maze maze) {
+    public static void run(Maze maze) {
         ApplicationContext context =
             new ClassPathXmlApplicationContext("beans.xml");
 
         RoomPopulator pr = (RoomPopulator) context.getBean("roomPopulator");
+        GateKeeper gk = (GateKeeper) context.getBean("gateKeeper");
 
         //System.out.println(pr.getSpawnSet());
 
-        for (maze.SpawningPool.Spawner s : pr.getSpawnSet()) {
+        for (SpawningPool.Spawner s : pr.getSpawnSet()) {
             Interacter spawnee = s.spawn();
             log("Spawning " + spawnee + "...");
 
@@ -70,7 +62,6 @@ public class PopulateRoom {
 
             Coordinate[] spawnPoints =
                     coordinateSet.toArray(new Coordinate[coordinateSet.size()]);
-                */
             /*
             System.out.print("Possible spawn points: ");
             for (Coordinate c : spawnPoints) {
@@ -78,7 +69,7 @@ public class PopulateRoom {
             }
 
             System.out.println(""); */
-            /*
+
             for (int i=0;i < maxSpawn;i++) {
                 int rand = new Random().nextInt(coordinateSet.size());
                 spawnPoint = spawnPoints[rand];
@@ -86,8 +77,11 @@ public class PopulateRoom {
                 maze.getRoom(spawnPoint).addActor(s.spawn());
             }
         }
+
+        gk.buildGates(maze);
+
         log("Done spawning!");
         maze.printMazeContents();
 
-    } */
+    }
 }
