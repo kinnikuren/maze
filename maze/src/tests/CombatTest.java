@@ -1,21 +1,22 @@
 package tests;
 
+import game.content.encounters.Parade;
+import game.core.events.Module;
+import game.core.events.Priority;
+import game.core.maze.Maze;
+import game.core.maze.MazeFactory;
+import game.core.pathfinding.AStar;
+import game.core.positional.Coordinate;
+import game.objects.units.Player;
+import game.player.util.Statistics;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import maze.AStar;
-import maze.Coordinate;
-import maze.Maze;
-import maze.MazeFactory;
-import maze.Module;
-import maze.Parade;
-import maze.Player;
-import maze.Priority;
-import maze.Statistics;
-import static maze.Bestiary.*;
-import static maze.Consumables.*;
-import static maze.Weapons.*;
+import static game.objects.items.Consumables.*;
+import static game.objects.items.Weapons.*;
+import static game.objects.units.Bestiary.*;
 import static util.Loggers.programLog;
 
 public class CombatTest {
@@ -54,7 +55,7 @@ public class CombatTest {
         monsters.add(new Rat());
         monsters.add(new RabidRat());
 
-        maze.InteractionHandler.run(monsters, you, new Module.Fight());
+        game.core.events.InteractionHandler.run(monsters, you, new Module.Fight());
 
         //maze.InteractionHandler.run(new Skeleton(), you, new Module.Fight());
     }

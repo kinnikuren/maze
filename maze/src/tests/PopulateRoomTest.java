@@ -2,20 +2,19 @@ package tests;
 
 import static util.Print.print;
 import static util.Loggers.*;
-import static maze.Priority.*;
-
-import maze.BestiaryGenerator;
-import maze.Coordinate;
-import maze.EerieChimeSound;
-import maze.Idol;
-import maze.Maze;
-import maze.Bestiary.*;
-import maze.Consumables.*;
-import maze.Useables.*;
-import maze.Maze.Room;
-import maze.Trinkets.*;
-import maze.Weapons.*;
-import maze.Armor.*;
+import static game.core.events.Priority.*;
+import game.content.alerts.EerieChimeSound;
+import game.core.maze.Maze;
+import game.core.maze.Maze.Room;
+import game.core.positional.Coordinate;
+import game.objects.general.BestiaryGenerator;
+import game.objects.items.Idol;
+import game.objects.items.Armor.*;
+import game.objects.items.Consumables.*;
+import game.objects.items.Trinkets.*;
+import game.objects.items.Useables.*;
+import game.objects.items.Weapons.*;
+import game.objects.units.Bestiary.*;
 
 public class PopulateRoomTest {
     static int spawnFactor = 2;
@@ -24,7 +23,7 @@ public class PopulateRoomTest {
         BestiaryGenerator.spawnMonsters(room);
         if (position.equals(center)) {
 
-            room.addActor(new maze.MysteriousConsole());
+            room.addActor(new game.objects.items.MysteriousConsole());
 
             room.addActor(new Idol());
             room.addActor(new HealingPotion());

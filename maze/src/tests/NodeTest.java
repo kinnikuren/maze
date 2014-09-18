@@ -2,6 +2,10 @@ package tests;
 
 import maze.*;
 import static util.Print.*;
+import game.core.maze.MazeMap;
+import game.core.positional.Cardinals;
+import game.core.positional.Coordinate;
+import game.core.positional.Node;
 
 import java.util.*;
 import java.util.Map.Entry;

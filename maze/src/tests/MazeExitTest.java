@@ -1,19 +1,18 @@
 package tests;
 
 import static util.Print.print;
+import game.core.inputs.Commands;
+import game.core.inputs.GameInputHandler;
+import game.core.maze.Maze;
+import game.core.maze.MazeFactory;
+import game.core.positional.Coordinate;
+import game.objects.units.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 import java.util.HashSet;
-
-import maze.Commands;
-import maze.Coordinate;
-import maze.GameInputHandler;
-import maze.Maze;
-import maze.MazeFactory;
-import maze.Player;
 
 public class MazeExitTest {
 

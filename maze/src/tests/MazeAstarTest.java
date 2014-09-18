@@ -1,5 +1,13 @@
 package tests;
 
+import game.core.inputs.Commands;
+import game.core.inputs.GameInputHandler;
+import game.core.maze.Maze;
+import game.core.maze.MazeFactory;
+import game.core.pathfinding.AStar;
+import game.core.positional.Coordinate;
+import game.objects.units.Player;
+
 import java.util.*;
 import java.io.*;
 

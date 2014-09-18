@@ -1,7 +1,8 @@
 package util;
 
 import java.util.*;
-import static util.GrammarGuy.*;
+
+import static game.core.inputs.GrammarGuy.*;
 import static util.Loggers.*;
 
 public class TextParser {

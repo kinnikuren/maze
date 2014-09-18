@@ -1,7 +1,7 @@
 package tests;
 
-import maze.AbstractRoom;
-import maze.Coordinates;
+import game.core.maze.AbstractRoom;
+import game.core.positional.Coordinates;
 
 import com.google.common.math.*;
 

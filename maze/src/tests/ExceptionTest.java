@@ -1,4 +1,7 @@
 package tests;
+import game.core.positional.Coordinate;
+import game.core.positional.Node;
+
 import java.util.*;
 
 import util.ReadOnlyFlatIterator;

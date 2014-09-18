@@ -24,7 +24,7 @@ public class TextTest {
         }
 */
 
-        System.out.println(util.GrammarGuy.pluralizeNoun("father-in-law"));
+        System.out.println(game.core.inputs.GrammarGuy.pluralizeNoun("father-in-law"));
 
         /*
         for (int i=1; i<30; i++) {

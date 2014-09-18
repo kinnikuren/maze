@@ -2,7 +2,8 @@ package tests;
 
 import java.util.Arrays;
 import java.util.List;
-import static maze.Bestiary.*;
+
+import static game.objects.units.Bestiary.*;
 
 public enum ReferencesTest {
     //100 - 149 Normal Monsters
@@ -67,16 +68,16 @@ public enum ReferencesTest {
     public final int classId;
     private final List<String> shortcuts;
     public boolean spawnOnce = false;
-    public maze.AbstractUnit unit;
+    public game.objects.units.AbstractUnit unit;
 
-    ReferencesTest(int classId, boolean spawnOnce, String[] shortcuts, maze.AbstractUnit unit) {
+    ReferencesTest(int classId, boolean spawnOnce, String[] shortcuts, game.objects.units.AbstractUnit unit) {
         this.shortcuts = Arrays.asList(shortcuts);
         this.classId = classId;
         this.spawnOnce = spawnOnce;
         this.unit = unit;
     }
 
-    public maze.AbstractUnit getUnit() {
+    public game.objects.units.AbstractUnit getUnit() {
         return unit;
     }
 

@@ -1,8 +1,8 @@
 package tests;
 
-import java.util.*;
+import game.core.positional.Coordinate;
 
-import maze.Coordinate;
+import java.util.*;
 
 public class ReverseTest {
     public static void main(String[] args) {

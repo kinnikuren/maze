@@ -3,20 +3,19 @@ package tests;
 import static util.Loggers.log;
 import static util.Loggers.programLog;
 import static util.Print.print;
+import game.content.encounters.Parade;
+import game.core.events.Priority;
+import game.core.maze.Maze;
+import game.core.maze.MazeFactory;
+import game.core.pathfinding.AStar;
+import game.core.positional.Coordinate;
+import game.objects.units.Player;
+import game.player.util.Statistics;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
-
-import maze.AStar;
-import maze.Coordinate;
-import maze.Maze;
-import maze.MazeFactory;
-import maze.Parade;
-import maze.Player;
-import maze.Priority;
-import maze.Statistics;
 
 public class EncounterTest {
 

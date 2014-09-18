@@ -1,5 +1,10 @@
 package tests;
 
+import game.core.positional.Cardinals;
+import game.core.positional.Coordinate;
+import game.core.positional.Coordinates;
+import game.core.positional.Node;
+
 import java.util.*;
 
 import util.View;

@@ -1,6 +1,6 @@
 package util;
-import static maze.Priority.*;
-import maze.Priority;
+import static game.core.events.Priority.*;
+import game.core.events.Priority;
 import static util.Print.*;
 
 public final class Logger {

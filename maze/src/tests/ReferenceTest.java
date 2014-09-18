@@ -1,9 +1,9 @@
 package tests;
 
+import game.objects.general.References;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import maze.References;
 
 public class ReferenceTest {
 

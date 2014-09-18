@@ -1,7 +1,7 @@
 package tests;
 
 import maze.*;
-import maze.Weapons.Dagger;
+import game.objects.items.Weapons.Dagger;
 
 import java.util.*;
 

@@ -2,25 +2,21 @@ package tests;
 
 import static util.Loggers.log;
 import static util.Print.print;
+import game.core.events.Interacter;
+import game.core.maze.Maze;
+import game.core.maze.MazeFactory;
+import game.core.pathfinding.AStar;
+import game.core.positional.Coordinate;
+import game.core.positional.Coordinates;
+import game.objects.general.References;
+import game.objects.units.Player;
+import game.objects.units.Bestiary.*;
+import game.player.util.Statistics;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-
-import maze.AStar;
-import maze.Coordinate;
-import maze.Coordinates;
-import maze.Interacter;
-import maze.Maze;
-import maze.MazeFactory;
-import maze.Player;
-import maze.References;
-import maze.Statistics;
-import maze.Bestiary.*;
-
-//import org.springframework.context.ApplicationContext;
-//import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import util.View;
 import util.Views;

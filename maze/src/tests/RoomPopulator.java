@@ -1,8 +1,8 @@
 package tests;
 
-import java.util.Set;
+import game.content.general.SpawningPool.Spawner;
 
-import maze.SpawningPool.Spawner;
+import java.util.Set;
 
 public class RoomPopulator {
     private Set<Spawner> spawnSet;

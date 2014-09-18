@@ -1,8 +1,8 @@
 package tests;
 
-import maze.BestiaryBean;
-
 import org.beanio.*;
+
+import game.objects.general.BestiaryBean;
 
 import java.io.*;
 import java.util.ArrayList;
