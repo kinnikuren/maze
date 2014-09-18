@@ -1,5 +1,7 @@
 package tests;
 
+import game.core.positional.Coordinate;
+
 import java.util.List;
 import java.util.HashSet;
 

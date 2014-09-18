@@ -1,5 +1,13 @@
 package tests;
 
+import game.core.inputs.Commands;
+import game.core.inputs.GameInputHandler;
+import game.core.maze.Maze;
+import game.core.maze.MazeFactory;
+import game.core.pathfinding.AStar;
+import game.core.positional.Coordinate;
+import game.objects.units.Player;
+
 import java.util.*;
 import java.io.*;
 
@@ -63,11 +71,11 @@ public class MazeAstarTest {
         do {
             print("\nPlease enter a command: ");
             input = scanner.nextLine();
-            GameInputHandler.run(input, you, coolMaze, path);
+            GameInputHandler.run(input, you, coolMaze);
         } while(Commands.get(input) != Commands.EXITMAZE);
 
         print("\nHere is your path: ");
-        for(Coordinate c : path) {
+        for(Coordinate c : you.getPath()) {
             System.out.print(" -> " + c);
         }
         scanner.close();

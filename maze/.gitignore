@@ -1,1 +1,7 @@
-/bin/
+*.class
+.classpath
+bin
+.metadata
+RemoteSystemsTempFiles
+build
+.DS_Store

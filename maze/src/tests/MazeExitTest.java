@@ -1,6 +1,12 @@
 package tests;
 
 import static util.Print.print;
+import game.core.inputs.Commands;
+import game.core.inputs.GameInputHandler;
+import game.core.maze.Maze;
+import game.core.maze.MazeFactory;
+import game.core.positional.Coordinate;
+import game.objects.units.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,19 +14,14 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.HashSet;
 
-import maze.Commands;
-import maze.Coordinate;
-import maze.GameInputHandler;
-import maze.Maze;
-import maze.MazeFactory;
-import maze.Player;
-
 public class MazeExitTest {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String input;
         String name;
+
+        int sizeIncreaseFactor = 5;
 
         HashSet<Coordinate> positionSet = new HashSet<Coordinate>();
 
@@ -38,8 +39,8 @@ public class MazeExitTest {
         positionSet.add(new Coordinate(-1,1));
         positionSet.add(new Coordinate(1,2)); //10th
 
-        Maze coolMaze = MazeFactory.buildMaze(positionSet, positionSet.size()+30,
-                center);
+        Maze coolMaze = MazeFactory.buildMaze(positionSet,
+                positionSet.size() + sizeIncreaseFactor, center);
 
         //Maze coolMaze = MazeFactory.buildMaze(20);
 

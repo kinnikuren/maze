@@ -2,13 +2,16 @@ package tests;
 
 import static util.Print.print;
 import static util.Utilities.*;
+import game.core.maze.Maze.Room;
+import game.core.positional.Cardinals;
+import game.core.positional.Coordinate;
+import game.core.positional.Node;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import maze.Maze.Room;
 import maze.*;
 import util.View;
 

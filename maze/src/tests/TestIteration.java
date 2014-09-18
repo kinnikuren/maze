@@ -1,7 +1,9 @@
 package tests;
 
+import game.core.positional.Coordinate;
+
 import java.util.*;
-import maze.Coordinate;
+
 import static util.Print.*;
 
 public class TestIteration {

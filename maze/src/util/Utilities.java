@@ -1,7 +1,30 @@
 package util;
 
+import game.core.positional.Coordinate;
+import game.core.positional.Node;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.ListIterator;
+
+import com.google.common.base.Predicate;
+
 public final class Utilities {
     private Utilities() { } //no instantiation
+
+    public enum NullFilter implements Predicate<Object> {
+        //allows for view filtering on set of nodes for listed conditions
+        NOT_NULL {
+          @Override public boolean apply(Object object) {
+            return object != null;
+          }
+        },
+        NULL {
+          @Override public boolean apply(Object object) {
+            return object == null;
+          };
+        }
+    }
 
     public static void checkNullArg(Object o) throws NullArgumentException {
         if (o == null) throw new NullArgumentException("Null arguments are not allowed for this method.");
@@ -48,5 +71,18 @@ public final class Utilities {
     public static int sign(double x) {
     //returns 1 for positive doubles, -1 for negative doubles, and 0 for 0
       return x > 0 ? 1 : (x < 0 ? -1 : 0);
+    }
+
+    public static <E> LinkedList<E> reverseLinkedList(LinkedList<E> list) {
+        LinkedList<E> reverse = new LinkedList<E>();
+
+        for (Iterator<E> itr = list.descendingIterator(); itr.hasNext();) {
+          reverse.add(itr.next());
+        }
+        list.clear();
+        for (E e : reverse) {
+          list.add(e);
+        }
+      return list;
     }
 }

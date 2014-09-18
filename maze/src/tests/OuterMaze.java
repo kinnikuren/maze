@@ -1,4 +1,6 @@
 package tests;
+import game.core.maze.AbstractRoom;
+import game.core.positional.Coordinate;
 import maze.*;
 
 public class OuterMaze {

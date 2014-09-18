@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+   <bean id="goblin" class="maze.Bestiary.Goblin" scope="prototype">
+       <property name="message" value="Hello World!"/>
+       <property name="maxSpawn" value="5"/>
+   </bean>
+
+   <bean id="skeleton" class="maze.Bestiary.Skeleton" scope="prototype">
+       <property name="maxSpawn" value="5"/>
+       <property name="rarity" value="medium"/>
+   </bean>
+
+   <bean id="rat" class="maze.Bestiary.Rat" scope="prototype">
+       <property name="maxSpawn" value="15"/>
+   </bean>
+
+   <bean id="ratKing" class="maze.Bestiary.RatKing" scope="singleton">
+       <property name="maxSpawn" value="1"/>
+       <property name="rarity" value="rare"/>
+   </bean>
+
+   <bean id="oilyRag" class="maze.Trinkets.OilyRag" scope="singleton"></bean>
+
+   <bean id="matches" class="maze.Useables.Matches" scope="singleton"></bean>
+
+   <bean id="woodenStick" class="maze.Weapons.WoodenStick" scope="singleton"></bean>
+   <bean id="longsword" class="maze.Weapons.LongSword" scope="singleton"></bean>
+   <bean id="dagger" class="maze.Weapons.Dagger" scope="singleton"></bean>
+
+   <bean id="fedora" class="maze.Armor.BrownFedora" scope="singleton"></bean>
+
+   <bean id="bronzeCoin" class="maze.Trinkets.BronzeCoin" scope="prototype">
+       <property name="maxSpawn" value="20"/>
+   </bean>
+
+   <bean id="goldCoin" class="maze.Trinkets.GoldCoin" scope="prototype">
+       <property name="maxSpawn" value="5"/>
+   </bean>
+
+   <bean id="silverCoin" class="maze.Trinkets.SilverCoin" scope="prototype">
+       <property name="maxSpawn" value="5"/>
+   </bean>
+
+   <bean id="idol" class="maze.Idol" scope="singleton">
+       <property name="maxSpawn" value="1"/>
+       <property name="rarity" value="medium-rare"/>
+   </bean>
+
+   <bean id="console" class="maze.MysteriousConsole" scope="singleton">
+       <property name="maxSpawn" value="1"/>
+       <property name="rarity" value="medium-rare"/>
+   </bean>
+
+   <bean id="roomPopulator" class="maze.RoomPopulator">
+        <property name="spawnSet">
+            <set>
+                <bean class="maze.SpawningPool.GoblinSpawner">
+                    <lookup-method name="spawn" bean="goblin"/>
+                </bean>
+                <bean class="maze.SpawningPool.SkeletonSpawner">
+                    <lookup-method name="spawn" bean="skeleton"/>
+                </bean>
+                <bean class="maze.SpawningPool.RatSpawner">
+                    <lookup-method name="spawn" bean="rat"/>
+                </bean>
+                <bean class="maze.SpawningPool.RatKingSpawner">
+                    <lookup-method name="spawn" bean="ratKing"/>
+                </bean>
+                <bean class="maze.SpawningPool.BronzeCoinSpawner">
+                    <lookup-method name="spawn" bean="bronzeCoin"/>
+                </bean>
+                <bean class="maze.SpawningPool.SilverCoinSpawner">
+                    <lookup-method name="spawn" bean="silverCoin"/>
+                </bean>
+                <bean class="maze.SpawningPool.GoldCoinSpawner">
+                    <lookup-method name="spawn" bean="goldCoin"/>
+                </bean>
+                <bean class="maze.SpawningPool.OilyRagSpawner">
+                    <lookup-method name="spawn" bean="oilyRag"/>
+                </bean>
+                <bean class="maze.SpawningPool.WoodenStickSpawner">
+                    <lookup-method name="spawn" bean="woodenStick"/>
+                </bean>
+                <bean class="maze.SpawningPool.LongswordSpawner">
+                    <lookup-method name="spawn" bean="longsword"/>
+                </bean>
+                <bean class="maze.SpawningPool.FedoraSpawner">
+                    <lookup-method name="spawn" bean="fedora"/>
+                </bean>
+                <bean class="maze.SpawningPool.DaggerSpawner">
+                    <lookup-method name="spawn" bean="dagger"/>
+                </bean>
+                <bean class="maze.SpawningPool.MatchesSpawner">
+                    <lookup-method name="spawn" bean="matches"/>
+                </bean>
+                <bean class="maze.SpawningPool.IdolSpawner">
+                    <lookup-method name="spawn" bean="idol"/>
+                </bean>
+                <bean class="maze.SpawningPool.ConsoleSpawner">
+                    <lookup-method name="spawn" bean="console"/>
+                </bean>
+            </set>
+        </property>
+        <!--
+        <property name="unit" ref="goblin"/>
+        <lookup-method name="spawnUnit" bean="goblin"/>
+        <property name="populateList">
+            <list>
+            </list>
+            <map>
+                <entry>
+                    <key><bean ref="goblin"/></key>
+                </entry>
+            </map>
+        </property>
+        -->
+   </bean>
+
+</beans>

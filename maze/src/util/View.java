@@ -4,30 +4,66 @@ import java.util.Iterator;
 import java.util.Map;
 
 import com.google.common.base.Function;
-
-import static util.Print.*;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 
 public class View<T> implements Iterable<T> {
-    private final Iterable<T> view;
+    protected final Iterable<T> view;
 
-    public <F> View(final Iterable<? extends F> originalSet,
+    //Constructors below. Each takes an Iterable to transform into the wrapped iterable view
+    //as well as various transformation mechanisms.
+    //The constructors use protected initialization methods to initialize the wrapped iterable view
+    //to allow subclass override of the initialization while keeping it final.
+    public <F> View(final Iterable<? extends F> fromIterable,
             final Function<? super F, ? extends T> transform) {
-        this.view = Views.transformReadOnly(originalSet, transform);
+        //iterating through this view will yield transformed versions of the members of the backing iterable
+        //the transformation is defined by the function
+        this.view = this.transform(fromIterable, transform);
     }
 
-    public <X, F> View(X agent, final Iterable<? extends F> originalSet,
+    public <X, F> View(X agent, final Iterable<? extends F> fromIterable,
             final BinaryFunction<? super X, ? super F, ? extends T> catalyzer) {
-        this.view = Views.catalyzeReadOnly(agent, originalSet, catalyzer);
+        //this is similar to the transformed view above, except it uses a binary function to transform
+        this.view = this.catalyze(agent, fromIterable, catalyzer);
     }
 
-    public View(final Iterable<? extends T> originalSet) {
-        this.view = Views.flattenReadOnly(originalSet);
+    public View(final Iterable<? extends T> fromIterable) {
+        //iterating through this view will yield type-flattened versions of the members of the backing iterable
+        //functionally equivalent to Collection<? extends T> given the original Collection<T>, except read-only
+        this.view = this.flatten(fromIterable);
+    }
+
+    public View(final Iterable<T> fromIterable, Predicate<? super T> predicate) {
+        //temp
+        this.view = Iterables.filter(fromIterable, predicate);
     }
 
     @SuppressWarnings("unchecked")
-    public <K, V> View(final Map<? extends K, ? extends V> originalMap) {
-        this.view = (Iterable<T>) Views.flattenMap(originalMap);
+    public <K, V> View(final Map<? extends K, ? extends V> fromMap) {
+        //temp
+        this.view = (Iterable<T>) Views.flattenMapReadOnly(fromMap);
     }
+    //end constructors
+
+    //protected initialization methods. The View class itself uses read-only transformations that
+    //will throw an exception if the 'remove' operation is attempted when using the iterator.
+    protected <F> Iterable<T> transform(final Iterable<? extends F> fromIterable,
+            final Function<? super F, ? extends T> transform) {
+
+        return Views.transformReadOnly(fromIterable, transform);
+    }
+
+    protected <X, F> Iterable<T> catalyze(X agent, final Iterable<? extends F> fromIterable,
+            final BinaryFunction<? super X, ? super F, ? extends T> catalyzer) {
+
+        return Views.catalyzeReadOnly(agent, fromIterable, catalyzer);
+    }
+
+    protected Iterable<T> flatten(final Iterable<? extends T> fromIterable) {
+
+        return Views.flattenReadOnly(fromIterable);
+    }
+    //end initialization methods
 
     public boolean contains(final Object o) {
         for (T t : view) {
@@ -73,16 +109,6 @@ public class View<T> implements Iterable<T> {
         }
       return arrayObj;
     }
-    /* public T[] toArray(T[] inputT) {
-    //takes an array of T as input and replaces its contents, if any, with the view contents
-        int i = 0;
-        T[] arrayT = Arrays.copyOf(inputT, size());
-        for (T t : view) {
-            arrayT[i] = t;
-            ++i;
-        }
-      return arrayT;
-    } */
 
     public String toString() {
         return view.toString();

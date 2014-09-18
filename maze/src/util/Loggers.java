@@ -1,6 +1,6 @@
 package util;
 
-import maze.Priority;
+import game.core.events.Priority;
 
 public final class Loggers {
     private Loggers() { } //no instantiation

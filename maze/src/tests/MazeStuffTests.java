@@ -1,6 +1,6 @@
 package tests;
 
-import maze.Bestiary.*;
+import game.objects.units.Bestiary.*;
 import static util.Print.*;
 
 public class MazeStuffTests {

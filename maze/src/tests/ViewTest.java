@@ -1,5 +1,9 @@
 package tests;
 
+import game.core.maze.AbstractRoom;
+import game.core.positional.Coordinate;
+import game.core.positional.Node;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -7,10 +11,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import util.View;
-import maze.Node;
-import maze.Coordinate;
-import maze.AbstractRoom;
-import static maze.AbstractRoom.*;
+import static game.core.maze.AbstractRoom.*;
 import static util.Print.*;
 
 public class ViewTest {
