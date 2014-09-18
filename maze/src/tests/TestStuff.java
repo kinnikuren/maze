@@ -1,8 +1,6 @@
 package tests;
 
 import static util.Print.*;
-import maze.*;
-
 import java.util.*;
 
 

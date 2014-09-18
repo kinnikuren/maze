@@ -8,7 +8,6 @@ import game.core.positional.Node;
 import java.util.*;
 
 import util.View;
-import maze.*;
 import static util.Print.*;
 
 import com.google.common.base.Function;

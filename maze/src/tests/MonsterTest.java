@@ -24,7 +24,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
-import maze.*;
 
 public class MonsterTest {
 

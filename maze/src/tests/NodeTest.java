@@ -1,6 +1,5 @@
 package tests;
 
-import maze.*;
 import static util.Print.*;
 import game.core.maze.MazeMap;
 import game.core.positional.Cardinals;

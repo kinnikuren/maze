@@ -11,7 +11,6 @@ import game.objects.units.Player;
 import java.util.*;
 import java.io.*;
 
-import maze.*;
 import static util.Print.*;
 
 public class MazeAstarTest {

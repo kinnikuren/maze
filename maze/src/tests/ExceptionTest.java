@@ -7,7 +7,6 @@ import java.util.*;
 import util.ReadOnlyFlatIterator;
 import util.View;
 import static util.Print.*;
-import maze.*;
 
 public class ExceptionTest {
 

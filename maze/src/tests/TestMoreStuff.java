@@ -1,12 +1,8 @@
 package tests;
 
-import maze.*;
 import game.objects.items.Weapons.Dagger;
-
 import java.util.*;
-
 import static util.Print.*;
-
 import java.math.*;
 
 @SuppressWarnings("unused")

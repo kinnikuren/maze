@@ -12,7 +12,6 @@ import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import maze.*;
 import util.View;
 
 import com.google.common.collect.Sets;

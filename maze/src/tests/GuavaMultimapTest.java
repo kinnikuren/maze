@@ -9,7 +9,6 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.HashMultimap;
 
 import static util.Print.*;
-import maze.*;
 
 public class GuavaMultimapTest {
 
