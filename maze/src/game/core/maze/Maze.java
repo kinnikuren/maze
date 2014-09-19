@@ -126,7 +126,7 @@ public class Maze {
             log(r + " -> " + r.interactionMap.values());
             //r.describeRoom();
             /* check for uniqueness
-            for (Interacter i : r.contents) {
+            for (Actor i : r.contents) {
                 print(i.hashCode());
             }
             */

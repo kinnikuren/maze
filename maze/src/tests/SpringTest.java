@@ -2,7 +2,7 @@ package tests;
 
 import static util.Loggers.log;
 import static util.Print.print;
-import game.core.events.Interacter;
+import game.core.interfaces.Actor;
 import game.core.maze.Maze;
 import game.core.maze.MazeFactory;
 import game.core.pathfinding.AStar;
@@ -89,7 +89,7 @@ public class SpringTest {
 
           //System.out.println(pr.getUnit());
 
-          //Interacter i = (Interacter) context.getBean("goblin");
+          //Actor i = (Actor) context.getBean("goblin");
 
           String name;
 
@@ -123,7 +123,7 @@ public class SpringTest {
           System.out.println(pr.getSpawnSet());
 
           for (maze.SpawningPool.Spawner s : pr.getSpawnSet()) {
-              Interacter spawnee = s.spawn();
+              Actor spawnee = s.spawn();
               log("Spawning " + spawnee + "...");
 
               maxSpawn = spawnee.getMaxSpawn();
@@ -166,7 +166,7 @@ public class SpringTest {
                   print("Maze exit: " + coolMaze.exit());
                   */
 
-                  //Interacter actor = (Interacter) context.getBean("goblin");
+                  //Actor actor = (Actor) context.getBean("goblin");
                   //coolMaze.getRoom(randCoordinate).addActor(pr.spawnUnit());
                   //coolMaze.getRoom(randCoordinate).addActor(actor);
 
@@ -189,7 +189,7 @@ public class SpringTest {
 
 
           for (References ref : References.values()) {
-              //Interacter actor = (Interacter) context.getBean(ref.name());
+              //Actor actor = (Actor) context.getBean(ref.name());
               //System.out.println(actor);
           }
 

@@ -10,9 +10,10 @@ import static util.Print.print;
 import static util.Utilities.checkNullArg;
 import game.core.events.Event;
 import game.core.events.Events;
-import game.core.events.Interacter;
-import game.core.events.Stage;
 import game.core.inputs.Commands;
+import game.core.interfaces.Actor;
+import game.core.interfaces.Portable;
+import game.core.interfaces.Stage;
 import game.core.positional.Coordinate;
 import game.objects.units.AbstractUnit;
 
@@ -49,7 +50,7 @@ public abstract class AbstractItemPortable extends AbstractItem implements Porta
       return event;
     }
 
-    public Event interact(Commands trigger, String prep, Interacter interactee) {
+    public Event interact(Commands trigger, String prep, Actor interactee) {
         if (trigger == COMBINE) {
             if (prep.equals("with")) {
                 return Events.combine(this, (Portable)interactee);
@@ -60,7 +61,7 @@ public abstract class AbstractItemPortable extends AbstractItem implements Porta
     }
 
     @Override
-    public Event interact(Commands trigger, String prep, Interacter interactee, Stage secondStage) {
+    public Event interact(Commands trigger, String prep, Actor interactee, Stage secondStage) {
         return null;
     }
 

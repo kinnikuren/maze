@@ -1,6 +1,6 @@
 package game.objects.general;
 
-import game.core.events.Interacter;
+import game.core.interfaces.Actor;
 import game.core.maze.AbstractRoom;
 import game.core.maze.Maze;
 
@@ -42,7 +42,7 @@ public class BestiaryGenerator {
     }
 
     public static boolean thereAreMonsters(Maze.Room room) {
-        for (Interacter actor : room.interactions()) {
+        for (Actor actor : room.interactions()) {
             if (actor instanceof Monster) return true;
         }
       return false;

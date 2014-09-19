@@ -2,9 +2,9 @@ package game.objects.items;
 
 import game.core.events.Event;
 import game.core.events.Events;
-import game.core.events.Questioner;
-import game.core.events.Stage;
 import game.core.inputs.Commands;
+import game.core.interfaces.Questioner;
+import game.core.interfaces.Stage;
 import game.core.positional.Coordinate;
 import game.objects.units.AbstractUnit;
 import game.objects.units.Player;
@@ -50,7 +50,7 @@ implements Questioner {
         this.createRiddles();
     }
 
-    //begin implementation of Interacter methods
+    //begin implementation of Actor methods
     @Override
     public boolean matches(String name) {
       return matchRef(IDOL, name);

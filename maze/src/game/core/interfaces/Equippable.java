@@ -1,4 +1,4 @@
-package game.objects.items;
+package game.core.interfaces;
 
 import game.objects.inventory.PaperDoll;
 import game.objects.inventory.PaperDoll.EquipSlots;

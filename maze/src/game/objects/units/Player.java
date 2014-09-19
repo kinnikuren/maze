@@ -8,11 +8,13 @@ import static util.Utilities.check;
 import static util.Utilities.sign;
 import game.content.encounters.EncounterTracker;
 import game.core.events.Event;
-import game.core.events.Fighter;
-import game.core.events.Interacter;
-import game.core.events.Stage;
 import game.core.inputs.Commands;
 import game.core.inputs.GrammarGuy;
+import game.core.interfaces.Equippable;
+import game.core.interfaces.Fighter;
+import game.core.interfaces.Actor;
+import game.core.interfaces.Portable;
+import game.core.interfaces.Stage;
 import game.core.maze.Maze;
 import game.core.maze.Maze.Room;
 import game.core.maze.MazeMap.Gate;
@@ -22,8 +24,6 @@ import game.objects.general.SpellBook;
 import game.objects.inventory.Inventory;
 import game.objects.inventory.PaperDoll;
 import game.objects.inventory.PaperDoll.EquipSlots;
-import game.objects.items.Equippable;
-import game.objects.items.Portable;
 import game.player.util.Attributes;
 import game.player.util.Narrator;
 
@@ -266,7 +266,7 @@ implements Fighter {
         }
       return didMove;
     }
-    //begin dummy methods for interacter
+    //begin dummy methods for Actor
     @Override
     public boolean matches(String name) {
       return name().equalsIgnoreCase(name);
@@ -282,10 +282,10 @@ implements Fighter {
     }
 
     @Override
-    public Event interact(Commands trigger, String prep, Interacter interactee) { return null; }
+    public Event interact(Commands trigger, String prep, Actor interactee) { return null; }
 
     @Override
-    public Event interact(Commands trigger, String prep, Interacter interactee, Stage secondStage) {
+    public Event interact(Commands trigger, String prep, Actor interactee, Stage secondStage) {
         return null;
     }
 
@@ -382,7 +382,7 @@ implements Fighter {
 
     /*
     public void unlockGate() {
-        Interacter g = this.getRoom().interactionMap.get("Locked Gate").get(0);
+        Actor g = this.getRoom().interactionMap.get("Locked Gate").get(0);
         print(((Gate)g).inspect());
         this.getRoom().interactionMap.removeAll("Locked Gate");
         this.getRoom().interactionMap.put(g.name(), g);

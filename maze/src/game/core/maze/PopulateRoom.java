@@ -2,8 +2,9 @@ package game.core.maze;
 
 import static util.Loggers.*;
 import game.content.general.SpawningPool;
-import game.core.events.Interacter;
+import game.core.interfaces.Actor;
 import game.core.positional.Coordinate;
+
 import java.util.HashSet;
 import java.util.Random;
 
@@ -23,7 +24,7 @@ public class PopulateRoom {
         //System.out.println(pr.getSpawnSet());
 
         for (SpawningPool.Spawner s : pr.getSpawnSet()) {
-            Interacter spawnee = s.spawn();
+            Actor spawnee = s.spawn();
             log("Spawning " + spawnee + "...");
 
             int maxSpawn = spawnee.getMaxSpawn();

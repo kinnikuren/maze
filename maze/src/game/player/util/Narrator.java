@@ -3,8 +3,8 @@ package game.player.util;
 import static util.Print.*;
 import static util.Loggers.*;
 import static game.core.events.Priority.*;
-import game.core.events.Fighter;
-import game.core.events.Interacter;
+import game.core.interfaces.Fighter;
+import game.core.interfaces.Actor;
 import game.core.maze.Maze.Room;
 import game.objects.units.Player;
 
@@ -55,7 +55,7 @@ public class Narrator {
 
         int trinketCount = 0;
 
-        Collection<Interacter> interactions = room.interactions();
+        Collection<Actor> interactions = room.interactions();
         List<String> monsterArray = new ArrayList<String>();
         List<String> itemArray = new ArrayList<String>();
         List<String> fixtureArray = new ArrayList<String>();
@@ -65,7 +65,7 @@ public class Narrator {
                     "The stone walls silently stare back at him.\n";
         }
         else {
-            for (Interacter i : interactions) {
+            for (Actor i : interactions) {
                 //print("Hello!");
                 if (i instanceof game.objects.units.Bestiary.Monster) {
                     //monsters = monsters + "a " + i.name() + ", ";
@@ -155,7 +155,7 @@ public class Narrator {
 
             if (trinketCount > 8) speech = speech + " So many trinkets!  Glittering prizes!";
 
-            for (Interacter i : interactions) {
+            for (Actor i : interactions) {
                 //print(room.howManyOf(i.name()) + " " + i.name());
                 //print(util.NumbersToText.convert(room.howManyOf(i.name())) + " " + i.name());
             }

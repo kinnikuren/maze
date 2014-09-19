@@ -1,6 +1,6 @@
 package game.objects.general;
 
-import game.objects.items.Portable;
+import game.core.interfaces.Portable;
 import game.objects.items.Trinkets.*;
 import game.objects.items.Useables.*;
 import game.objects.items.Weapons.*;

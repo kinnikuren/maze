@@ -7,9 +7,9 @@ import static util.Utilities.*;
 import static util.Loggers.*;
 import game.core.events.Event;
 import game.core.events.Events;
-import game.core.events.Interacter;
-import game.core.events.Stage;
 import game.core.inputs.Commands;
+import game.core.interfaces.Actor;
+import game.core.interfaces.Stage;
 import game.core.maze.Maze.Room;
 import game.core.positional.Cardinals;
 import game.core.positional.Coordinate;
@@ -317,7 +317,7 @@ public class MazeMap {
       return null;
     }
 
-    public class Gate implements Interacter {
+    public class Gate implements Actor {
         final Paired<Coordinate> g;
         Key key;
         int maxSpawn = 1;
@@ -416,7 +416,7 @@ public class MazeMap {
         }
         @Override
         public boolean canInteract(AbstractUnit unit) {
-          return true; //instanceof key, after changing interacter to object
+          return true; //instanceof key, after changing actor to object
         }
         @Override
         public Event interact(Commands trigger) {
@@ -428,10 +428,10 @@ public class MazeMap {
         }
 
         @Override
-        public Event interact(Commands trigger, String prep, Interacter interactee) { return null; }
+        public Event interact(Commands trigger, String prep, Actor interactee) { return null; }
 
         @Override
-        public Event interact(Commands trigger, String prep, Interacter interactee, Stage secondStage) {
+        public Event interact(Commands trigger, String prep, Actor interactee, Stage secondStage) {
             return null;
         }
 

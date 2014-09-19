@@ -1,10 +1,10 @@
 package game.content.general;
 
-import game.core.events.Interacter;
+import game.core.interfaces.Actor;
 
 public final class SpawningPool {
 
-    public static abstract class Spawner { public abstract Interacter spawn(); }
+    public static abstract class Spawner { public abstract Actor spawn(); }
 
     public static abstract class GoblinSpawner extends Spawner {  }
 

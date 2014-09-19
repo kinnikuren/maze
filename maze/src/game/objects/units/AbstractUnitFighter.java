@@ -1,10 +1,10 @@
 package game.objects.units;
 
 import game.core.events.Event;
-import game.core.events.Fighter;
-import game.core.events.Interacter;
-import game.core.events.Stage;
 import game.core.inputs.Commands;
+import game.core.interfaces.Fighter;
+import game.core.interfaces.Actor;
+import game.core.interfaces.Stage;
 import game.core.positional.Coordinate;
 import game.objects.inventory.Inventory;
 
@@ -64,17 +64,17 @@ implements Fighter {
         this.damageLow = 1;
         this.damageHigh = 2;
     }
-    //begin Interacter methods, abstract
+    //begin Actor methods, abstract
     @Override public abstract boolean matches(String name);
     @Override public abstract boolean canInteract(AbstractUnit unit);
     @Override public abstract Event interact(Commands trigger);
     @Override public abstract boolean isDone(Stage stage);
 
     @Override
-    public abstract Event interact(Commands trigger, String prep, Interacter interactee);
+    public abstract Event interact(Commands trigger, String prep, Actor interactee);
 
     @Override
-    public abstract Event interact(Commands trigger, String prep, Interacter interactee, Stage secondStage);
+    public abstract Event interact(Commands trigger, String prep, Actor interactee, Stage secondStage);
 
     //begin fighter methods
     @Override

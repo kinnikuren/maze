@@ -4,12 +4,12 @@ import static game.core.events.Events.*;
 import static game.core.events.Priority.*;
 import static game.core.inputs.Commands.*;
 import game.core.events.Event;
-import game.core.events.Interacter;
-import game.core.events.Stage;
 import game.core.inputs.Commands;
+import game.core.interfaces.Actor;
+import game.core.interfaces.Stage;
 import game.objects.units.AbstractUnit;
 
-public class EerieChimeSound implements Interacter {
+public class EerieChimeSound implements Actor {
     int maxSpawn;
     String rarity;
 
@@ -30,10 +30,10 @@ public class EerieChimeSound implements Interacter {
     }
 
     @Override
-    public Event interact(Commands trigger, String prep, Interacter interactee) { return null; }
+    public Event interact(Commands trigger, String prep, Actor interactee) { return null; }
 
     @Override
-    public Event interact(Commands trigger, String prep, Interacter interactee, Stage secondStage) {
+    public Event interact(Commands trigger, String prep, Actor interactee, Stage secondStage) {
         return null;
     }
 

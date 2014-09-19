@@ -1,9 +1,10 @@
-package game.core.events;
+package game.core.interfaces;
 
+import game.core.events.Event;
 import game.core.inputs.Commands;
 import game.objects.units.AbstractUnit;
 
-public interface Interacter {
+public interface Actor {
     public String name();
 
     public boolean matches(String name);
@@ -13,9 +14,9 @@ public interface Interacter {
     //calls InteractionHandler.run() in override of Event.fire(player);
     public Event interact(Commands trigger);
 
-    public Event interact(Commands trigger, String prep, Interacter interactee);
+    public Event interact(Commands trigger, String prep, Actor interactee);
 
-    public Event interact(Commands trigger, String prep, Interacter interactee, Stage secondStage);
+    public Event interact(Commands trigger, String prep, Actor interactee, Stage secondStage);
 
     public boolean isDone(Stage stage);
 

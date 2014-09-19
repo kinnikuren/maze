@@ -4,9 +4,10 @@ import static game.core.events.Events.*;
 import static game.core.inputs.Commands.*;
 import game.core.events.Event;
 import game.core.events.Events;
-import game.core.events.Interacter;
-import game.core.events.Stage;
 import game.core.inputs.Commands;
+import game.core.interfaces.Actor;
+import game.core.interfaces.Stage;
+import game.core.interfaces.Useable;
 import game.core.positional.Coordinate;
 import game.objects.units.Player;
 
@@ -28,7 +29,7 @@ implements Useable {
     }
 
     @Override
-    public Event interact(Commands trigger, String prep, Interacter interactee, Stage secondStage) {
+    public Event interact(Commands trigger, String prep, Actor interactee, Stage secondStage) {
         if (trigger == USE) {
             if (prep.equals("on")) {
                 return Events.useOn(this, interactee, secondStage);
@@ -40,5 +41,5 @@ implements Useable {
 
     @Override public abstract void usedBy(Player player);
 
-    @Override public boolean usedBy(Player player, Interacter target, Stage targetStage) { return false; }
+    @Override public boolean usedBy(Player player, Actor target, Stage targetStage) { return false; }
 }

@@ -4,6 +4,7 @@ import static game.core.events.Events.equip;
 import static game.core.events.Events.unequip;
 import game.core.events.Event;
 import game.core.inputs.Commands;
+import game.core.interfaces.Equippable;
 import game.core.positional.Coordinate;
 
 public abstract class AbstractItemEquippable extends AbstractItemPortable implements Equippable {

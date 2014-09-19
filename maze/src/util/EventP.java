@@ -1,54 +1,55 @@
-package game.core.events;
+package util;
 
 import static game.core.events.Priority.LOW;
 import static util.Loggers.log;
+import game.core.events.Event;
+import game.core.events.Events;
+import game.core.events.Priority;
 import game.core.interfaces.Actor;
+import game.core.interfaces.Consumable;
+import game.core.interfaces.Fighter;
 import game.core.interfaces.Stage;
-import game.objects.units.Bestiary;
+import game.core.interfaces.Useable;
 import game.objects.units.Player;
-import game.objects.units.Bestiary.Monster;
+import game.objects.units.Bestiary.Skeleton;
+import game.objects.items.Consumables.HealingPotion;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Event implements Comparable<Event> {
+public class EventP<A extends Actor> implements Comparable<EventP<A>> {
 
     //comparable implementation is intentionally not consistent with equals
-    private List<? extends Actor> actors;
+    private List<A> actors;
     //private Stage stage;
     private Priority priority;
     private boolean isSticky = false;
     public boolean cleanupActor = false;
 
-    public Event(Actor actor, Priority priority) {
-        List<Actor> temp = new ArrayList<Actor>();
+    public EventP(A actor, Priority priority) {
+        List<A> temp = new ArrayList<A>();
         temp.add(actor);
         this.actors = temp;
         this.priority = priority;
     }
 
-    public Event(List<? extends Actor> actors, Priority priority) {
+    public EventP(List<A> actors, Priority priority) {
         this.actors = actors;
         this.priority = priority;
     }
 
-    /* public Event(Actor actor, Stage stage, Priority priority) {
-        this.actor = actor;
-        this.stage = stage;
-        this.priority = priority;
-    } */
+    public List<A> actors() { return actors; }
 
     public Priority priority() { return this.priority; }
 
-    //public Stage stage() { return this.stage; }
-
-    public abstract Events.ResultMessage fire(Player player);
+    //public Events.ResultMessage fire(Player player) { return null; }
 
     public String toString() {
         return "Event: Actors " + actors + " Priority " + priority;
     }
 
-    public int compareTo(Event other) { //intentionally not consistent with equals
+    @SuppressWarnings("rawtypes")
+    public int compareTo(EventP other) { //intentionally not consistent with equals
         if (this == other) return 0;
         else {
             //int thisLevel = Priority.getLevel(this.priority);
@@ -56,8 +57,6 @@ public abstract class Event implements Comparable<Event> {
           return this.priority.compareTo(other.priority());
         }
     }
-
-    //public void setCleanup(Stage stage) {
 
     public void cleanup(Stage stage) {
         log("checking if actors are done...");
@@ -75,4 +74,15 @@ public abstract class Event implements Comparable<Event> {
     public void unStick() { isSticky = false; }
 
     public boolean isSticky() { return isSticky; }
+
+    public static void main(String[] args) {
+        Skeleton sk1 = new Skeleton();
+        EventP<Fighter> ep1 = new EventP<Fighter>(sk1, LOW);
+
+        HealingPotion hp1 = new HealingPotion();
+        EventP<Consumable> ep2 = new EventP<Consumable>(hp1, Priority.HIGH);
+
+        int x = ep1.compareTo(ep2);
+        System.out.println("comparison: " + x);
+    }
 }

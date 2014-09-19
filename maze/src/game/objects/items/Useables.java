@@ -3,8 +3,8 @@ package game.objects.items;
 import static util.Print.*;
 import static game.objects.general.References.*;
 import static java.lang.Math.*;
-import game.core.events.Interacter;
-import game.core.events.Stage;
+import game.core.interfaces.Actor;
+import game.core.interfaces.Stage;
 import game.core.maze.Maze;
 import game.core.maze.Win;
 import game.core.pathfinding.AStar;
@@ -83,7 +83,7 @@ public final class Useables {
         }
 
         @Override
-        public boolean usedBy(Player player, Interacter target, Stage targetStage) {
+        public boolean usedBy(Player player, Actor target, Stage targetStage) {
             print("You attempt to use the dissolving potion on the " + target + ".");
             if (target instanceof AbstractUnit) {
                 ((AbstractUnit)target).setHP(0);

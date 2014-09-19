@@ -8,11 +8,14 @@ import static util.Utilities.checkNullArgs;
 import game.core.events.Module.Fight;
 import game.core.inputs.Commands;
 import game.core.inputs.GrammarGuy;
+import game.core.interfaces.Consumable;
+import game.core.interfaces.Equippable;
+import game.core.interfaces.Actor;
+import game.core.interfaces.Portable;
+import game.core.interfaces.Questioner;
+import game.core.interfaces.Stage;
+import game.core.interfaces.Useable;
 import game.objects.general.Combiner;
-import game.objects.items.Consumable;
-import game.objects.items.Equippable;
-import game.objects.items.Portable;
-import game.objects.items.Useable;
 import game.objects.units.Bestiary;
 import game.objects.units.Player;
 import game.objects.units.Bestiary.Monster;
@@ -244,7 +247,7 @@ public final class Events {
         currentEvents.clear();
     }
 
-    public static Event announce(final Interacter talker, final Priority priority, final String message) {
+    public static Event announce(final Actor talker, final Priority priority, final String message) {
         Event event = new Event(talker, priority) {
           @Override public ResultMessage fire(Player player) {
               print(message);
@@ -425,7 +428,7 @@ public final class Events {
         return event;
     }
 
-    public static Event useOn(final Useable item, final Interacter target, final Stage secondStage) {
+    public static Event useOn(final Useable item, final Actor target, final Stage secondStage) {
         Event event = new Event(item, LOW) {
             @Override public ResultMessage fire(Player player) {
                 log("You use " + item + " on " + target + ".");

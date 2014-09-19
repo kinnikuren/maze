@@ -1,8 +1,8 @@
 package game.objects.units;
 
+import game.core.interfaces.Portable;
 import game.objects.inventory.Inventory;
 import game.objects.items.Armor;
-import game.objects.items.Portable;
 import game.objects.items.Armor.SuperSuit;
 
 import java.util.HashMap;

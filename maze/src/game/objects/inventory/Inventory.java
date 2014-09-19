@@ -2,11 +2,11 @@ package game.objects.inventory;
 
 import game.core.events.Event;
 import game.core.events.EventManager;
-import game.core.events.Interacter;
-import game.core.events.Stage;
 import game.core.inputs.Commands;
 import game.core.inputs.GrammarGuy;
-import game.objects.items.Portable;
+import game.core.interfaces.Actor;
+import game.core.interfaces.Portable;
+import game.core.interfaces.Stage;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -167,7 +167,7 @@ public class Inventory implements Stage {
     }
 
     @Override
-    public void removeActor(Interacter actor) {
+    public void removeActor(Actor actor) {
         for (Portable item : portables) {
           if (item.equals(actor)) remove(item);
         }

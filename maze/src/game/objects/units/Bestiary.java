@@ -8,10 +8,10 @@ import static game.objects.general.References.*;
 import static util.Loggers.*;
 import game.core.events.Event;
 import game.core.events.Events;
-import game.core.events.Fighter;
-import game.core.events.Interacter;
-import game.core.events.Stage;
 import game.core.inputs.Commands;
+import game.core.interfaces.Fighter;
+import game.core.interfaces.Actor;
+import game.core.interfaces.Stage;
 import game.core.positional.Coordinate;
 import game.objects.general.References;
 import game.objects.inventory.Inventory;
@@ -75,10 +75,10 @@ public final class Bestiary {
         }
 
         @Override
-        public Event interact(Commands trigger, String prep, Interacter interactee) { return null; }
+        public Event interact(Commands trigger, String prep, Actor interactee) { return null; }
 
         @Override
-        public Event interact(Commands trigger, String prep, Interacter interactee, Stage secondStage) {
+        public Event interact(Commands trigger, String prep, Actor interactee, Stage secondStage) {
             return null;
         }
     }
@@ -123,7 +123,7 @@ public final class Bestiary {
             }
             super.death();
         }
-        //begin implementation of Interacter methods defined as abstract in FighterUnit
+        //begin implementation of Actor methods defined as abstract in FighterUnit
         @Override
         public boolean matches(String name) {
           return matchRef(SKELETON, name);
@@ -179,7 +179,7 @@ public final class Bestiary {
             }
             super.death();
         }
-        //begin implementation of Interacter methods defined as abstract in FighterUnit
+        //begin implementation of Actor methods defined as abstract in FighterUnit
         @Override
         public boolean matches(String name) { return matchRef(GOBLIN, name); }
 
@@ -230,7 +230,7 @@ public final class Bestiary {
             }
             super.death();
         }
-        //begin implementation of Interacter methods defined as abstract in FighterUnit
+        //begin implementation of Actor methods defined as abstract in FighterUnit
         @Override
         public boolean matches(String name) {
           return matchRef(REVANTON, name);
@@ -290,7 +290,7 @@ public final class Bestiary {
             }
             super.death();
         }
-        //begin implementation of Interacter methods defined as abstract in FighterUnit
+        //begin implementation of Actor methods defined as abstract in FighterUnit
         @Override
         public boolean matches(String name) {
           return matchRef(RAT, name);
@@ -338,7 +338,7 @@ public final class Bestiary {
         public String inspect() {
           return ("The rat is foaming at the mouth.");
         }
-        //begin implementation of Interacter methods defined as abstract in FighterUnit
+        //begin implementation of Actor methods defined as abstract in FighterUnit
         @Override
         public boolean matches(String name) {
           return matchRef(RABIDRAT, name);
@@ -411,7 +411,7 @@ public final class Bestiary {
             }
             this.isAlive = false;
         }
-        //begin implementation of Interacter methods defined as abstract in FighterUnit
+        //begin implementation of Actor methods defined as abstract in FighterUnit
         @Override
         public boolean matches(String name) {
           return matchRef(RATKING, name);

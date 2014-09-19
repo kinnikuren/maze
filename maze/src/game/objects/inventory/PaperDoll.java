@@ -6,10 +6,10 @@ import static util.Utilities.checkNullArg;
 import static game.objects.inventory.PaperDoll.EquipSlots.*;
 import game.core.events.Event;
 import game.core.events.EventManager;
-import game.core.events.Interacter;
-import game.core.events.Stage;
 import game.core.inputs.Commands;
-import game.objects.items.Equippable;
+import game.core.interfaces.Equippable;
+import game.core.interfaces.Actor;
+import game.core.interfaces.Stage;
 
 import java.util.HashMap;
 import java.util.PriorityQueue;
@@ -112,7 +112,7 @@ public class PaperDoll implements Stage {
     }
 
     @Override
-    public void removeActor(Interacter actor) {
+    public void removeActor(Actor actor) {
         for (Equippable item : equipments) {
           if (item.equals(actor)) remove(item);
         }

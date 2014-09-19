@@ -4,10 +4,11 @@ import game.core.events.Module.Fight;
 import game.core.events.Module.Question;
 import game.core.inputs.GameInputHandler;
 import game.core.inputs.GrammarGuy;
+import game.core.interfaces.Portable;
+import game.core.interfaces.Questioner;
 import game.objects.general.Spells;
 import game.objects.general.Spells.Spell;
 import game.objects.inventory.Inventory;
-import game.objects.items.Portable;
 import game.objects.units.Bestiary;
 import game.objects.units.Player;
 import game.objects.units.Bestiary.Monster;
@@ -425,10 +426,10 @@ public final class InteractionHandler {
             /* if (!enemy.getInventory().isBarren()) {
                 print("Here is your loot:");
                 enemy.getInventory().printInventory();
-                ArrayList<Interacter> interactions = enemy.getInventory().interactions;
-                for (Iterator<Interacter> itr = interactions.iterator(); itr.hasNext();) {
+                ArrayList<Actor> interactions = enemy.getInventory().interactions;
+                for (Iterator<Actor> itr = interactions.iterator(); itr.hasNext();) {
                     //enemy.getInventory().remove(i.name());
-                    Interacter i = itr.next();
+                    Actor i = itr.next();
                     player.getInventory().add((Portable)i);
                     itr.remove();
                 }

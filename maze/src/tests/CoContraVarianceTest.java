@@ -25,7 +25,7 @@ public class CoContraVarianceTest {
         myObjs.add("Luke");
         myObjs.add("Obi-wan");
 
-        List<? super Skeleton> mySkellies = new ArrayList<Interacter>();
+        List<? super Skeleton> mySkellies = new ArrayList<Actor>();
         //List<? super Integer> myInts = myObjs;
         //myInts.add(10);
         //myInts.add(3);

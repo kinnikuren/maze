@@ -1,18 +1,19 @@
-package game.core.events;
+package game.core.interfaces;
 
+import game.core.events.Event;
 import game.core.inputs.Commands;
 
 import java.util.List;
 import java.util.PriorityQueue;
 
 public interface Stage {
-    //public void addActor(Interacter actor);
+    //public void addActor(Actor actor);
 
-    public void removeActor(Interacter actor);
+    public void removeActor(Actor actor);
 
     public void cleanupActors();
 
-    public Iterable<? extends Interacter> getActors();
+    public Iterable<? extends Actor> getActors();
 
     public PriorityQueue<Event> getCurrentEvents();
 

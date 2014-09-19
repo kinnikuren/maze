@@ -2,7 +2,7 @@ package game.core.inputs;
 
 import game.core.events.Events;
 import game.core.events.Priority;
-import game.core.events.Stage;
+import game.core.interfaces.Stage;
 import game.core.maze.Maze;
 import game.core.maze.Win;
 import game.core.maze.Maze.Room;

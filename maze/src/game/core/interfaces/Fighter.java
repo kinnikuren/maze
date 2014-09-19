@@ -1,7 +1,7 @@
-package game.core.events;
+package game.core.interfaces;
 
 
-public interface Fighter extends Interacter {
+public interface Fighter extends Actor {
 
     public int attack(int enemyDefense, boolean crit);
 

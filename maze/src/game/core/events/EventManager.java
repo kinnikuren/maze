@@ -1,6 +1,8 @@
 package game.core.events;
 
 import game.core.inputs.Commands;
+import game.core.interfaces.Actor;
+import game.core.interfaces.Stage;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -14,24 +16,24 @@ import static game.core.events.Priority.*;
 import static util.Loggers.*;
 
 public class EventManager {
-    private View<Interacter> interactions;
+    private View<Actor> interactions;
     private PriorityQueue<Event> currentEvents =
             new PriorityQueue<Event>(10, Collections.reverseOrder());
 
-    public EventManager(Collection<? extends Interacter> interactions) {
-        Collection<? extends Interacter> actors = Collections2.filter(interactions, NOT_NULL);
-        this.interactions = new View<Interacter>(actors);
+    public EventManager(Collection<? extends Actor> interactions) {
+        Collection<? extends Actor> actors = Collections2.filter(interactions, NOT_NULL);
+        this.interactions = new View<Actor>(actors);
     }
 
-    public View<Interacter> interactions() {
+    public View<Actor> interactions() {
       return interactions;
     }
 
-    /* public void addActor(Interacter actor) {
+    /* public void addActor(Actor actor) {
         interactions.add(actor);
     }
 
-    public Interacter removeActor(Interacter actor) {
+    public Actor removeActor(Actor actor) {
         if (interactions.remove(actor)) {
           return actor;
         }
@@ -41,7 +43,7 @@ public class EventManager {
     public PriorityQueue<Event> getCurrentEvents() { return currentEvents; }
 
     public PriorityQueue<Event> getCurrentEvents(Commands trigger) {
-        for (Interacter i : interactions) {
+        for (Actor i : interactions) {
             Event event = i.interact(trigger);
             if (event != null) currentEvents.add(event);
         }
@@ -50,7 +52,7 @@ public class EventManager {
     }
 
     public PriorityQueue<Event> getCurrentEvents(Commands trigger, String objectName) {
-        for (Interacter i : interactions) {
+        for (Actor i : interactions) {
             if (i.matches(objectName)) {
                 Event event = i.interact(trigger);
                 if (event != null) currentEvents.add(event);
@@ -65,24 +67,24 @@ public class EventManager {
             String secondObjectName) {
         boolean firstObjectExists = false;
         boolean secondObjectExists = false;
-        Interacter interacter = null;
-        Interacter interactee = null;
-        for (Interacter i: interactions) {
+        Actor actor = null;
+        Actor actee = null;
+        for (Actor i: interactions) {
             if (i.matches(objectName)) {
                 firstObjectExists = true;
-                interacter = i;
+                actor = i;
                 //Event event = i.interact(trigger, prep)
                         //WIP
             }
             if (i.matches(secondObjectName)) {
                 secondObjectExists = true;
-                interactee = i;
+                actee = i;
             }
         }
 
         if (firstObjectExists && secondObjectExists) {
-            log("Both interacters, " + interacter.name() + " and " + interactee.name() + " found!");
-            Event event = interacter.interact(trigger, prep, interactee);
+            log("Both actors, " + actor.name() + " and " + actee.name() + " found!");
+            Event event = actor.interact(trigger, prep, actee);
             if (event != null) currentEvents.add(event);
         }
 
@@ -94,27 +96,23 @@ public class EventManager {
 
     public PriorityQueue<Event> getCurrentEvents(Commands trigger, String objectName, String prep,
             String secondObjectName, Stage secondStage) {
-        boolean firstObjectExists = false;
-        boolean secondObjectExists = false;
-        Interacter interacter = null;
-        Interacter interactee = null;
-        for (Interacter i: interactions) {
+        Actor actor = null;
+        Actor actee = null;
+        for (Actor i: interactions) {
             if (i.matches(objectName)) {
-                firstObjectExists = true;
-                interacter = i;
+                actor = i;
             }
         }
 
-        for (Interacter i : secondStage.getActors()) {
+        for (Actor i : secondStage.getActors()) {
             if (i.matches(secondObjectName)) {
-                secondObjectExists = true;
-                interactee = i;
+                actee = i;
             }
         }
 
-        if (firstObjectExists && secondObjectExists) {
-            log("Both interacters, " + interacter.name() + " and " + interactee.name() + " found!");
-            Event event = interacter.interact(trigger, prep, interactee, secondStage);
+        if (actor != null && actee != null) {
+            log("Both interacters, " + actor.name() + " and " + actee.name() + " found!");
+            Event event = actor.interact(trigger, prep, actee, secondStage);
             if (event != null) currentEvents.add(event);
         }
 
@@ -127,7 +125,7 @@ public class EventManager {
 
     public boolean contains(String objectName) {
         boolean objectExists = false;
-        for (Interacter actor : interactions) {
+        for (Actor actor : interactions) {
                     log("looking for actors that match string '" + objectName + "'...");
           if (actor.matches(objectName)) {
             objectExists = true;
@@ -138,9 +136,9 @@ public class EventManager {
       return objectExists;
     }
 
-    public boolean contains(Interacter intr) {
+    public boolean contains(Actor intr) {
         boolean actorExists = false;
-        for (Interacter actor : interactions) {
+        for (Actor actor : interactions) {
                     log("looking for actors that match " + actor);
           if (actor.equals(intr)) {
             actorExists = true;

@@ -2,10 +2,10 @@ package game.core.maze;
 
 import game.core.events.Event;
 import game.core.events.EventManager;
-import game.core.events.Interacter;
-import game.core.events.Stage;
 import game.core.inputs.Commands;
 import game.core.inputs.GrammarGuy;
+import game.core.interfaces.Actor;
+import game.core.interfaces.Stage;
 import game.core.positional.Coordinate;
 import game.objects.items.AbstractItem;
 import game.objects.units.AbstractUnit;
@@ -22,14 +22,14 @@ import static game.core.events.Priority.*;
 public abstract class AbstractRoom implements Stage {
 
     public final Coordinate position;
-    List<Interacter> contents;
-    ArrayListMultimap<String, Interacter> interactionMap;
+    List<Actor> contents;
+    ArrayListMultimap<String, Actor> interactionMap;
     EventManager manager;
     boolean isVisited = false;
 
     public AbstractRoom(Coordinate c) {
         this.position = c;
-        this.contents = new ArrayList<Interacter>();
+        this.contents = new ArrayList<Actor>();
         this.interactionMap = ArrayListMultimap.create();
         this.manager = new EventManager(interactionMap.values());
     }
@@ -67,21 +67,21 @@ public abstract class AbstractRoom implements Stage {
 
     public abstract void populateRoom();
 
-    public void addActor(Interacter actor) {
+    public void addActor(Actor actor) {
         if (actor instanceof AbstractUnit || actor instanceof AbstractItem) {
           contents.add(actor);
         }
         interactionMap.put(actor.name(), actor);
     }
 
-    public void addActors(Collection<? extends Interacter> actors) {
-        for (Interacter actor : actors) {
+    public void addActors(Collection<? extends Actor> actors) {
+        for (Actor actor : actors) {
             addActor(actor);
         }
     }
 
     @Override
-    public void removeActor(Interacter actor) {
+    public void removeActor(Actor actor) {
         if (actor instanceof AbstractUnit || actor instanceof AbstractItem) {
           contents.remove(actor);
         }
@@ -89,7 +89,7 @@ public abstract class AbstractRoom implements Stage {
     }
     @Override
     public void cleanupActors() {
-        for (Interacter actor : interactionMap.values()) {
+        for (Actor actor : interactionMap.values()) {
           if (actor.isDone(this)) removeActor(actor);
         }
     }
@@ -131,11 +131,11 @@ public abstract class AbstractRoom implements Stage {
 
     public void addToRoom() { }
 
-    public List<Interacter> contents() { return contents; }
+    public List<Actor> contents() { return contents; }
 
-    public Iterable<Interacter> getActors() { return contents; }
+    public Iterable<Actor> getActors() { return contents; }
 
-    public Collection<Interacter> interactions() {
+    public Collection<Actor> interactions() {
       return interactionMap.values();
     }
 

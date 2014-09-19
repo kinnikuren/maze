@@ -4,6 +4,7 @@ import static game.core.events.Events.*;
 import static game.core.inputs.Commands.*;
 import game.core.events.Event;
 import game.core.inputs.Commands;
+import game.core.interfaces.Consumable;
 import game.core.positional.Coordinate;
 import game.objects.units.Player;
 
