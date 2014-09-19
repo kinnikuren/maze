@@ -2,6 +2,7 @@ package game.core.inputs;
 
 import game.core.events.Events;
 import game.core.events.Priority;
+import game.core.events.Theatres;
 import game.core.interfaces.Stage;
 import game.core.maze.Maze;
 import game.core.maze.Win;
@@ -146,7 +147,7 @@ public final class GameInputHandler {
                       //EncounterGenerator.run(you);
                   }
 
-                  Events.run(you, MOVE, room);
+                  Theatres.run(you, MOVE, room);
 
                   if(you.isAlive()) {
                     if (you.location().equals(maze.exit())) {
@@ -173,7 +174,7 @@ public final class GameInputHandler {
             you.setLocation(you.getPrevLocation());
             print("You have moved " + direction + " and returned to the previous room.");
             Room room = maze.getRoom(you.location());
-            Events.run(you, MOVE, room);
+            Theatres.run(you, MOVE, room);
 
             if(you.isAlive()) {
                 if (you.location().equals(maze.exit())) {
@@ -312,7 +313,7 @@ public final class GameInputHandler {
 
     public static boolean performAction(Player you, Commands action, String object, Stage stage) {
         //Boolean result = r.respondsTo(you, trigger, arg);
-        Boolean result = Events.run(you, action, object, stage);
+        Boolean result = Theatres.run(you, action, object, stage);
         String preposition = action.getPreposition() == null ? "" : action.getPreposition();
         //Grammar correction
         if (result == null) {
@@ -328,12 +329,12 @@ public final class GameInputHandler {
 
     public static boolean performAction(Player you, Commands action, String object, String prep,
             String secondObject, Stage stage, Stage secondStage) {
-        Boolean result = Events.run(you, action, object, prep, secondObject, stage, secondStage);
+        Boolean result = Theatres.run(you, action, object, prep, secondObject, stage, secondStage);
         return result;
     }
 
     public static boolean performAction(Player you, Commands action, Stage stage) {
-        Boolean result = Events.run(you, action, stage);
+        Boolean result = Theatres.run(you, action, stage);
         if (result == false) {
             print("There is nothing to " + action + " here.");
         }

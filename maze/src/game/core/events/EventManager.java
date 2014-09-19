@@ -16,31 +16,38 @@ import static game.core.events.Priority.*;
 import static util.Loggers.*;
 
 public class EventManager {
+
+    private static class ManagedQueue {
+        private PriorityQueue<Event> queue;
+
+        private ManagedQueue() {
+            this.queue = new PriorityQueue<Event>(10, Collections.reverseOrder());
+        }
+
+        private boolean add(Event event) {
+            boolean result = false;
+            if (!queue.contains(event)) {
+                result = queue.add(event);
+            }
+          return result;
+        }
+
+        private PriorityQueue<Event> queue() { return queue; }
+
+        public String toString() { return queue.toString(); }
+    }
+
+    private ManagedQueue currentEvents = new ManagedQueue();
     private View<Actor> interactions;
-    private PriorityQueue<Event> currentEvents =
-            new PriorityQueue<Event>(10, Collections.reverseOrder());
 
     public EventManager(Collection<? extends Actor> interactions) {
         Collection<? extends Actor> actors = Collections2.filter(interactions, NOT_NULL);
         this.interactions = new View<Actor>(actors);
     }
 
-    public View<Actor> interactions() {
-      return interactions;
-    }
+    public PriorityQueue<Event> getCurrentEvents() { return currentEvents.queue(); }
 
-    /* public void addActor(Actor actor) {
-        interactions.add(actor);
-    }
-
-    public Actor removeActor(Actor actor) {
-        if (interactions.remove(actor)) {
-          return actor;
-        }
-      return null;
-    } */
-
-    public PriorityQueue<Event> getCurrentEvents() { return currentEvents; }
+    public View<Actor> interactions() { return interactions; }
 
     public PriorityQueue<Event> getCurrentEvents(Commands trigger) {
         for (Actor i : interactions) {
@@ -48,7 +55,7 @@ public class EventManager {
             if (event != null) currentEvents.add(event);
         }
             log("Event manager on trigger " + trigger + " returns " + currentEvents, LOW);
-      return currentEvents;
+      return currentEvents.queue();
     }
 
     public PriorityQueue<Event> getCurrentEvents(Commands trigger, String objectName) {
@@ -60,7 +67,7 @@ public class EventManager {
         }
             log("Event manager on trigger " + trigger + " on object "
                     + objectName + " returns " + currentEvents, LOW);
-      return currentEvents;
+      return currentEvents.queue();
     }
 
     public PriorityQueue<Event> getCurrentEvents(Commands trigger, String objectName, String prep,
@@ -91,7 +98,7 @@ public class EventManager {
         log("Event manager on trigger " + trigger + " on object "
                 + objectName + " returns " + currentEvents, LOW);
 
-        return currentEvents;
+        return currentEvents.queue();
     }
 
     public PriorityQueue<Event> getCurrentEvents(Commands trigger, String objectName, String prep,
@@ -122,7 +129,7 @@ public class EventManager {
                 + objectName + ", and on second object, " + secondObjectName +
                 ", returns " + currentEvents, LOW);
 
-        return currentEvents;
+        return currentEvents.queue();
     }
 
     public boolean contains(String objectName) {

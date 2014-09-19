@@ -42,7 +42,7 @@ public abstract class Event implements Comparable<Event> {
 
     //public Stage stage() { return this.stage; }
 
-    public abstract Events.ResultMessage fire(Player player);
+    public abstract Theatres.ResultMessage fire(Player player);
 
     public String toString() {
         return "Event: Actors " + actors + " Priority " + priority;

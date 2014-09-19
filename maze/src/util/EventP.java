@@ -5,6 +5,7 @@ import static util.Loggers.log;
 import game.core.events.Event;
 import game.core.events.Events;
 import game.core.events.Priority;
+import game.core.events.Theatres;
 import game.core.interfaces.Actor;
 import game.core.interfaces.Consumable;
 import game.core.interfaces.Fighter;
@@ -17,7 +18,7 @@ import game.objects.items.Consumables.HealingPotion;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventP<A extends Actor> implements Comparable<EventP<A>> {
+public abstract class EventP<A extends Actor> implements Comparable<EventP<A>> {
 
     //comparable implementation is intentionally not consistent with equals
     private List<A> actors;
@@ -40,13 +41,19 @@ public class EventP<A extends Actor> implements Comparable<EventP<A>> {
 
     public List<A> actors() { return actors; }
 
+    public void addActor(A actor) {
+        actors.add(actor);
+    }
+
     public Priority priority() { return this.priority; }
 
-    //public Events.ResultMessage fire(Player player) { return null; }
+    public abstract Theatres.ResultMessage fire(Player player);
 
     public String toString() {
         return "Event: Actors " + actors + " Priority " + priority;
     }
+
+    //public boolean absorb(Event<A>)
 
     @SuppressWarnings("rawtypes")
     public int compareTo(EventP other) { //intentionally not consistent with equals
@@ -75,7 +82,7 @@ public class EventP<A extends Actor> implements Comparable<EventP<A>> {
 
     public boolean isSticky() { return isSticky; }
 
-    public static void main(String[] args) {
+    /* public static void main(String[] args) {
         Skeleton sk1 = new Skeleton();
         EventP<Fighter> ep1 = new EventP<Fighter>(sk1, LOW);
 
@@ -84,5 +91,5 @@ public class EventP<A extends Actor> implements Comparable<EventP<A>> {
 
         int x = ep1.compareTo(ep2);
         System.out.println("comparison: " + x);
-    }
+    } */
 }
