@@ -158,7 +158,6 @@ public final class GameInputHandler {
                         Statistics.globalUpdate("roomsExplored");
                       }
                       room.describeRoom();
-                      print("\nYou can go in the following directions: ");
                       you.whereCanIGo(maze);
                     }
                   }
@@ -167,6 +166,32 @@ public final class GameInputHandler {
                     print("There's no path to the " + direction + " from this room.");
                 }
           }
+        }
+        else if (leadCmd == RETURN) {
+            Cardinals direction = Cardinals.get(you.location(), you.getPrevLocation());
+            log("Current location: " + you.location() + "; Previous location: " + you.getPrevLocation());
+            you.setLocation(you.getPrevLocation());
+            print("You have moved " + direction + " and returned to the previous room.");
+            Room room = maze.getRoom(you.location());
+            Events.run(you, MOVE, room);
+
+            if(you.isAlive()) {
+                if (you.location().equals(maze.exit())) {
+                  Win.foundExit();
+                } else {
+                  you.narrator().talksAboutRoom(you, room);
+                  if (!room.hasBeenVisited()) {
+                    room.setVisitedTrue(you);
+                    Statistics.globalUpdate("roomsExplored");
+                  }
+                  room.describeRoom();
+                  you.whereCanIGo(maze);
+                }
+            }
+                    /*
+            } else {
+                print("You are unable to return to the previous room.");
+            }*/
         }
         else if (leadCmd == ATTRIB) {
             you.printAttribs();
@@ -226,7 +251,6 @@ public final class GameInputHandler {
             you.paperDoll().printout();
         }
         else if (fullCmd == WHEREGO) {
-            print("\nYou can go in the following directions: ");
             you.whereCanIGo(maze);
         }
         else if (fullCmd == WHEREAM) {
@@ -238,6 +262,10 @@ public final class GameInputHandler {
         else if(fullCmd == EXITMAZE) {
             you.getPath().add(you.location());
             print("\nThank you for playing in the Maze.");
+        }
+        else if (fullCmd == DEATH) {
+            print("You disembowel yourself.");
+            you.death();
         }
         else if(fullCmd == COMMANDS) {
 

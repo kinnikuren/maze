@@ -19,7 +19,8 @@ import game.core.positional.Node.Filter;
 import static game.objects.general.References.*;
 import game.objects.general.References;
 import game.objects.items.Trinkets;
-import game.objects.items.Trinkets.Key;
+import game.objects.items.Useables;
+import game.objects.items.Useables.Key;
 import game.objects.units.AbstractUnit;
 import util.Paired;
 
@@ -94,7 +95,7 @@ public class MazeMap {
       return node == null ? false : node.removeLinkTo(target);
     }
 
-    private void checkLegalArgs(Coordinate... args) throws IllegalArgumentException {
+    public void checkLegalArgs(Coordinate... args) throws IllegalArgumentException {
         for (Coordinate c : args) {
           checkNullArg(c);
           if (!contains(c)) {
@@ -334,7 +335,7 @@ public class MazeMap {
 
         public Gate(Coordinate c1, Coordinate c2) {
             g = new Paired<Coordinate>(c1, c2);
-            this.key = new Trinkets.PlainKey();
+            this.key = new Useables.PlainKey();
             diff = Coordinates.diff(this.g.o1, this.g.o2);
             this.name = "Locked Gate";
             this.desc = "This locked gate bars your path to the " + Cardinals.get(diff) + ".";
@@ -368,12 +369,12 @@ public class MazeMap {
             boolean result = false;
             if (this.key == null) {
                 result = false;
-            } else if (!this.key.equals(key)) {
+            } else if (!this.key.name().equals(key.name())) {
                 result = false;
             } else {
                 result = MazeMap.this.linkDouble(g.o1, g.o2);
                 if (result) {
-                    this.name = "Unlocked Gate";
+                    setUnlockedName();
                     setDescription();
                 }
             }
@@ -386,8 +387,16 @@ public class MazeMap {
           return this.g.matches(c1, c2);
         }
 
+        public Paired<Coordinate> getCoords() {
+            return g;
+        }
+
         public void setDescription() {
             this.desc = "This gate is now unlocked and the path " + Cardinals.get(diff) + " is clear.";
+        }
+
+        public void setUnlockedName() {
+            this.name = "Unlocked Gate";
         }
 
         public String inspect() {
@@ -457,19 +466,66 @@ public class MazeMap {
         public final int classId = RED_DOOR.classId;
         public final References ref = RED_DOOR;
 
-        public RedDoor() {
-            super();
-        }
 
         public RedDoor(Coordinate c1, Coordinate c2) {
             super(c1, c2);
+            this.key = new Useables.RedKey();
             this.name = "Locked Red Door";
             this.desc = "This red door bars your path to the " + Cardinals.get(diff) + ".";
         }
 
         @Override
+        public void setUnlockedName() {
+            this.name = "Unlocked Red Door";
+        }
+
+        @Override
         public boolean matches(String name) {
           return matchRef(RED_DOOR, name);
+        }
+    }
+
+    public class BlueDoor extends Gate {
+        public final int classId = BLUE_DOOR.classId;
+        public final References ref = BLUE_DOOR;
+
+        public BlueDoor(Coordinate c1, Coordinate c2) {
+            super(c1, c2);
+            this.key = new Useables.BlueKey();
+            this.name = "Locked Blue Door";
+            this.desc = "This blue door bars your path to the " + Cardinals.get(diff) + ".";
+        }
+
+        @Override
+        public void setUnlockedName() {
+            this.name = "Unlocked Blue Door";
+        }
+
+        @Override
+        public boolean matches(String name) {
+          return matchRef(BLUE_DOOR, name);
+        }
+    }
+
+    public class PurpleDoor extends Gate {
+        public final int classId = PURPLE_DOOR.classId;
+        public final References ref = PURPLE_DOOR;
+
+        public PurpleDoor(Coordinate c1, Coordinate c2) {
+            super(c1, c2);
+            this.key = new Useables.PurpleKey();
+            this.name = "Locked Purple Door";
+            this.desc = "This purple door bars your path to the " + Cardinals.get(diff) + ".";
+        }
+
+        @Override
+        public void setUnlockedName() {
+            this.name = "Unlocked Purple Door";
+        }
+
+        @Override
+        public boolean matches(String name) {
+          return matchRef(PURPLE_DOOR, name);
         }
     }
 }

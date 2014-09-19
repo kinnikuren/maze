@@ -133,10 +133,14 @@ public abstract class AbstractRoom implements Stage {
 
     public List<Actor> contents() { return contents; }
 
-    public Iterable<Actor> getActors() { return contents; }
+    public Iterable<Actor> getActors() { return interactionMap.values(); }
 
     public Collection<Actor> interactions() {
       return interactionMap.values();
+    }
+
+    public ArrayListMultimap<String, Actor> getMap() {
+        return interactionMap;
     }
 
     public static AbstractRoom testRoom(Coordinate c) {

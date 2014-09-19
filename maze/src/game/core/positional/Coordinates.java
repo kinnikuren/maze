@@ -1,7 +1,6 @@
 package game.core.positional;
 
 import game.core.maze.MazeMap.Gate;
-import game.objects.items.Trinkets.Key;
 
 import java.util.EnumSet;
 import java.util.Set;

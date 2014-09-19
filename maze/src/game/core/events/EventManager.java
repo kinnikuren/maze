@@ -101,12 +101,14 @@ public class EventManager {
         for (Actor i: interactions) {
             if (i.matches(objectName)) {
                 actor = i;
+                log("first object exists");
             }
         }
 
         for (Actor i : secondStage.getActors()) {
             if (i.matches(secondObjectName)) {
                 actee = i;
+                log("second object exists");
             }
         }
 

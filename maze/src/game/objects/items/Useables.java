@@ -6,6 +6,8 @@ import static java.lang.Math.*;
 import game.core.interfaces.Actor;
 import game.core.interfaces.Stage;
 import game.core.maze.Maze;
+import game.core.maze.AbstractRoom;
+import game.core.maze.MazeMap.Gate;
 import game.core.maze.Win;
 import game.core.pathfinding.AStar;
 import game.core.positional.Cardinals;
@@ -15,6 +17,9 @@ import game.objects.units.AbstractUnit;
 import game.objects.units.Player;
 
 import java.util.LinkedList;
+import java.util.List;
+
+import util.Paired;
 
 public final class Useables {
     private Useables() {} //no instantiation
@@ -88,6 +93,7 @@ public final class Useables {
             if (target instanceof AbstractUnit) {
                 ((AbstractUnit)target).setHP(0);
                 print("The " + target + " dissolves into a puddle.");
+                targetStage.removeActor(target);
                 return true;
             } else {
                 print("You can't dissolve the " + target + ".");
@@ -116,5 +122,97 @@ public final class Useables {
 
             Win.foundExit();
         }
+    }
+
+    public static abstract class Key extends AbstractItemUseable {
+
+        /*
+        final String id;
+
+
+        private Key(String id) {
+            this.id = id;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == this) return true;
+
+            if (o instanceof Key) {
+              Key k = (Key)o;
+              if (k.id.equals(id)) return true;
+            }
+          return false;
+        }
+        @Override
+        public int hashCode() { return id.hashCode(); }
+
+
+        @Override
+        public String toString() { return this.id; }
+        */
+        @Override
+        public void usedBy(Player player) {
+        }
+
+        @Override
+        public boolean usedBy(Player player, Actor target, Stage targetStage) {
+            print("You attempt to use the " + this + " on the " + target + ".");
+            if (target instanceof Gate) {
+                Gate gate = (Gate)target;
+                if (!gate.isLocked()) {
+                    print("It's already unlocked.");
+                } else {
+                    String oldGateName = target.name();
+                    Paired<Coordinate> c = gate.getCoords();
+                    if(gate.unlock(this)) {
+                        print("You unlocked it!");
+                        player.maze().getRoom(c.o1).getMap().remove(oldGateName, target);
+                        player.maze().getRoom(c.o2).getMap().remove(oldGateName, target);
+                        player.maze().getRoom(c.o1).getMap().put(target.name(), target);
+                        player.maze().getRoom(c.o2).getMap().put(target.name(), target);
+
+                    } else {
+                        print("You failed to unlock the " + target + " with the " + this.name());
+                    }
+                }
+                return true;
+            } else {
+                print("You can't unlock the " + target + ".");
+                return false;
+            }
+        }
+    }
+
+    public static class PlainKey extends Key {
+        public PlainKey() { }
+        @Override public String name() { return "Plain Key"; }
+        @Override public boolean matches(String name) { return matchRef(PLAIN_KEY, name); }
+        @Override public String details() { return "It's a plain, old key."; }
+        @Override public int weight() { return 1; }
+    }
+
+    public static class RedKey extends Key {
+        public RedKey() { }
+        @Override public String name() { return "Red Key"; }
+        @Override public boolean matches(String name) { return matchRef(RED_KEY, name); }
+        @Override public String details() { return "It's a red key."; }
+        @Override public int weight() { return 1; }
+    }
+
+    public static class BlueKey extends Key {
+        public BlueKey() { }
+        @Override public String name() { return "Blue Key"; }
+        @Override public boolean matches(String name) { return matchRef(BLUE_KEY, name); }
+        @Override public String details() { return "It's a blue key."; }
+        @Override public int weight() { return 1; }
+    }
+
+    public static class PurpleKey extends Key {
+        public PurpleKey() { }
+        @Override public String name() { return "Purple Key"; }
+        @Override public boolean matches(String name) { return matchRef(PURPLE_KEY, name); }
+        @Override public String details() { return "It's a purple key."; }
+        @Override public int weight() { return 1; }
     }
 }

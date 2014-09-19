@@ -12,6 +12,9 @@ public enum Commands {
                 + "\n" + "e.g. move north || move n|| mv southeast || go sw"
                 + "\n" + "Valid directions are: " + Coordinates.CARDINALS + "."
         ),
+    RETURN(new String[] {"return"},
+        "return to the previous room."
+        ),
     WHEREGO(new String[] {"where can i go?", "go?"},
         "where can i go?/go? usage: print out a list of valid directions to move towards."
         ),
@@ -75,6 +78,8 @@ public enum Commands {
     STATS( new String[] {"stats", "statistics"},
         "print out current player statistics."
             ),
+    DEATH(new String[] {"harakiri"}, "kill yourself."
+            ),
     HELP(new String[] {"help"},
         "help usage: help <command name> to print out details of using the command."
                 + "\n" + "e.g. help move || help appr|| help xx"
@@ -119,6 +124,7 @@ public enum Commands {
             print("| talk + <<object>> | pickup item (pkup) | use item | consume item (consume)|");
             print("| combine <<item1>> with <<item2>> (comb)                                   |");
             print("| equip item | unequip item | inventory (got?) | equipped | status (status) |");
+            print("| return |                                                                  |");
             print("| attributes (attrib | statistics (stats) | exit maze (xx) | help           |");
             print("-----------------------------------------------------------------------------");
 

@@ -147,13 +147,14 @@ public final class Events {
 
         if(!stage.contains(object)) {
             response = null;
-            log(stage.getName() + " does not contain " + object);
+            print(stage.getName() + " does not contain " + object);
         } else if (!stage.contains(secondObject)) {
             log(stage.getName() + " does not contain " + secondObject);
 
             //check if other stage (room) has second object
             if (!secondStage.contains(secondObject)) {
                 log(secondStage.getName() + " also does not contain " + secondObject);
+                print("There is no " + secondObject);
                 response = null;
             } else {
                 log(secondStage.getName() + " contains " + secondObject);
@@ -412,8 +413,10 @@ public final class Events {
             @Override public ResultMessage fire(Player player) {
                 Portable newItem = Combiner.combine(firstItem, secondItem);
                 if (newItem != null) {
-                    player.inventory().removeActor(firstItem);
-                    player.inventory().removeActor(secondItem);
+                    //player.inventory().removeActor(firstItem);
+                    //player.inventory().removeActor(secondItem);
+                    player.inventory().remove(firstItem);
+                    player.inventory().remove(secondItem);
                     player.inventory().add(newItem);
                     print("You have combined the " + firstItem.name() + " and the " +
                             secondItem.name() +
@@ -433,7 +436,6 @@ public final class Events {
             @Override public ResultMessage fire(Player player) {
                 log("You use " + item + " on " + target + ".");
                 if (item.usedBy(player, target, secondStage)) {
-                    secondStage.removeActor(target);
                 }
                 return null;
             }

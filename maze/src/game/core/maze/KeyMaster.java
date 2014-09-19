@@ -3,18 +3,27 @@ package game.core.maze;
 import static util.Print.print;
 import game.core.maze.MazeMap.Gate;
 import game.core.pathfinding.AStar;
+import game.core.pathfinding.Pathfinder;
 import game.core.positional.Coordinate;
+import game.core.positional.Coordinates;
+import game.core.positional.Coordinates.Paired;
 
 import java.util.LinkedList;
 import java.util.Random;
 
-import game.objects.items.Trinkets.Key;
+import game.objects.items.Useables.Key;
 
 public class KeyMaster {
     private static Random rand = new Random();
 
     public static Coordinate getKeyCoord(Maze maze, Coordinate c1, Coordinate c2) {
         Coordinate keyPoint;
+        //Paired<Coordinate> coords = new Paired<Coordinate>(c1,c2);
+        /*
+        Coordinates.Paired coords = new Coordinates.Paired(c1, c2);
+
+        Pathfinder.findReachableAfterLock(maze, coords);
+        */
 
         LinkedList<Coordinate> path1 = null;
         LinkedList<Coordinate> path2 = null;

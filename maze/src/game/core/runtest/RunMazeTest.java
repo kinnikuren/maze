@@ -3,10 +3,14 @@ package game.core.runtest;
 import game.core.events.Priority;
 import game.core.inputs.Commands;
 import game.core.inputs.GameInputHandler;
+import game.core.maze.GateKeeper;
+import game.core.maze.KeyMaster;
 import game.core.maze.Maze;
 import game.core.maze.MazeFactory;
+import game.core.maze.MazeMap.*;
 import game.core.maze.Win;
 import game.core.positional.Coordinate;
+import game.objects.obstacles.TheDarkness;
 import game.objects.units.Player;
 import game.objects.units.Bestiary.Skeleton;
 import game.objects.units.Bestiary.Rat;
@@ -22,7 +26,7 @@ import static game.objects.items.Weapons.*;
 
 public class RunMazeTest {
     public static void main(String[] args) {
-        programLog.setLevel(Priority.DORMANT);
+        programLog.setLevel(Priority.HIGH);
 
         Scanner scanner = new Scanner(System.in);
         String input;
@@ -74,6 +78,22 @@ public class RunMazeTest {
         you.inventory().add(new DissolvingPotion());
         you.getRoom().addActor(new Rat());
 
+        /*
+        Coordinate c1 = new Coordinate(0,0);
+        Coordinate c2 = new Coordinate(0,1);
+        //Gate g = GateKeeper.buildGate(coolMaze, c1, c2);
+        Gate g = coolMaze.map().new PurpleDoor(c1, c2);
+        coolMaze.map().addLockedGate(g);
+        you.getRoom().addActor(new PlainKey());
+        you.getRoom().addActor(new RedKey());
+        you.getRoom().addActor(new BlueKey());
+        */
+
+        Coordinate c3 = new Coordinate(0,1);
+        TheDarkness.addDarkness(coolMaze, c3);
+        //coolMaze.getRoom(c3).addActor(new Rat());
+
+        /*
         you.getRoom().setVisitedTrue(you);
             Skeleton sk1 = new Skeleton();
             sk1.inventory().add(new BronzeCoin());
@@ -84,6 +104,7 @@ public class RunMazeTest {
         you.getRoom().addActor(sk1);
         you.getRoom().addActor(sk2);
         you.getRoom().addActor(new Rat());
+        */
 
         you.narrator().speakIntro(you);
         you.narrator().talksAboutRoom(you, you.getRoom());

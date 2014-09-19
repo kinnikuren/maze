@@ -42,6 +42,7 @@ implements Fighter {
     private SpellBook spellBook;
     private List<Coordinate> path = new ArrayList<Coordinate>();
     private PaperDoll paperDoll = new PaperDoll();
+    private Coordinate prevLocation;
 
     private Random rand = new Random();
 
@@ -61,6 +62,8 @@ implements Fighter {
 
     public List<Coordinate> getPath() { return path; }
 
+    public Coordinate getPrevLocation() { return prevLocation; }
+
     public int getDex() { return this.dexterity; }
     public int getStr() { return this.strength; }
     public int getInt() { return this.intelligence; }
@@ -74,11 +77,13 @@ implements Fighter {
         this.tracker = new EncounterTracker();
         this.spellBook = new SpellBook();
         this.path.add(maze.center());
+        this.prevLocation = maze.center();
     }
 
     @Override
     public void setLocation(Coordinate c) {
         log("Setting location to " + c + "...");
+        prevLocation = location();
         if (location() != c) {
             log("Adding location " + c + " to path...");
             path.add(c);
@@ -246,12 +251,16 @@ implements Fighter {
     //begin implementation of mover abstract methods
     @Override
     public void whereCanIGo(Maze maze) {
-        List<String> list = new ArrayList<String>();
-        for (Cardinals d: maze.viewAvailableMoves(location)) {
-            //printnb(d + " ");
-            list.add(d.name());
+        if (maze.viewAvailableMoves(location).size() > 0) {
+            print("\nYou can go in the following directions: ");
+            List<String> list = new ArrayList<String>();
+            for (Cardinals d: maze.viewAvailableMoves(location)) {
+                list.add(d.name());
+            }
+            print(GrammarGuy.oxfordCommify(list));
+        } else {
+            print("\nThere is nowhere to go.");
         }
-        print(GrammarGuy.oxfordCommify(list));
     }
     @Override
     public boolean move(Cardinals move, Maze maze) {

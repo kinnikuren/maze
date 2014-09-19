@@ -26,9 +26,14 @@ public enum References {
     //300-399 Gates
     GATE(300, new String[] {"gate", "locked gate", "unlocked gate"}),
     RED_DOOR(301, new String[] {"red door", "locked red door", "unlocked red door"}),
+    BLUE_DOOR(302, new String[] {"blue door", "locked blue door", "unlocked blue door"}),
+    PURPLE_DOOR(303, new String[] {"purple door", "locked purple door", "unlocked purple door"}),
 
     //400-499 NPCs
     VENDOR(400, new String[] {"vendor"}),
+
+    //500-599 Obstacles
+    THE_DARKNESS(500, new String[] {"the darkness", "darkness"}),
 
     //1100-1199 Normal Trinkets
     DOODAD(1000, new String[] {"doodad"}),
