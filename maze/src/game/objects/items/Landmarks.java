@@ -2,11 +2,15 @@ package game.objects.items;
 
 import static game.objects.general.References.*;
 import static game.core.inputs.Commands.*;
+import static util.Print.print;
 import game.core.events.Event;
 import game.core.events.Events;
 import game.core.events.Priority;
+import game.core.events.Theatres.ResultMessage;
 import game.core.inputs.Commands;
 import game.core.interfaces.Stage;
+import game.core.positional.Cardinals;
+import game.core.positional.Coordinate;
 import game.objects.general.References;
 import game.objects.units.AbstractUnit;
 import game.objects.units.Player;
@@ -51,6 +55,30 @@ public final class Landmarks {
             return event;
         }
 
+    }
+
+    public static class Tombstone extends AbstractLandmark {
+        public Tombstone() {
+            super();
+            this.ref = TOMBSTONE;
+            this.desc = "It's an old tombstone.";
+            this.name = "Tombstone";
+        }
+
+        @Override
+        public Event interact(Commands trigger) {
+            Event event = null;
+            if (trigger == DESCRIBE) {
+                event = new Event(this, Priority.LOW) {
+                    @Override public ResultMessage fire(Player player) {
+                        print(desc + " " + "It's inscription reads, 'Here lies " + player.name() +
+                                ". He never found the way out.'");
+                        return null;
+                    }
+                };
+            }
+            return event;
+        }
     }
 
     public static class GnarledTree extends AbstractLandmark{

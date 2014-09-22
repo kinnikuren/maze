@@ -106,6 +106,11 @@ public class TheDarkness implements Actor {
     }
 
     @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
     public boolean matches(String name) {
         return matchRef(THE_DARKNESS, name);
     }

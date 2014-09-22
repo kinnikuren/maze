@@ -3,10 +3,13 @@ package game.core.maze;
 import static util.Loggers.*;
 import game.content.general.SpawningPool;
 import game.core.interfaces.Actor;
+import game.core.pathfinding.Pathfinder;
 import game.core.positional.Coordinate;
+import game.objects.obstacles.TheDarkness;
 
 import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -22,6 +25,20 @@ public class PopulateRoom {
         GateKeeper gk = (GateKeeper) context.getBean("gateKeeper");
 
         //System.out.println(pr.getSpawnSet());
+
+        //spawn darkness
+        HashSet<Coordinate> darknessSet = maze.getCoordinateSet(0.3,maze.exit());
+        Coordinate darknessLocation;
+
+        Coordinate[] darknessLocs =
+                darknessSet.toArray(new Coordinate[darknessSet.size()]);
+
+        darknessLocation = darknessLocs[rand.nextInt(darknessLocs.length)];
+        log("Spawning The Darkness at " + darknessLocation + "...");
+        TheDarkness.addDarkness(maze, darknessLocation);
+
+        HashSet<Coordinate> reachableAfterDarkness = Pathfinder.findReachableAfterLock(maze, darknessLocation);
+        log("Reachable after Darkness added: " + reachableAfterDarkness);
 
         for (SpawningPool.Spawner s : pr.getSpawnSet()) {
             Actor spawnee = s.spawn();
@@ -50,7 +67,16 @@ public class PopulateRoom {
                 distanceFactor = 1.0;
             }
 
-            HashSet<Coordinate> coordinateSet = maze.getCoordinateSet(distanceFactor,maze.exit());
+            HashSet<Coordinate> coordinateSet;
+
+            //darkness dependent spawns
+            if (!rarity.equals("dd")) {
+                coordinateSet = maze.getCoordinateSet(distanceFactor,maze.exit());
+            } else {
+                coordinateSet = reachableAfterDarkness;
+
+            }
+
             Coordinate spawnPoint;
 
             Coordinate[] spawnPoints =

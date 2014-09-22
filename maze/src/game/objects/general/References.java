@@ -56,6 +56,7 @@ public enum References {
     MADMAN(617, new String[] {"madman, raving madman"}),
     PILLAR_OF_LIGHT(618, new String[] {"pillar of light"}),
     TOILET(619, new String[] {"toilet"}),
+    TOMBSTONE(620, new String[] {"tombstone"}),
 
     //1100-1199 Normal Trinkets
     DOODAD(1000, new String[] {"doodad"}),

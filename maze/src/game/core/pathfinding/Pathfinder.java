@@ -56,6 +56,35 @@ public class Pathfinder {
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
+    public static HashSet<Coordinate> findReachableAfterLock(Maze maze, Coordinate locked) {
+        checkNullArg(maze);
+        checkNullArg(maze.center());
+
+        HashSet<Coordinate> reachableSet = new HashSet<Coordinate>();
+        Coordinate center = maze.center();
+        HashSet<Coordinate> openSet = new HashSet<Coordinate>();
+        HashSet<Coordinate> newSet = new HashSet<Coordinate>();
+
+        openSet.add(center);
+        do {
+            for (Iterator<Coordinate> i = openSet.iterator(); i.hasNext();) {
+              Coordinate c = i.next();
+              reachableSet.add(c);
+              for (Coordinate n : maze.viewNeighborsOf(c)) {
+                if (!n.equals(locked)) {
+                  if (reachableSet.add(n)) newSet.add(n);
+                }
+              }
+              i.remove();
+            }
+            openSet = new HashSet(newSet);
+            newSet.clear();
+        } while(openSet.size() != 0);
+
+      return reachableSet;
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public static HashSet<Coordinate> findReachableAfterLock(Maze maze, Paired<Coordinate> locked) {
         checkNullArg(maze);
         checkNullArg(maze.center());
