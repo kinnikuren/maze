@@ -307,7 +307,7 @@ public class MazeMap {
 
         if (!gates.contains(gate)) {
           if (gate.lock()) {
-              log("Adding locked gate to " + gate.g.o1 + " and " + gate.g.o2 + "...");
+              log("Adding " + gate.name() + " to " + gate.g.o1 + " and " + gate.g.o2 + "...");
             gates.add(gate);
             r1.addActor(gate);
             r2.addActor(gate);

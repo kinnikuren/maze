@@ -65,6 +65,10 @@ public class GateKeeper {
                     gate = maze.map().new Gate(gateCoords.c1, gateCoords.c2);
                 } else if (gateName.equals("Red Door")) {
                     gate = maze.map().new RedDoor(gateCoords.c1, gateCoords.c2);
+                } else if (gateName.equals("Blue Door")) {
+                    gate = maze.map().new BlueDoor(gateCoords.c1, gateCoords.c2);
+                } else if (gateName.equals("Purple Door")) {
+                    gate = maze.map().new PurpleDoor(gateCoords.c1, gateCoords.c2);
                 }
 
                 if (g.isSpawnKey()) {

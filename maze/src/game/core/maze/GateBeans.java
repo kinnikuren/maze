@@ -40,4 +40,8 @@ public final class GateBeans {
 
     public static class RedDoorBean extends GateBean { }
 
+    public static class BlueDoorBean extends GateBean { }
+
+    public static class PurpleDoorBean extends GateBean { }
+
 }

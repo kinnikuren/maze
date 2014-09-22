@@ -234,6 +234,20 @@
                     <property name="spawnKey" value="true"></property>
                 </bean>
 
+                <bean class="game.core.maze.GateBeans.BlueDoorBean">
+                    <property name="gateName" value="Blue Door"></property>
+                    <property name="maxDistance" value="0.7"></property>
+                    <property name="maxSpawn" value="1"></property>
+                    <property name="spawnKey" value="true"></property>
+                </bean>
+
+                <bean class="game.core.maze.GateBeans.PurpleDoorBean">
+                    <property name="gateName" value="Purple Door"></property>
+                    <property name="maxDistance" value="0.3"></property>
+                    <property name="maxSpawn" value="1"></property>
+                    <property name="spawnKey" value="false"></property>
+                </bean>
+
             </set>
         </property>
    </bean>

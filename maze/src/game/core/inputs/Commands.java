@@ -83,6 +83,8 @@ public enum Commands {
             ),
     DEATH(new String[] {"harakiri"}, "kill yourself."
             ),
+    MAP(new String[] {"map"}, "show the map."
+            ),
     HELP(new String[] {"help"},
         "help usage: help <command name> to print out details of using the command."
                 + "\n" + "e.g. help move || help appr|| help xx"
