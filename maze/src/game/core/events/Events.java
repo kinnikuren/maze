@@ -2,7 +2,7 @@ package game.core.events;
 
 import static game.core.events.Priority.*;
 import static util.Loggers.*;
-import static util.Print.print;
+import static util.Print.*;
 import static util.Utilities.checkNullArg;
 import static util.Utilities.checkNullArgs;
 import game.core.events.Module.Fight;
@@ -36,7 +36,7 @@ public final class Events {
         Event event = new Event(talker, priority) {
           @Override public ResultMessage fire(Player player) {
               if (message != null) {
-                  print(message);
+                  wordWrapPrint(message);
               }
             return null;
           }

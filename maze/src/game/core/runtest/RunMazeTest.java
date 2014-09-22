@@ -14,6 +14,7 @@ import game.objects.obstacles.TheDarkness;
 import game.objects.units.Player;
 import game.objects.units.Bestiary.Skeleton;
 import game.objects.units.Bestiary.Rat;
+import game.objects.items.Landmarks.*;
 import game.player.util.Statistics;
 
 import java.util.*;
@@ -90,6 +91,7 @@ public class RunMazeTest {
         you.getRoom().addActor(new PlainKey());
         you.getRoom().addActor(new RedKey());
         you.getRoom().addActor(new BlueKey());
+        you.getRoom().addActor(new GnarledTree());
 
         you.inventory().add(new LitTorch());
 

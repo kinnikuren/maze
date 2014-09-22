@@ -29,4 +29,25 @@ public final class SpawningPool {
     public static abstract class SilverCoinSpawner extends Spawner {  }
     public static abstract class GoldCoinSpawner extends Spawner {  }
 
+    public static abstract class GnarledTreeSpawner extends Spawner {  }
+    public static abstract class DeadTreeSpawner extends Spawner {  }
+    public static abstract class LeafyTreeSpawner extends Spawner {  }
+    public static abstract class ClownStatueSpawner extends Spawner {  }
+
+    public static abstract class SpawnerL1 extends Spawner {  }
+    public static abstract class SpawnerL2 extends Spawner {  }
+    public static abstract class SpawnerL3 extends Spawner {  }
+    public static abstract class SpawnerL4 extends Spawner {  }
+    public static abstract class SpawnerL5 extends Spawner {  }
+    public static abstract class SpawnerL6 extends Spawner {  }
+    public static abstract class SpawnerL7 extends Spawner {  }
+    public static abstract class SpawnerL8 extends Spawner {  }
+    public static abstract class SpawnerL9 extends Spawner {  }
+    public static abstract class SpawnerL10 extends Spawner {  }
+    public static abstract class SpawnerL11 extends Spawner {  }
+    public static abstract class SpawnerL12 extends Spawner {  }
+    public static abstract class SpawnerL13 extends Spawner {  }
+    public static abstract class SpawnerL14 extends Spawner {  }
+    public static abstract class SpawnerL15 extends Spawner {  }
+
 }

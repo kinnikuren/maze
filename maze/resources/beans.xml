@@ -56,6 +56,28 @@
        <property name="rarity" value="medium-rare"/>
    </bean>
 
+    <bean id="gnarledTree" class="game.objects.items.Landmarks.GnarledTree" scope="singleton"></bean>
+    <bean id="leafyTree" class="game.objects.items.Landmarks.LeafyTree" scope="singleton"></bean>
+    <bean id="deadTree" class="game.objects.items.Landmarks.DeadTree" scope="singleton"></bean>
+    <bean id="clownStatue" class="game.objects.items.Landmarks.ClownStatue" scope="singleton"></bean>
+
+    <bean id="L1" class="game.objects.items.Landmarks.ThreeDPainting" scope="singleton"></bean>
+    <bean id="L2" class="game.objects.items.Landmarks.Lamppost" scope="singleton"></bean>
+    <bean id="L3" class="game.objects.items.Landmarks.StoneGolem" scope="singleton"></bean>
+    <bean id="L4" class="game.objects.items.Landmarks.Gargoyle" scope="singleton"></bean>
+    <bean id="L5" class="game.objects.items.Landmarks.Mirror" scope="singleton"></bean>
+    <bean id="L6" class="game.objects.items.Landmarks.TwoFerns" scope="singleton"></bean>
+    <bean id="L7" class="game.objects.items.Landmarks.EmptyThrone" scope="singleton"></bean>
+    <bean id="L8" class="game.objects.items.Landmarks.Altar" scope="singleton"></bean>
+    <bean id="L9" class="game.objects.items.Landmarks.GildedDoor" scope="singleton"></bean>
+    <bean id="L10" class="game.objects.items.Landmarks.Hieroglyphics" scope="singleton"></bean>
+    <bean id="L11" class="game.objects.items.Landmarks.Skylight" scope="singleton"></bean>
+    <bean id="L12" class="game.objects.items.Landmarks.Hopscotch" scope="singleton"></bean>
+    <bean id="L13" class="game.objects.items.Landmarks.Madman" scope="singleton"></bean>
+    <bean id="L14" class="game.objects.items.Landmarks.PillarOfLight" scope="singleton"></bean>
+    <bean id="L15" class="game.objects.items.Landmarks.Toilet" scope="singleton"></bean>
+
+
     <!--
    <bean id="gate" class="maze.MazeMap.Gate" scope="singleton">
        <property name="rarity" value="rare"/>
@@ -109,6 +131,64 @@
                 </bean>
                 <bean class="game.content.general.SpawningPool.ConsoleSpawner">
                     <lookup-method name="spawn" bean="console"/>
+                </bean>
+                <bean class="game.content.general.SpawningPool.GnarledTreeSpawner">
+                    <lookup-method name="spawn" bean="gnarledTree"/>
+                </bean>
+                <bean class="game.content.general.SpawningPool.LeafyTreeSpawner">
+                    <lookup-method name="spawn" bean="leafyTree"/>
+                </bean>
+                <bean class="game.content.general.SpawningPool.DeadTreeSpawner">
+                    <lookup-method name="spawn" bean="deadTree"/>
+                </bean>
+                <bean class="game.content.general.SpawningPool.ClownStatueSpawner">
+                    <lookup-method name="spawn" bean="clownStatue"/>
+                </bean>
+
+                <bean class="game.content.general.SpawningPool.SpawnerL1">
+                    <lookup-method name="spawn" bean="L1"/>
+                </bean>
+                <bean class="game.content.general.SpawningPool.SpawnerL2">
+                    <lookup-method name="spawn" bean="L2"/>
+                </bean>
+                <bean class="game.content.general.SpawningPool.SpawnerL3">
+                    <lookup-method name="spawn" bean="L3"/>
+                </bean>
+                <bean class="game.content.general.SpawningPool.SpawnerL4">
+                    <lookup-method name="spawn" bean="L4"/>
+                </bean>
+                <bean class="game.content.general.SpawningPool.SpawnerL5">
+                    <lookup-method name="spawn" bean="L5"/>
+                </bean>
+                <bean class="game.content.general.SpawningPool.SpawnerL6">
+                    <lookup-method name="spawn" bean="L6"/>
+                </bean>
+                <bean class="game.content.general.SpawningPool.SpawnerL7">
+                    <lookup-method name="spawn" bean="L7"/>
+                </bean>
+                <bean class="game.content.general.SpawningPool.SpawnerL8">
+                    <lookup-method name="spawn" bean="L8"/>
+                </bean>
+                <bean class="game.content.general.SpawningPool.SpawnerL9">
+                    <lookup-method name="spawn" bean="L9"/>
+                </bean>
+                <bean class="game.content.general.SpawningPool.SpawnerL10">
+                    <lookup-method name="spawn" bean="L10"/>
+                </bean>
+                <bean class="game.content.general.SpawningPool.SpawnerL11">
+                    <lookup-method name="spawn" bean="L11"/>
+                </bean>
+                <bean class="game.content.general.SpawningPool.SpawnerL12">
+                    <lookup-method name="spawn" bean="L12"/>
+                </bean>
+                <bean class="game.content.general.SpawningPool.SpawnerL13">
+                    <lookup-method name="spawn" bean="L13"/>
+                </bean>
+                <bean class="game.content.general.SpawningPool.SpawnerL14">
+                    <lookup-method name="spawn" bean="L14"/>
+                </bean>
+                <bean class="game.content.general.SpawningPool.SpawnerL15">
+                    <lookup-method name="spawn" bean="L15"/>
                 </bean>
             </set>
         </property>

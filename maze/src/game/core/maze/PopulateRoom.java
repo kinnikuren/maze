@@ -25,7 +25,9 @@ public class PopulateRoom {
 
         for (SpawningPool.Spawner s : pr.getSpawnSet()) {
             Actor spawnee = s.spawn();
-            log("Spawning " + spawnee + "...");
+            log("Attempting to spawn " + spawnee + "...");
+
+            double spawnChance = 1.0;
 
             int maxSpawn = spawnee.getMaxSpawn();
             String rarity = spawnee.getRarity();
@@ -37,8 +39,12 @@ public class PopulateRoom {
                 distanceFactor = 0.2;
             } else if (rarity.equals("medium-rare")) {
                 distanceFactor = 0.35;
+            } else if (rarity.equals("pretty common")) {
+                distanceFactor = 1.0;
+                spawnChance = 0.8;
             } else if (rarity.equals("medium")) {
-                distanceFactor = 0.5;
+                distanceFactor = 1.0;
+                spawnChance = 0.5;
             }
             else {
                 distanceFactor = 1.0;
@@ -58,10 +64,15 @@ public class PopulateRoom {
             System.out.println(""); */
 
             for (int i=0;i < maxSpawn;i++) {
-                int rand = new Random().nextInt(coordinateSet.size());
-                spawnPoint = spawnPoints[rand];
+                double randDouble = rand.nextInt(101) * 0.01;
 
-                maze.getRoom(spawnPoint).addActor(s.spawn());
+                if (randDouble < spawnChance) {
+                    int randNum = rand.nextInt(coordinateSet.size());
+                    spawnPoint = spawnPoints[randNum];
+
+                    log("Spawning " + spawnee + "...");
+                    maze.getRoom(spawnPoint).addActor(s.spawn());
+                }
             }
         }
 

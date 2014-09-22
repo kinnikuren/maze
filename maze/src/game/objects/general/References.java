@@ -35,6 +35,28 @@ public enum References {
     //500-599 Obstacles
     THE_DARKNESS(500, new String[] {"the darkness", "darkness"}),
 
+    //600-699 Landmarks
+    GNARLED_TREE(600, new String[] {"gnarled tree"}),
+    LEAFY_TREE(601, new String[] {"leafy tree"}),
+    DEAD_TREE(602, new String[] {"dead tree"}),
+    CLOWN_STATUE(603, new String[] {"clown statue"}),
+    GALLOWS(604, new String[] {"gallows"}),
+    THREED_PAINTING(605, new String[] {"3-D painting, 3D painting"}),
+    LAMPPOST(606, new String[] {"lamppost"}),
+    STONE_GOLEM_INACTIVE(607, new String[] {"stone golem", "golem"}),
+    GARGOYLE_INACTIVE(608, new String[] {"gargoyle, stone gargoyle"}),
+    MIRROR(609, new String [] {"mirror"}),
+    TWO_FERNS(610, new String[] {"two ferns", "ferns"}),
+    THRONE(611, new String[] {"empty throne, throne"}),
+    ALTAR(612, new String[] {"sacrificial altar", "altar"}),
+    GILDED_DOOR(613, new String[] {"gilded door"}),
+    HIEROGLYPHICS(614, new String[] {"hieroglyphics"}),
+    SKYLIGHT(615, new String[] {"skylight"}),
+    HOPSCOTCH(616, new String[] {"hopscotch court", "hopscotch"}),
+    MADMAN(617, new String[] {"madman, raving madman"}),
+    PILLAR_OF_LIGHT(618, new String[] {"pillar of light"}),
+    TOILET(619, new String[] {"toilet"}),
+
     //1100-1199 Normal Trinkets
     DOODAD(1000, new String[] {"doodad"}),
     BRONZE_COIN(1101, new String[] {"bronze coin", "coin"}),
