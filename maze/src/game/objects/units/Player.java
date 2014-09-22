@@ -77,6 +77,7 @@ implements Fighter {
         this.tracker = new EncounterTracker();
         this.spellBook = new SpellBook();
         this.path.add(maze.center());
+        this.location = maze.center();
         this.prevLocation = maze.center();
     }
 

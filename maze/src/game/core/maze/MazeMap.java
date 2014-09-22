@@ -1,13 +1,12 @@
 package game.core.maze;
 
-import static game.core.events.Events.*;
-import static game.core.events.Priority.*;
 import static game.core.inputs.Commands.*;
 import static util.Utilities.*;
 import static util.Loggers.*;
+import static util.Print.*;
 import game.core.events.Event;
-import game.core.events.Events;
 import game.core.events.Priority;
+import game.core.events.Theatres.ResultMessage;
 import game.core.inputs.Commands;
 import game.core.interfaces.Actor;
 import game.core.interfaces.Stage;
@@ -16,10 +15,8 @@ import game.core.positional.Cardinals;
 import game.core.positional.Coordinate;
 import game.core.positional.Coordinates;
 import game.core.positional.Node;
-import game.core.positional.Node.Filter;
 import static game.objects.general.References.*;
 import game.objects.general.References;
-import game.objects.items.Trinkets;
 import game.objects.items.Useables;
 import game.objects.items.Useables.Key;
 import game.objects.units.AbstractUnit;
@@ -326,6 +323,7 @@ public class MazeMap {
         int maxSpawn = 1;
         String rarity = "rare";
         String name;
+        String fullName;
         String desc;
         Coordinate diff;
         public final int classId = GATE.classId;
@@ -340,7 +338,8 @@ public class MazeMap {
             this.key = new Useables.PlainKey();
             //diff = Coordinates.diff(this.g.o1, this.g.o2);
             this.name = "Locked Gate";
-            this.desc = "This locked gate bars your path to the ";
+            this.fullName = "Locked Gate";
+            this.desc = "This " + name + " bars your path to the ";
         }
         private Gate(Coordinate c1, Coordinate c2, Key key) {
             g = new Paired<Coordinate>(c1, c2);
@@ -377,7 +376,6 @@ public class MazeMap {
                 result = MazeMap.this.linkDouble(g.o1, g.o2);
                 if (result) {
                     setUnlockedName();
-                    setDescription();
                 }
             }
           return result;
@@ -393,12 +391,9 @@ public class MazeMap {
             return g;
         }
 
-        public void setDescription() {
-            this.desc = "This gate is now unlocked and the path " + Cardinals.get(diff) + " is clear.";
-        }
-
         public void setUnlockedName() {
             this.name = "Unlocked Gate";
+            this.fullName = "Unlocked Gate";
         }
 
         public String inspect() {
@@ -436,10 +431,27 @@ public class MazeMap {
             Event event = null;
             if (trigger == DESCRIBE) {
                 event = new Event(this, Priority.LOW) {
-                    @Override public Events.ResultMessage fire(Player player) {
+                    //Paired<Coordinate> gateCoords = g;
+                    @Override public ResultMessage fire(Player player) {
                         Coordinate playerLocation = player.location();
-
-                        //"This locked gate bars your path to the ";
+                        Coordinate targetLocation = null;
+                        if (playerLocation.equals(g.o1)) {
+                            targetLocation = g.o2;
+                        } else if (playerLocation.equals(g.o2)) {
+                            targetLocation = g.o1;
+                        }
+                        /*
+                        log("Player location: " + playerLocation);
+                        log("Gate location 1: " + g.o1);
+                        log("Gate location 2: " + g.o2);
+                        log("Target location: " + targetLocation);
+                        */
+                        if (isLocked()) {
+                            print(desc + Cardinals.get(playerLocation, targetLocation) + ".");
+                        } else {
+                            print("The gate is unlocked and the path " +
+                                    Cardinals.get(playerLocation, targetLocation) + " is clear.");
+                        }
                         return null;
                     }
                 };
@@ -483,7 +495,6 @@ public class MazeMap {
             super(c1, c2);
             this.key = new Useables.RedKey();
             this.name = "Locked Red Door";
-            this.desc = "This red door bars your path to the " + Cardinals.get(diff) + ".";
         }
 
         @Override
@@ -505,7 +516,6 @@ public class MazeMap {
             super(c1, c2);
             this.key = new Useables.BlueKey();
             this.name = "Locked Blue Door";
-            this.desc = "This blue door bars your path to the " + Cardinals.get(diff) + ".";
         }
 
         @Override
@@ -527,7 +537,6 @@ public class MazeMap {
             super(c1, c2);
             this.key = new Useables.PurpleKey();
             this.name = "Locked Purple Door";
-            this.desc = "This purple door bars your path to the " + Cardinals.get(diff) + ".";
         }
 
         @Override

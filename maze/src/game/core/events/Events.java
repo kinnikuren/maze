@@ -184,16 +184,6 @@ public final class Events {
       return event;
     }
 
-    public static Event describe(final Gate gate) {
-        Event event = new Event(gate, LOW) {
-          @Override public ResultMessage fire(Player player) {
-              print(gate.inspect());
-            return null;
-          }
-        };
-      return event;
-    }
-
     public static Event combine(final Portable firstItem, final Portable secondItem) {
         Event event = new Event(firstItem, LOW) {
             @Override public ResultMessage fire(Player player) {

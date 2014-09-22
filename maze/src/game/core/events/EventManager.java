@@ -81,8 +81,6 @@ public class EventManager {
             if (i.matches(objectName)) {
                 firstObjectExists = true;
                 actor = i;
-                //Event event = i.interact(trigger, prep)
-                        //WIP
             }
             if (i.matches(secondObjectName)) {
                 secondObjectExists = true;

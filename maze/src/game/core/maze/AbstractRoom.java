@@ -52,7 +52,7 @@ public abstract class AbstractRoom implements Stage {
           String roomContents = "CONTENTS OF THIS ROOM:";
           for (String thing : interactionMap.keySet()) {
               count = interactionMap.get(thing).size();
-              String addDescription= thing + " (" + count + ")";
+              String addDescription = thing + " (" + count + ")";
               //roomContents += addDescription;
               list.add(addDescription);
           }

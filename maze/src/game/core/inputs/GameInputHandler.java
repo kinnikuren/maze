@@ -1,5 +1,7 @@
 package game.core.inputs;
 
+import util.Paired;
+import game.content.encounters.EncounterGenerator;
 import game.core.events.Events;
 import game.core.events.Priority;
 import game.core.events.Theatres;
@@ -8,6 +10,7 @@ import game.core.maze.Maze;
 import game.core.maze.Win;
 import game.core.maze.Maze.Room;
 import game.core.positional.Cardinals;
+import game.core.positional.Coordinate;
 import game.objects.units.Player;
 import game.player.util.Statistics;
 import static util.TextParser.ParsedCommand;
@@ -144,7 +147,7 @@ public final class GameInputHandler {
                   if (you.inventory().contains("Enc-None")) {
                       print("\nRandom encounters begone! Enc-None shields you.\n");
                   } else {
-                      //EncounterGenerator.run(you);
+                      EncounterGenerator.run(you);
                   }
 
                   Theatres.run(you, MOVE, room);
@@ -268,6 +271,16 @@ public final class GameInputHandler {
             print("You disembowel yourself.");
             you.death();
         }
+        else if (leadCmd == TELEPORT) {
+            Coordinate teleportCoord = null;
+            Integer coord1 = Integer.parseInt(inputs[1]);
+            Integer coord2 = Integer.parseInt(inputs[2]);
+            teleportCoord = new Coordinate(coord1,coord2);
+
+            maze.map().checkLegalArgs(teleportCoord);
+
+            you.setLocation(teleportCoord);
+        }
         else if(fullCmd == COMMANDS) {
 
             /*
@@ -330,7 +343,10 @@ public final class GameInputHandler {
     public static boolean performAction(Player you, Commands action, String object, String prep,
             String secondObject, Stage stage, Stage secondStage) {
         Boolean result = Theatres.run(you, action, object, prep, secondObject, stage, secondStage);
-        return result;
+        if (result == null) {
+            print("You can't do that.");
+            return false;
+        } else return true;
     }
 
     public static boolean performAction(Player you, Commands action, Stage stage) {

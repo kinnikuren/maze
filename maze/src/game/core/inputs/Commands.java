@@ -78,6 +78,9 @@ public enum Commands {
     STATS( new String[] {"stats", "statistics"},
         "print out current player statistics."
             ),
+    TELEPORT(new String[] {"teleport"},
+        "teleport!"
+            ),
     DEATH(new String[] {"harakiri"}, "kill yourself."
             ),
     HELP(new String[] {"help"},

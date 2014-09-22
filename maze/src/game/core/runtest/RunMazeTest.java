@@ -74,29 +74,29 @@ public class RunMazeTest {
         you.getInventory().add(new Matches());
         you.getInventory().add(new WoodenStick());
         you.getInventory().add(new OilyRag());
-        */
         you.inventory().add(new DissolvingPotion());
         you.getRoom().addActor(new Rat());
+        */
 
-        /*
         Coordinate c1 = new Coordinate(0,0);
         Coordinate c2 = new Coordinate(0,1);
+        Coordinate c3 = new Coordinate(1,0);
         //Gate g = GateKeeper.buildGate(coolMaze, c1, c2);
-        Gate g = coolMaze.map().new PurpleDoor(c1, c2);
+        Gate g = coolMaze.map().new Gate(c1, c2);
+        Gate g1 = coolMaze.map().new Gate(c1, c3);
         coolMaze.map().addLockedGate(g);
-
-
+        coolMaze.map().addLockedGate(g1);
 
         you.getRoom().addActor(new PlainKey());
         you.getRoom().addActor(new RedKey());
         you.getRoom().addActor(new BlueKey());
-         */
 
         you.inventory().add(new LitTorch());
 
+        /*
         Coordinate c3 = new Coordinate(0,1);
         TheDarkness.addDarkness(coolMaze, c3);
-
+        */
 
         //coolMaze.getRoom(c3).addActor(new Rat());
 
