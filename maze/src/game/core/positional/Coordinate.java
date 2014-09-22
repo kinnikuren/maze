@@ -1,5 +1,8 @@
 package game.core.positional;
 
+import static game.core.positional.Cardinals.getXSign;
+import static game.core.positional.Cardinals.getYSign;
+import static game.core.positional.Coordinates.PRIME_CARDINALS;
 
 public class Coordinate {
     private final int x;
@@ -16,15 +19,13 @@ public class Coordinate {
     }
 
     public Coordinate(Coordinate c, Cardinals direction) {
-        int xSign = Cardinals.getXSign(direction);
-        int ySign = Cardinals.getYSign(direction);
-        this.x = c.x() + (xSign);
-        this.y = c.y() + (ySign);
+        this.x = c.x() + (getXSign(direction));
+        this.y = c.y() + (getYSign(direction));
     }
 
     public Coordinate(Coordinate c, Cardinals direction, int xDistance, int yDistance) {
-        int xSign = Cardinals.getXSign(direction);
-        int ySign = Cardinals.getYSign(direction);
+        int xSign = getXSign(direction);
+        int ySign = getYSign(direction);
 
         if ((xDistance != 0 && xSign == 0) || (yDistance != 0 && ySign == 0)) {
             throw new IllegalArgumentException("INVALID NONZERO DISTANCE USED "
@@ -56,16 +57,14 @@ public class Coordinate {
     }
 
     public Coordinate[] getNeighboringPrimes() {
-        Coordinate[] neighbors = new Coordinate[Coordinates.PRIME_CARDINALS.size()];
+        Coordinate[] neighbors = new Coordinate[PRIME_CARDINALS.size()];
         int i = 0;
-        for (Cardinals card : Coordinates.PRIME_CARDINALS) {
+        for (Cardinals card : PRIME_CARDINALS) {
             neighbors[i] = new Coordinate(this, card);
             ++i;
-        };
+        }
       return neighbors;
     }
-
-    public Node toNode() { return new Node(x, y); }
 
     @Override
     public boolean equals(Object o) {

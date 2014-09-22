@@ -82,7 +82,4 @@ public class Node extends Coordinate {
     public View<Cardinals> viewNeighborDirections() {
       return new View<Cardinals>(this, viewNeighbors(), Coordinates.Find.DIRECTION);
     }
-
-    @Override
-    public Node toNode() { return this; }
 }

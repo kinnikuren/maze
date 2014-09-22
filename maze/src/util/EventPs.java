@@ -15,14 +15,14 @@ import game.objects.units.Player;
 public final class EventPs {
 
     private static final EventP<Monster> MULTIFIGHT =
-            new EventP<Monster>(new ArrayList<Monster>(), HIGH) {
-                @Override public ResultMessage fire(Player player) {
-                    InteractionHandler.run(this.actors(), player, new Module.Fight());
-                    this.actors().clear();
-                    ResultMessage rm = new ResultMessage(EventActions.CLEAR_FORCED);
-                  return rm;
-                }
-            };
+        new EventP<Monster>(new ArrayList<Monster>(), HIGH) {
+            @Override public ResultMessage fire(Player player) {
+                InteractionHandler.run(this.actors(), player, new Module.Fight());
+                this.actors().clear();
+                ResultMessage rm = new ResultMessage(EventActions.CLEAR_FORCED);
+              return rm;
+            }
+        };
 
     public static EventP<Monster> multiFight(final Monster enemy) {
         MULTIFIGHT.addActor(enemy);

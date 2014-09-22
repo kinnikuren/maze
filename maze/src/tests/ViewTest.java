@@ -47,8 +47,8 @@ public class ViewTest {
         print("roomMap");
         for (Entry<Coordinate,AbstractRoom> e : vi2) {
             print(e);
-            Node ii = e.getKey().toNode();
-            ii.addLinkTo(n3);
+            //Node ii = e.getKey().toNode();
+            //ii.addLinkTo(n3);
         }
     }
 }
