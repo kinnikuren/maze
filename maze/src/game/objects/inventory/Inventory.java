@@ -7,6 +7,7 @@ import game.core.inputs.GrammarGuy;
 import game.core.interfaces.Actor;
 import game.core.interfaces.Portable;
 import game.core.interfaces.Stage;
+import game.objects.units.Player;
 
 import java.util.ArrayList;
 import java.util.Collection;

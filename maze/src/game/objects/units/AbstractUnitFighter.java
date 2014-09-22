@@ -67,8 +67,10 @@ implements Fighter {
     //begin Actor methods, abstract
     @Override public abstract boolean matches(String name);
     @Override public abstract boolean canInteract(AbstractUnit unit);
-    @Override public abstract Event interact(Commands trigger);
     @Override public abstract boolean isDone(Stage stage);
+
+    @Override
+    public Event interact(Commands trigger) { return null; }
 
     @Override
     public abstract Event interact(Commands trigger, String prep, Actor interactee);

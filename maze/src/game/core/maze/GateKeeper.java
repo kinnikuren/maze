@@ -8,8 +8,10 @@ import game.core.maze.MazeMap.Gate;
 import game.core.positional.Coordinate;
 import game.core.positional.Coordinates;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -44,6 +46,7 @@ public class GateKeeper {
     }
 
     public void buildGates(Maze maze) {
+        List<Gate> gateList = new ArrayList<Gate>();
 
         for (GateBean g : gateSet) {
             Double maxDistance = g.getMaxDistance();
@@ -68,12 +71,15 @@ public class GateKeeper {
                     KeyMaster.insertKey(maze, gate);
                 }
 
-                //add gate to maze
-                maze.map().addLockedGate(gate);
-
+                //add gate to list
+                gateList.add(gate);
             }
-
         }
+        for (Gate g : gateList) {
+            //add gate to maze
+            maze.map().addLockedGate(g);
+        }
+
     }
 
     public Set<GateBean> getGateSet() {

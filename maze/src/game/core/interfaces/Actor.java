@@ -3,6 +3,7 @@ package game.core.interfaces;
 import game.core.events.Event;
 import game.core.inputs.Commands;
 import game.objects.units.AbstractUnit;
+import game.objects.units.Player;
 
 public interface Actor {
     public String name();

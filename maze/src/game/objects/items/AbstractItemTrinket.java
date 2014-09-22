@@ -23,6 +23,7 @@ public abstract class AbstractItemTrinket extends AbstractItemPortable {
     public Event interact(Commands trigger, Stage stage) {
       return trigger == Commands.PICKUP ? pickup(this) : null;
     } */
+
     @Override public abstract String details();
     @Override public abstract int weight();
 }

@@ -28,6 +28,7 @@ public final class Bestiary {
 
     public static abstract class Monster extends AbstractUnitFighter {
         private Random rand = new Random();
+        protected String moveTrigger = null;
 
         public Monster() {
             super();
@@ -63,12 +64,9 @@ public final class Bestiary {
                 log(monsterParty.toString());
 
                 event = Events.fightAll(monsterParty, HIGH);
+              } else if (trigger == MOVE) {
+                  event = announce(this, DEFAULT, moveTrigger);
               }
-            /*
-            return trigger == FIGHT ? fight(this, HIGH)
-                : (trigger == APPROACH ? announce(this, LOW, inspect())
-                :  null);
-                */
               else if (trigger == APPROACH) event = announce(this, LOW, inspect());
             }
           return event;
@@ -86,9 +84,11 @@ public final class Bestiary {
     public static class Skeleton extends Monster {
         public static final int classId = SKELETON.classId;
         public static final References ref = SKELETON;
+
         //public static final String battlecry = "The skeleton flashes you a toothy grin as it slowly raises a rusty sword.";
         public Skeleton() {
             super();
+            this.moveTrigger = "You hear a rattle of bones";
             statusList.add("undead");
         }
 
@@ -113,7 +113,8 @@ public final class Bestiary {
         }
         @Override
         public String inspect() {
-          return ("This reanimated skeleton is poorly constructed.  You are confident you could defeat it in battle.");
+          return ("This reanimated skeleton is poorly constructed.  You are confident you could "
+                  + "defeat it in battle.");
         }
         @Override //overrides Unit method
         public void death() {
@@ -128,22 +129,12 @@ public final class Bestiary {
         public boolean matches(String name) {
           return matchRef(SKELETON, name);
         }
-        @Override
-        public Event interact(Commands trigger) {
-            Event event = super.interact(trigger);
 
-            if (event == null && isAlive) {
-              if (trigger == MOVE)
-                event = announce(this, DEFAULT, "You hear a rattle of bones");
-            }
-          return event;
-        }
     }
 
     public static class Goblin extends Monster {
         public static final int classId = GOBLIN.classId;
         public static final References ref = GOBLIN;
-        private int maxSpawn;
 
         public Goblin() {
             super();
@@ -182,20 +173,16 @@ public final class Bestiary {
         //begin implementation of Actor methods defined as abstract in FighterUnit
         @Override
         public boolean matches(String name) { return matchRef(GOBLIN, name); }
-
-        @Override
-        public Event interact(Commands trigger) {
-            Event result = super.interact(trigger);
-          return result;
-        }
     }
 
     public static class Revanton extends Monster {
         public static final int classId = REVANTON.classId;
         public static final References ref = REVANTON;
         //public static final String battlecry = "The skeleton flashes you a toothy grin as it slowly raises a rusty sword.";
+
         public Revanton() {
             super();
+            this.moveTrigger = "You see something moving in the shadows.";
         }
 
         public Revanton(Coordinate c) {
@@ -235,17 +222,6 @@ public final class Bestiary {
         public boolean matches(String name) {
           return matchRef(REVANTON, name);
         }
-
-        @Override
-        public Event interact(Commands trigger) {
-            Event event = super.interact(trigger);
-
-            if (event == null && isAlive) {
-              if (trigger == MOVE)
-                event = announce(this, DEFAULT, "You see something moving in the shadows.");
-            }
-          return event;
-        }
     }
 
     public static class Rat extends Monster {
@@ -254,6 +230,7 @@ public final class Bestiary {
         public Rat() {
             super();
             statusList.add("beast");
+            this.moveTrigger = "You hear squeaking of a non-mechanical nature.";
         }
 
         public Rat(Coordinate c) {
@@ -296,16 +273,6 @@ public final class Bestiary {
           return matchRef(RAT, name);
         }
 
-        @Override
-        public Event interact(Commands trigger) {
-            Event event = super.interact(trigger);
-
-            if (event == null && isAlive) {
-              if (trigger == MOVE)
-                event = announce(this, DEFAULT, "You hear squeaking of a non-mechanical nature");
-            }
-          return event;
-        }
     }
 
     public static class RabidRat extends Rat {
@@ -352,6 +319,8 @@ public final class Bestiary {
         public RatKing() { //sets values to default
             super();
             this.name = "Rat King";
+            this.moveTrigger = "You hear a chorus of "
+                    + "squeaking, spanning a spectrum from bass to soprano.";
             this.ratBuff = 0; //initially 0
         }
 
@@ -415,18 +384,6 @@ public final class Bestiary {
         @Override
         public boolean matches(String name) {
           return matchRef(RATKING, name);
-        }
-
-        @Override
-        public Event interact(Commands trigger) {
-            Event event = super.interact(trigger);
-
-            if (event == null && isAlive) {
-              if (trigger == MOVE)
-                event = announce(this, DEFAULT, "You hear a chorus of "
-                            + "squeaking, panning a spectrum from bass to soprano.");
-            }
-          return event;
         }
     }
 }

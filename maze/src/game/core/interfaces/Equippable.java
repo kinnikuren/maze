@@ -6,7 +6,7 @@ import game.player.util.Attributes;
 
 import java.util.HashMap;
 
-public interface Equippable extends Portable {
+public interface Equippable extends Useable {
 
     public PaperDoll.EquipSlots type();
 

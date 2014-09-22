@@ -8,6 +8,7 @@ import static game.core.events.Priority.DEFAULT;
 import static game.core.inputs.Commands.*;
 import static util.Print.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,6 +28,7 @@ import game.core.interfaces.Actor;
 import game.core.interfaces.Stage;
 import game.objects.items.Useables.Key;
 import game.objects.units.AbstractUnit;
+import game.objects.units.Player;
 
 public class TheDarkness implements Actor {
     private ArrayListMultimap<String, Actor> darknessMap;
@@ -35,7 +37,7 @@ public class TheDarkness implements Actor {
     private String name = "The Darkness";
     private String desc = "The darkness is impenetrable and shrouds everything. You can only return "
             + "whence you came.";
-    private View<Coordinate> storedNeighbors;
+    private List<Coordinate> storedNeighbors = new ArrayList<Coordinate>();
     private Coordinate location;
 
     public TheDarkness(AbstractRoom room) {
@@ -65,7 +67,10 @@ public class TheDarkness implements Actor {
 
         TheDarkness theDarkness = new TheDarkness(room);
 
-        theDarkness.storedNeighbors = room.viewNeighbors();
+        for (Coordinate coord : room.viewNeighbors()) {
+            log("storing coord " + coord);
+            theDarkness.storedNeighbors.add(coord);
+        }
 
         Object[] neighbors = theDarkness.storedNeighbors.toArray();
 
@@ -78,12 +83,20 @@ public class TheDarkness implements Actor {
         return true;
     }
 
-    public static void dispelDarkness(Maze maze, TheDarkness theDarkness) {
-        Object[] neighbors = theDarkness.storedNeighbors.toArray();
+    public void dispelDarkness(Maze maze) {
+        Object[] neighbors = this.storedNeighbors.toArray();
+        if (neighbors.length == 0) {
+            log("No coords stored in the darkness.");
+        }
 
         for (int i=0;i<neighbors.length;i++) {
             Coordinate neighbor = (Coordinate)neighbors[i];
-            maze.map().link(theDarkness.location, neighbor);
+            log("Adding link to " + neighbor);
+            maze.map().link(this.location, neighbor);
+        }
+
+        for (Actor a : this.darknessMap.values()) {
+            maze.getRoom(this.location).addActor(a);
         }
     }
 

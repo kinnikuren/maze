@@ -101,6 +101,7 @@ public abstract class AbstractRoom implements Stage {
     public PriorityQueue<Event> getCurrentEvents(Commands trigger) {
       return manager.getCurrentEvents(trigger);
     }
+
     @Override
     public PriorityQueue<Event> getCurrentEvents(Commands trigger, String objectName) {
       return manager.getCurrentEvents(trigger, objectName);

@@ -16,6 +16,7 @@ import game.core.interfaces.Portable;
 import game.core.interfaces.Stage;
 import game.core.positional.Coordinate;
 import game.objects.units.AbstractUnit;
+import game.objects.units.Player;
 
 public abstract class AbstractItemPortable extends AbstractItem implements Portable {
     Coordinate location;
@@ -42,6 +43,7 @@ public abstract class AbstractItemPortable extends AbstractItem implements Porta
     @Override
     public String toString() { return this.name(); }
 
+    @Override
     public Event interact(Commands trigger) {
         Event event = null;
              if (trigger == DROP) event = drop(this);

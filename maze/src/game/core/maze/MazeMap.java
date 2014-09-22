@@ -7,6 +7,7 @@ import static util.Utilities.*;
 import static util.Loggers.*;
 import game.core.events.Event;
 import game.core.events.Events;
+import game.core.events.Priority;
 import game.core.inputs.Commands;
 import game.core.interfaces.Actor;
 import game.core.interfaces.Stage;
@@ -22,6 +23,7 @@ import game.objects.items.Trinkets;
 import game.objects.items.Useables;
 import game.objects.items.Useables.Key;
 import game.objects.units.AbstractUnit;
+import game.objects.units.Player;
 import util.Paired;
 
 import java.util.HashMap;
@@ -336,9 +338,9 @@ public class MazeMap {
         public Gate(Coordinate c1, Coordinate c2) {
             g = new Paired<Coordinate>(c1, c2);
             this.key = new Useables.PlainKey();
-            diff = Coordinates.diff(this.g.o1, this.g.o2);
+            //diff = Coordinates.diff(this.g.o1, this.g.o2);
             this.name = "Locked Gate";
-            this.desc = "This locked gate bars your path to the " + Cardinals.get(diff) + ".";
+            this.desc = "This locked gate bars your path to the ";
         }
         private Gate(Coordinate c1, Coordinate c2, Key key) {
             g = new Paired<Coordinate>(c1, c2);
@@ -427,12 +429,22 @@ public class MazeMap {
         public boolean canInteract(AbstractUnit unit) {
           return true; //instanceof key, after changing actor to object
         }
+
         @Override
         public Event interact(Commands trigger) {
-          //return isLocked() && trigger == WHEREGO ? announce(this, LOW, "You see a locked door.") : null;
+            //return isLocked() && trigger == WHEREGO ? announce(this, LOW, "You see a locked door.") : null;
             Event event = null;
-            if (trigger == DESCRIBE)
-                event = Events.describe(this);
+            if (trigger == DESCRIBE) {
+                event = new Event(this, Priority.LOW) {
+                    @Override public Events.ResultMessage fire(Player player) {
+                        Coordinate playerLocation = player.location();
+
+                        //"This locked gate bars your path to the ";
+                        return null;
+                    }
+                };
+            }
+                //event = Events.describe(this);
             return event;
         }
 

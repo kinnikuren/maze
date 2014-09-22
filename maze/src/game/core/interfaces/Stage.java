@@ -2,6 +2,7 @@ package game.core.interfaces;
 
 import game.core.events.Event;
 import game.core.inputs.Commands;
+import game.objects.units.Player;
 
 import java.util.List;
 import java.util.PriorityQueue;

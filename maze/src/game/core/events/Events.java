@@ -35,7 +35,9 @@ public final class Events {
     public static Event announce(final Actor talker, final Priority priority, final String message) {
         Event event = new Event(talker, priority) {
           @Override public ResultMessage fire(Player player) {
-              print(message);
+              if (message != null) {
+                  print(message);
+              }
             return null;
           }
         };
@@ -219,8 +221,7 @@ public final class Events {
         Event event = new Event(item, LOW) {
             @Override public ResultMessage fire(Player player) {
                 log("You use " + item + " on " + target + ".");
-                if (item.usedBy(player, target, secondStage)) {
-                }
+                item.usedBy(player, target, secondStage);
                 return null;
             }
         };

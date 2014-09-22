@@ -8,6 +8,7 @@ import game.core.inputs.Commands;
 import game.core.interfaces.Actor;
 import game.core.interfaces.Stage;
 import game.objects.units.AbstractUnit;
+import game.objects.units.Player;
 
 public class EerieChimeSound implements Actor {
     int maxSpawn;
@@ -53,4 +54,5 @@ public class EerieChimeSound implements Actor {
     public String getRarity() { return rarity; }
 
     public void setRarity(String rarity) { this.rarity = rarity; }
+
 }

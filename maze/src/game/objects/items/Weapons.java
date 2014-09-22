@@ -1,10 +1,20 @@
 package game.objects.items;
 
+import static game.core.inputs.Commands.USE;
 import static game.objects.general.References.*;
 import static game.objects.inventory.PaperDoll.EquipSlots.*;
 import static game.player.util.Attributes.*;
+import static util.Print.print;
+import game.core.events.Event;
+import game.core.events.Events;
+import game.core.inputs.Commands;
+import game.core.interfaces.Actor;
+import game.core.interfaces.Stage;
 import game.core.positional.Coordinate;
 import game.objects.inventory.PaperDoll.EquipSlots;
+import game.objects.obstacles.TheDarkness;
+import game.objects.units.AbstractUnit;
+import game.objects.units.Player;
 import game.player.util.Attributes;
 
 import java.util.HashMap;
@@ -122,6 +132,33 @@ public final class Weapons {
         @Override
         public HashMap<Attributes, Integer> getStats() {
             return stats;
+        }
+
+        @Override
+        public Event interact(Commands trigger, String prep, Actor interactee, Stage secondStage) {
+            if (trigger == USE) {
+                if (prep.equals("on")) {
+                    return Events.useOn(this, interactee, secondStage);
+                } else return null;
+            } else {
+                return null;
+            }
+        }
+
+        @Override
+        public boolean usedBy(Player player, Actor target, Stage targetStage) {
+            print("You attempt to use the " + this + " on " + target.name() + ".");
+            if (target instanceof TheDarkness) {
+                TheDarkness dk = ((TheDarkness)target);
+                dk.dispelDarkness(player.maze());
+                print("The Darkness is dispelled!\n");
+                targetStage.removeActor(target);
+                player.getRoom().describeRoom();
+                return true;
+            } else {
+                print("Nothing happens.");
+                return false;
+            }
         }
     }
 }

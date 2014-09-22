@@ -13,6 +13,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import util.NullArgumentException;
+import util.Paired;
 import util.View;
 
 public class Pathfinder {
@@ -55,7 +56,7 @@ public class Pathfinder {
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public static HashSet<Coordinate> findReachableAfterLock(Maze maze, Coordinates.Paired locked) {
+    public static HashSet<Coordinate> findReachableAfterLock(Maze maze, Paired<Coordinate> locked) {
         checkNullArg(maze);
         checkNullArg(maze.center());
 
@@ -89,7 +90,7 @@ public class Pathfinder {
       return reachableSet;
     }
 
-    public static HashSet<Coordinate> findUnreachableAfterLock(Maze maze, Coordinates.Paired locked) {
+    public static HashSet<Coordinate> findUnreachableAfterLock(Maze maze, Paired<Coordinate> locked) {
         HashSet<Coordinate> reachableSet = findReachableAfterLock(maze, locked);
         HashSet<Coordinate> unreachableSet = new HashSet<Coordinate>();
         for (Coordinate c : maze.viewPositions()) {

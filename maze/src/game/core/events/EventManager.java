@@ -3,6 +3,7 @@ package game.core.events;
 import game.core.inputs.Commands;
 import game.core.interfaces.Actor;
 import game.core.interfaces.Stage;
+import game.objects.units.Player;
 
 import java.util.Collection;
 import java.util.Collections;

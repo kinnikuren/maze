@@ -65,7 +65,7 @@ public class PopulateRoom {
             }
         }
 
-        //gk.buildGates(maze);
+        gk.buildGates(maze);
 
         log("Done spawning!");
         maze.printMazeContents();

@@ -26,7 +26,7 @@ import static game.objects.items.Weapons.*;
 
 public class RunMazeTest {
     public static void main(String[] args) {
-        programLog.setLevel(Priority.HIGH);
+        programLog.setLevel(Priority.DORMANT);
 
         Scanner scanner = new Scanner(System.in);
         String input;
@@ -84,13 +84,20 @@ public class RunMazeTest {
         //Gate g = GateKeeper.buildGate(coolMaze, c1, c2);
         Gate g = coolMaze.map().new PurpleDoor(c1, c2);
         coolMaze.map().addLockedGate(g);
+
+
+
         you.getRoom().addActor(new PlainKey());
         you.getRoom().addActor(new RedKey());
         you.getRoom().addActor(new BlueKey());
-        */
+         */
+
+        you.inventory().add(new LitTorch());
 
         Coordinate c3 = new Coordinate(0,1);
         TheDarkness.addDarkness(coolMaze, c3);
+
+
         //coolMaze.getRoom(c3).addActor(new Rat());
 
         /*
