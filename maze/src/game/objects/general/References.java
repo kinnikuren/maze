@@ -34,6 +34,7 @@ public enum References {
 
     //500-599 Obstacles
     THE_DARKNESS(500, new String[] {"the darkness", "darkness"}),
+    ROPE_BRIDGE(501, new String[] {"rope bridge", "bridge"}),
 
     //600-699 Landmarks
     GNARLED_TREE(600, new String[] {"gnarled tree"}),

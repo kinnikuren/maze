@@ -5,6 +5,7 @@ import game.content.general.SpawningPool;
 import game.core.interfaces.Actor;
 import game.core.pathfinding.Pathfinder;
 import game.core.positional.Coordinate;
+import game.objects.obstacles.RopeBridge;
 import game.objects.obstacles.TheDarkness;
 
 import java.util.HashSet;
@@ -89,20 +90,24 @@ public class PopulateRoom {
 
             System.out.println(""); */
 
-            for (int i=0;i < maxSpawn;i++) {
-                double randDouble = rand.nextInt(101) * 0.01;
+            if (coordinateSet.size() > 0) {
+                for (int i=0;i < maxSpawn;i++) {
+                    double randDouble = rand.nextInt(101) * 0.01;
 
-                if (randDouble < spawnChance) {
-                    int randNum = rand.nextInt(coordinateSet.size());
-                    spawnPoint = spawnPoints[randNum];
+                    if (randDouble < spawnChance) {
+                        int randNum = rand.nextInt(coordinateSet.size());
+                        spawnPoint = spawnPoints[randNum];
 
-                    log("Spawning " + spawnee + "...");
-                    maze.getRoom(spawnPoint).addActor(s.spawn());
+                        log("Spawning " + spawnee + "...");
+                        maze.getRoom(spawnPoint).addActor(s.spawn());
+                    }
                 }
             }
         }
 
         gk.buildGates(maze);
+
+        RopeBridge.addBridge(maze);
 
         log("Done spawning!");
         maze.printMazeContents();

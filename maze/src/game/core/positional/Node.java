@@ -15,6 +15,11 @@ public class Node extends Coordinate {
           return node.numberOfLinks() == 0 ? true : false;
         }
       },
+      HAS_TWO_LINKS {
+          @Override public boolean apply(Node node) {
+              return node.numberOfLinks() == 2 ? true : false;
+          }
+      },
       HAS_LINKS {
         @Override public boolean apply(Node node) {
           return node.numberOfLinks() > 0 ? true : false;

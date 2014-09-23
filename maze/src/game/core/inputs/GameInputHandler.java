@@ -8,6 +8,7 @@ import game.core.events.Theatres;
 import game.core.interfaces.Stage;
 import game.core.maze.Maze;
 import game.core.maze.MazeDisplay;
+import game.core.maze.MazeFullDisplay;
 import game.core.maze.Win;
 import game.core.maze.Maze.Room;
 import game.core.positional.Cardinals;
@@ -270,6 +271,9 @@ public final class GameInputHandler {
         }
         else if (fullCmd == MAP) {
             MazeDisplay.run(maze, you);
+        }
+        else if (fullCmd == BSW) {
+            MazeFullDisplay.run(maze, you);
         }
         else if (fullCmd == DEATH) {
             print("You disembowel yourself.");

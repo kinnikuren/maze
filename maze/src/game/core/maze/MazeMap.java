@@ -211,6 +211,11 @@ public class MazeMap {
       return new View<Coordinate>(linkedNodes);
     }
 
+    public View<Coordinate> viewTwoLinkNodes() {
+        Set<Node> twoLinkNodes = Sets.filter(roomMap.keySet(), Node.Filter.HAS_TWO_LINKS);
+        return new View<Coordinate>(twoLinkNodes);
+    }
+
     public View<Coordinate> viewUnlinkedNodes() {
         Set<Node> unlinkedNodes = Sets.filter(roomMap.keySet(), Node.Filter.HAS_NO_LINKS);
       return new View<Coordinate>(unlinkedNodes);

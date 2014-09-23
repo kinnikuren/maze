@@ -85,6 +85,8 @@ public enum Commands {
             ),
     MAP(new String[] {"map"}, "show the map."
             ),
+    BSW(new String[] {"bsw"}, "map cheat."
+            ),
     HELP(new String[] {"help"},
         "help usage: help <command name> to print out details of using the command."
                 + "\n" + "e.g. help move || help appr|| help xx"
