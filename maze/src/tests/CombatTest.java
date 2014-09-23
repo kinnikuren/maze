@@ -47,7 +47,7 @@ public class CombatTest {
         you.inventory().add(new HealingPotion());
         you.inventory().add(new HealingPotion());
 
-        you.paperDoll().add(new LongSword());
+        you.paperDoll().add(new Longsword());
 
         List<Monster> monsters = new ArrayList<Monster>();
         monsters.add(new Rat());

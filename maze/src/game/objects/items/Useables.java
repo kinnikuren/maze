@@ -13,6 +13,7 @@ import game.core.pathfinding.AStar;
 import game.core.positional.Cardinals;
 import game.core.positional.Coordinate;
 import game.core.positional.Coordinates;
+import game.objects.obstacles.Cable;
 import game.objects.units.AbstractUnit;
 import game.objects.units.Player;
 
@@ -26,7 +27,7 @@ public final class Useables {
     //contains various consumable classes that extend AbstractItemUseable
 
     public static class Compass extends AbstractItemUseable{
-        public Compass() { }
+        public Compass() { super(); }
         @Override public String name() { return "Compass"; }
         @Override public boolean matches(String name) { return matchRef(COMPASS, name); }
         @Override public String details() { return "This will get you were you need to go."; }
@@ -183,7 +184,7 @@ public final class Useables {
     }
 
     public static class PlainKey extends Key {
-        public PlainKey() { }
+        public PlainKey() { super(); }
         @Override public String name() { return "Plain Key"; }
         @Override public boolean matches(String name) { return matchRef(PLAIN_KEY, name); }
         @Override public String details() { return "It's a plain, old key."; }
@@ -191,7 +192,7 @@ public final class Useables {
     }
 
     public static class RedKey extends Key {
-        public RedKey() { }
+        public RedKey() { super(); }
         @Override public String name() { return "Red Key"; }
         @Override public boolean matches(String name) { return matchRef(RED_KEY, name); }
         @Override public String details() { return "It's a red key."; }
@@ -199,7 +200,7 @@ public final class Useables {
     }
 
     public static class BlueKey extends Key {
-        public BlueKey() { }
+        public BlueKey() { super(); }
         @Override public String name() { return "Blue Key"; }
         @Override public boolean matches(String name) { return matchRef(BLUE_KEY, name); }
         @Override public String details() { return "It's a blue key."; }
@@ -207,10 +208,46 @@ public final class Useables {
     }
 
     public static class PurpleKey extends Key {
-        public PurpleKey() { }
+        public PurpleKey() { super(); }
         @Override public String name() { return "Purple Key"; }
         @Override public boolean matches(String name) { return matchRef(PURPLE_KEY, name); }
         @Override public String details() { return "It's a purple key."; }
         @Override public int weight() { return 1; }
+    }
+
+    public static class RubberChicken extends AbstractItemUseable {
+        public RubberChicken() {
+            super();
+            this.maxUses = 1;
+        }
+
+        @Override public String name() { return "Rubber Chicken with a Pulley in the Middle"; }
+        @Override public boolean matches(String name) { return matchRef(RUBBER_CHICKEN, name); }
+        @Override public String details() { return "A rubber chicken with a pulley in the middle."; }
+        @Override public int weight() { return 4; }
+
+        @Override
+        public void usedBy(Player player) {
+            print("You play with your rubber chicken for a while.");
+        }
+
+        @Override
+        public boolean usedBy(Player player, Actor target, Stage targetStage) {
+
+            print("You attempt to use the " + this + " on the " + target + ".");
+            if (target instanceof Cable) {
+                Cable cable = (Cable)target;
+                print("You attach the rubber chicken to the cable.");
+                print("You've made a strange-looking zipline.");
+
+                cable.enable();
+
+                super.usedBy(player, target, targetStage);
+                return true;
+            } else {
+                print("Your rubber chicken flops uselessly against the " + target + ".");
+                return false;
+            }
+        }
     }
 }

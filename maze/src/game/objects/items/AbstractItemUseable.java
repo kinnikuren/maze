@@ -2,8 +2,10 @@ package game.objects.items;
 
 import static game.core.events.Events.*;
 import static game.core.inputs.Commands.*;
+import static util.Loggers.*;
 import game.core.events.Event;
 import game.core.events.Events;
+import game.core.events.Priority;
 import game.core.inputs.Commands;
 import game.core.interfaces.Actor;
 import game.core.interfaces.Stage;
@@ -13,7 +15,9 @@ import game.objects.units.Player;
 
 public abstract class AbstractItemUseable extends AbstractItemTrinket
 implements Useable {
-    public AbstractItemUseable() { }
+    int maxUses;
+
+    public AbstractItemUseable() { this.maxUses = -1; }
 
     @Override
     public Event interact(Commands trigger) {
@@ -37,5 +41,14 @@ implements Useable {
 
     @Override public abstract void usedBy(Player player);
 
-    @Override public boolean usedBy(Player player, Actor target, Stage targetStage) { return false; }
+    @Override public boolean usedBy(Player player, Actor target, Stage targetStage) {
+
+        maxUses--;
+        log("# of uses remaining: " + maxUses, Priority.LOW);
+        if (maxUses == 0) {
+            player.inventory().remove(this);
+        }
+
+        return false;
+    }
 }

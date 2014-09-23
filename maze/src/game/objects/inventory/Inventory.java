@@ -2,6 +2,7 @@ package game.objects.inventory;
 
 import game.core.events.Event;
 import game.core.events.EventManager;
+import game.core.events.Priority;
 import game.core.inputs.Commands;
 import game.core.inputs.GrammarGuy;
 import game.core.interfaces.Actor;
@@ -64,6 +65,7 @@ public class Inventory implements Stage {
     public Portable remove(Portable item) {
         String itemName = item.name();
         Portable removed = null;
+        log("looking for " + itemName + "...", Priority.LOW);
         for (Portable i : inventory.get(itemName)) {
           if (i.equals(item)) removed = i;
         }

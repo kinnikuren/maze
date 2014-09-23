@@ -5,6 +5,7 @@ import game.content.general.SpawningPool;
 import game.core.interfaces.Actor;
 import game.core.pathfinding.Pathfinder;
 import game.core.positional.Coordinate;
+import game.objects.obstacles.Cable;
 import game.objects.obstacles.RopeBridge;
 import game.objects.obstacles.TheDarkness;
 
@@ -26,6 +27,9 @@ public class PopulateRoom {
         GateKeeper gk = (GateKeeper) context.getBean("gateKeeper");
 
         //System.out.println(pr.getSpawnSet());
+
+        RopeBridge.addBridge(maze);
+        Coordinate cableLocation = Cable.addCable(maze);
 
         //spawn darkness
         HashSet<Coordinate> darknessSet = maze.getCoordinateSet(0.3,maze.exit());
@@ -71,11 +75,12 @@ public class PopulateRoom {
             HashSet<Coordinate> coordinateSet;
 
             //darkness dependent spawns
-            if (!rarity.equals("dd")) {
-                coordinateSet = maze.getCoordinateSet(distanceFactor,maze.exit());
-            } else {
+            if (rarity.equals("cable")) {
+                coordinateSet = Pathfinder.findReachableAfterLock(maze, cableLocation);
+            } else if (rarity.equals("dd")) {
                 coordinateSet = reachableAfterDarkness;
-
+            } else {
+                coordinateSet = maze.getCoordinateSet(distanceFactor,maze.exit());
             }
 
             Coordinate spawnPoint;
@@ -106,8 +111,6 @@ public class PopulateRoom {
         }
 
         gk.buildGates(maze);
-
-        RopeBridge.addBridge(maze);
 
         log("Done spawning!");
         maze.printMazeContents();

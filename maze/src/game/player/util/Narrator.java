@@ -61,6 +61,7 @@ public class Narrator {
         List<String> monsterArray = new ArrayList<String>();
         List<String> itemArray = new ArrayList<String>();
         List<String> fixtureArray = new ArrayList<String>();
+        List<String> gateArray = new ArrayList<String>();
 
         if (room.isBarren()) {
             speech = player.name() + " is disappointed to find nothing of interest in the room.  " +
@@ -81,6 +82,8 @@ public class Narrator {
                     }
                 } else if (i instanceof game.objects.items.AbstractItemFixture) {
                     fixtureArray = noDuplicates(fixtureArray,i.name());
+                } else if (i instanceof game.core.maze.MazeMap.Gate) {
+                    gateArray = noDuplicates(gateArray, i.name());
                 }
                 //print(i.name());
             }
@@ -112,6 +115,7 @@ public class Narrator {
             monsterArray = game.core.inputs.GrammarGuy.numberify(monsterArray, room);
             itemArray = game.core.inputs.GrammarGuy.numberify(itemArray, room);
             fixtureArray = game.core.inputs.GrammarGuy.numberify(fixtureArray, room);
+            gateArray = game.core.inputs.GrammarGuy.numberify(gateArray, room);
 
             /*
             print(monsterArray);
@@ -128,6 +132,7 @@ public class Narrator {
             genericArray.addAll(monsterArray);
             genericArray.addAll(itemArray);
             genericArray.addAll(fixtureArray);
+            genericArray.addAll(gateArray);
 
             String generics = game.core.inputs.GrammarGuy.oxfordCommify(genericArray);
 

@@ -27,7 +27,7 @@ import static game.objects.items.Weapons.*;
 
 public class RunMazeTest {
     public static void main(String[] args) {
-        programLog.setLevel(Priority.DORMANT);
+        programLog.setLevel(Priority.LOW);
 
         Scanner scanner = new Scanner(System.in);
         String input;
@@ -96,6 +96,7 @@ public class RunMazeTest {
 
         you.inventory().add(new LitTorch());
         you.inventory().add(new EncNone());
+        you.inventory().add(new RubberChicken());
 
         /*
         Coordinate c3 = new Coordinate(0,1);

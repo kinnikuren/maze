@@ -113,6 +113,9 @@ public class MazeFullDisplay extends JPanel {
           if (mazeCopy.getRoom(c).contains("Rope Bridge")) {
               g.drawString("Rope Bridge", x+5, y_item+=10);
           }
+          if (mazeCopy.getRoom(c).contains("Cable")) {
+              g.drawString("Cable", x+5, y_item+=10);
+          }
 
           View<Coordinate> viewNeighbors = mazeCopy.viewNeighborsOf(c);
           for (Coordinate neighbor : viewNeighbors) {
@@ -207,7 +210,7 @@ public class MazeFullDisplay extends JPanel {
           g2.setColor(Color.BLACK);
 
           if (playerLoc.equals(c)) {
-              g.drawString("YOU", x+10, y+20);
+              g.drawString("YOU", x+10, y+10);
           }
 
           if (mazeCopy.exit().equals(c)) {

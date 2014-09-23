@@ -43,10 +43,11 @@ public final class Weapons {
         }
     }
 
-    public static class LongSword extends AbstractItemWeapon {
+    public static class Longsword extends AbstractItemWeapon {
 
-        public LongSword() {
+        public Longsword() {
             super();
+            this.name = "Longsword";
             this.stats.put(WDLOW, 3);
             this.stats.put(WDHIGH, 5);
         }

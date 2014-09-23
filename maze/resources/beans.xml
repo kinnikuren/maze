@@ -32,10 +32,14 @@
        <property name="rarity" value="dd"/>
    </bean>
 
+   <bean id="rubberChicken" class="game.objects.items.Useables.RubberChicken" scope="singleton">
+       <property name="rarity" value="cable"/>
+   </bean>
+
    <bean id="woodenStick" class="game.objects.items.Weapons.WoodenStick" scope="singleton">
        <property name="rarity" value="dd"/>
    </bean>
-   <bean id="longsword" class="game.objects.items.Weapons.LongSword" scope="singleton"></bean>
+   <bean id="longsword" class="game.objects.items.Weapons.Longsword" scope="singleton"></bean>
    <bean id="dagger" class="game.objects.items.Weapons.Dagger" scope="singleton"></bean>
 
    <bean id="fedora" class="game.objects.items.Armor.BrownFedora" scope="singleton"></bean>
@@ -119,6 +123,9 @@
                 </bean>
                 <bean class="game.content.general.SpawningPool.WoodenStickSpawner">
                     <lookup-method name="spawn" bean="woodenStick"/>
+                </bean>
+                <bean class="game.content.general.SpawningPool.RubberChickenSpawner">
+                    <lookup-method name="spawn" bean="rubberChicken"/>
                 </bean>
                 <bean class="game.content.general.SpawningPool.LongswordSpawner">
                     <lookup-method name="spawn" bean="longsword"/>

@@ -17,7 +17,10 @@ public final class SpawningPool {
     public static abstract class WoodenStickSpawner extends Spawner { }
     public static abstract class MatchesSpawner extends Spawner { }
 
+    public static abstract class RubberChickenSpawner extends Spawner { }
+
     public static abstract class DaggerSpawner extends Spawner { }
+
     public static abstract class LongswordSpawner extends Spawner { }
 
     public static abstract class FedoraSpawner extends Spawner { }

@@ -134,10 +134,10 @@ public class EventManager {
     public boolean contains(String objectName) {
         boolean objectExists = false;
         for (Actor actor : interactions) {
-                    log("looking for actors that match string '" + objectName + "'...");
+                    log("looking for actors that match string '" + objectName + "'...", DORMANT);
           if (actor.matches(objectName)) {
             objectExists = true;
-                    log("actor found!");
+                    log("actor found!", LOW);
             break;
           }
         }

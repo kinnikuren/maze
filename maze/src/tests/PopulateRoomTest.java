@@ -47,7 +47,7 @@ public class PopulateRoomTest {
             //BestiaryGenerator.spawnMonsters(this);
             Dagger dg = new Dagger();
             room.addActor(dg);
-            room.addActor(new LongSword());
+            room.addActor(new Longsword());
 
             //testing lots of items
             for (int i = 0; i < spawnFactor; i++) {
