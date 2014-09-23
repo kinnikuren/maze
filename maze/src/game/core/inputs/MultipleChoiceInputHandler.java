@@ -12,12 +12,12 @@ public class MultipleChoiceInputHandler {
 
          do {
 
-             if (input.equals("A")) validInput = true;
-             else if (input.equals("B")) validInput = true;
+             if (input.equals("A") || input.equals("a")) validInput = true;
+             else if (input.equals("B") || input.equals("b")) validInput = true;
              else if (num > 2) {
-                 if (input.equals("C")) validInput = true;
+                 if (input.equals("C") || input.equals("c")) validInput = true;
                  if (num > 3) {
-                     if (input.equals("D")) validInput = true;
+                     if (input.equals("D") || input.equals("d")) validInput = true;
                  }
              }
 
@@ -28,7 +28,7 @@ public class MultipleChoiceInputHandler {
          } while(!validInput);
 
 
-         return input;
+         return input.toUpperCase();
     }
 
 }

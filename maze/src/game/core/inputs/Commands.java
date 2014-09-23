@@ -78,6 +78,9 @@ public enum Commands {
     STATS( new String[] {"stats", "statistics"},
         "print out current player statistics."
             ),
+    LEAVE(new String[] {""},
+        "(leave trigger, not used by player)."
+            ),
     TELEPORT(new String[] {"teleport"},
         "teleport!"
             ),

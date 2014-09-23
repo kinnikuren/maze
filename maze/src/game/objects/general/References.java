@@ -21,7 +21,6 @@ public enum References {
     IDOL(200, new String[] {"idol"}),
     CONSOLE(201, new String[] {"mysterious console", "console"}),
     DEAD_ADVENTURER(202, new String[] {"dead adventurer"}),
-    PULLEY(203, new String[]{"pulley"}),
 
     //300-399 Gates
     GATE(300, new String[] {"gate", "locked gate", "unlocked gate"}),
@@ -35,6 +34,7 @@ public enum References {
     //500-599 Obstacles
     THE_DARKNESS(500, new String[] {"the darkness", "darkness"}),
     ROPE_BRIDGE(501, new String[] {"rope bridge", "bridge"}),
+    CABLE(502, new String[] {"cable"}),
 
     //600-699 Landmarks
     GNARLED_TREE(600, new String[] {"gnarled tree"}),
@@ -67,7 +67,6 @@ public enum References {
     GOLDEN_STATUE(1104, new String[] {"golden statue"}),
     RAT_TAIL(1105, new String[] {"rat tail", "tail"}),
     BONEMEAL(1106, new String[] {"bonemeal"}),
-    RUBBER_CHICKEN(1107, new String[] {"rubber chicken"}),
     ENCNONE(1199, new String[] {"enc-none"}),
 
     //1200-1299 Consumable Items
@@ -82,6 +81,7 @@ public enum References {
     PURPLE_KEY(1303, new String[] {"purple key"}),
     MATCHES(1304, new String[] {"matches"}),
     OILY_RAG(1305, new String[] {"oily rag", "rag"}),
+    RUBBER_CHICKEN(1306, new String[] {"rubber chicken", "rubber chicken with a pulley in the middle"}),
     WARPWHISTLE(1399, new String[] {"warp whistle"}),
 
     //1400-1499, One-time Use Trinkets

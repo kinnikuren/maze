@@ -20,6 +20,7 @@ import game.core.maze.Maze.Room;
 import game.core.maze.MazeMap.Gate;
 import game.core.positional.Cardinals;
 import game.core.positional.Coordinate;
+import game.core.positional.Coordinates;
 import game.objects.general.SpellBook;
 import game.objects.inventory.Inventory;
 import game.objects.inventory.PaperDoll;
@@ -256,7 +257,13 @@ implements Fighter {
             print("\nYou can go in the following directions: ");
             List<String> list = new ArrayList<String>();
             for (Cardinals d: maze.viewAvailableMoves(location)) {
-                list.add(d.name());
+                // this only works properly if you don't teleport around
+                if (!d.equals(Cardinals.get(Coordinates.diff(location, prevLocation)))) {
+                    list.add(d.name());
+                } else {
+                    list.add(d.name() + " (previous room)");
+                }
+
             }
             print(GrammarGuy.oxfordCommify(list));
         } else {

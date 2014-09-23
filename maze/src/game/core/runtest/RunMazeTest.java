@@ -86,14 +86,16 @@ public class RunMazeTest {
         //Gate g1 = coolMaze.map().new Gate(c1, c3);
         coolMaze.map().addLockedGate(g);
         coolMaze.map().addLockedGate(g1);
+        */
 
         you.getRoom().addActor(new PlainKey());
         you.getRoom().addActor(new RedKey());
         you.getRoom().addActor(new BlueKey());
-        */
+
         you.getRoom().addActor(new Tombstone());
 
         you.inventory().add(new LitTorch());
+        you.inventory().add(new EncNone());
 
         /*
         Coordinate c3 = new Coordinate(0,1);

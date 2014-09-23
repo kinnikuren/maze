@@ -26,19 +26,23 @@ public class GateKeeper {
 
         HashSet<Coordinate> coordinateSet = maze.getCoordinateSet(gateDistanceFactor,maze.exit());
 
-        Coordinate[] spawnPoints =
-                coordinateSet.toArray(new Coordinate[coordinateSet.size()]);
+        if (coordinateSet.size() > 0) {
+            Coordinate[] spawnPoints =
+                    coordinateSet.toArray(new Coordinate[coordinateSet.size()]);
 
-        randNum = new Random().nextInt(coordinateSet.size());
-        spawnPoint = spawnPoints[randNum];
+            randNum = new Random().nextInt(coordinateSet.size());
+            spawnPoint = spawnPoints[randNum];
 
-        Object[] neighbors = maze.viewNeighborsOf(spawnPoint).toArray();
-        neighborPoint = (Coordinate)neighbors[rand.nextInt(neighbors.length)];
+            Object[] neighbors = maze.viewNeighborsOf(spawnPoint).toArray();
+            neighborPoint = (Coordinate)neighbors[rand.nextInt(neighbors.length)];
 
-        Coordinates.Paired gateCoords = new Coordinates.Paired(spawnPoint, neighborPoint);
-        log("Gate to be spawned at " + spawnPoint + " and " + neighborPoint);
+            Coordinates.Paired gateCoords = new Coordinates.Paired(spawnPoint, neighborPoint);
+            log("Gate to be spawned at " + spawnPoint + " and " + neighborPoint);
 
-        return gateCoords;
+            return gateCoords;
+        } else return null;
+
+
     }
 
     public static Gate buildGate(Maze maze, Coordinate c1, Coordinate c2) {
@@ -59,24 +63,26 @@ public class GateKeeper {
                 //get spawn points for gate
                 Coordinates.Paired gateCoords = getGateCoords(maze, maxDistance);
 
-                //create gate
-                //Gate gate = buildGate(maze, gateCoords.c1, gateCoords.c2);
-                if (gateName.equals("Gate")) {
-                    gate = maze.map().new Gate(gateCoords.c1, gateCoords.c2);
-                } else if (gateName.equals("Red Door")) {
-                    gate = maze.map().new RedDoor(gateCoords.c1, gateCoords.c2);
-                } else if (gateName.equals("Blue Door")) {
-                    gate = maze.map().new BlueDoor(gateCoords.c1, gateCoords.c2);
-                } else if (gateName.equals("Purple Door")) {
-                    gate = maze.map().new PurpleDoor(gateCoords.c1, gateCoords.c2);
-                }
+                if (gateCoords != null) {
+                    //create gate
+                    //Gate gate = buildGate(maze, gateCoords.c1, gateCoords.c2);
+                    if (gateName.equals("Gate")) {
+                        gate = maze.map().new Gate(gateCoords.c1, gateCoords.c2);
+                    } else if (gateName.equals("Red Door")) {
+                        gate = maze.map().new RedDoor(gateCoords.c1, gateCoords.c2);
+                    } else if (gateName.equals("Blue Door")) {
+                        gate = maze.map().new BlueDoor(gateCoords.c1, gateCoords.c2);
+                    } else if (gateName.equals("Purple Door")) {
+                        gate = maze.map().new PurpleDoor(gateCoords.c1, gateCoords.c2);
+                    }
 
-                if (g.isSpawnKey()) {
-                    KeyMaster.insertKey(maze, gate);
-                }
+                    if (g.isSpawnKey()) {
+                        KeyMaster.insertKey(maze, gate);
+                    }
 
-                //add gate to list
-                gateList.add(gate);
+                    //add gate to list
+                    gateList.add(gate);
+                }
             }
         }
         for (Gate g : gateList) {
