@@ -15,10 +15,6 @@ public abstract class AbstractItemUseable extends AbstractItemTrinket
 implements Useable {
     public AbstractItemUseable() { }
 
-    public AbstractItemUseable(Coordinate c) {
-        super(c);
-    }
-
     @Override
     public Event interact(Commands trigger) {
         Event event = super.interact(trigger);

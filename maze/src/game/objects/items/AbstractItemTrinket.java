@@ -9,10 +9,6 @@ public abstract class AbstractItemTrinket extends AbstractItemPortable {
     private boolean pickedUp = false;
     public AbstractItemTrinket() { }
 
-    public AbstractItemTrinket(Coordinate c) {
-        super(c);
-    }
-
     @Override public abstract boolean matches(String name);
     @Override
     public boolean canInteract(AbstractUnit unit) {

@@ -14,6 +14,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
+import util.View;
+
 import com.google.common.collect.ArrayListMultimap;
 
 public class Narrator {
@@ -55,7 +57,7 @@ public class Narrator {
 
         int trinketCount = 0;
 
-        Collection<Actor> interactions = room.interactions();
+        View<Actor> interactions = new View<Actor>(room.getActors());
         List<String> monsterArray = new ArrayList<String>();
         List<String> itemArray = new ArrayList<String>();
         List<String> fixtureArray = new ArrayList<String>();
@@ -83,7 +85,7 @@ public class Narrator {
                 //print(i.name());
             }
 
-            log(("Number of interactions: " + ((Integer)interactions.size()).toString()),LOW);
+            log("Number of interactions: " + interactions.size(),LOW);
 
             if (interactions.size() == 0) {
                 quantity = "zero";

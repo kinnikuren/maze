@@ -16,7 +16,6 @@ public final class Armor  {
 
     public static abstract class Helmet extends AbstractItemArmor {
         private Helmet() { super(); }
-        private Helmet(Coordinate c) { super(c); }
 
         @Override
         public EquipSlots type() {
@@ -25,10 +24,10 @@ public final class Armor  {
     }
 
     public static class BrownFedora extends Helmet {
-        protected HashMap<Attributes, Integer> stats = new HashMap<Attributes, Integer>();
 
         public BrownFedora() {
             super();
+            this.name = "Brown Fedora";
             this.stats.put(DEX, 1);
         }
 
@@ -42,8 +41,6 @@ public final class Armor  {
             else return event;
         }
         */
-
-        @Override public String name() { return "Brown Fedora"; }
 
         @Override
         public String details() {
@@ -65,7 +62,6 @@ public final class Armor  {
 
     public static abstract class ChestArmor extends AbstractItemArmor {
         private ChestArmor() { super(); }
-        private ChestArmor(Coordinate c) { super(c); }
 
         @Override
         public EquipSlots type() {
@@ -74,16 +70,14 @@ public final class Armor  {
     }
 
     public static class SuperSuit extends ChestArmor {
-        protected HashMap<Attributes, Integer> stats = new HashMap<Attributes, Integer>();
 
         public SuperSuit() {
             super();
-            this.stats.put(DEX, 100);
-            this.stats.put(STR, 100);
-            this.stats.put(INT, 100);
+            this.name = "Super Suit";
+            this.stats.put(DEX, 12);
+            this.stats.put(STR, 12);
+            this.stats.put(INT, 12);
         }
-
-        @Override public String name() { return "Super Suit"; }
 
         @Override
         public String details() {

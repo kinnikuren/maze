@@ -198,13 +198,13 @@ public final class Events {
                             secondItem.name() +
                             " to make " + GrammarGuy.addArticle(newItem.name()) + ".");
                 } else {
-                    print("You cannot combine " + firstItem.name() + " and " + secondItem.name()
-                            + ".");
+                    print("You cannot combine " + firstItem.name() + " and "
+                            + secondItem.name() + ".");
                 }
-                return null;
+              return null;
             }
         };
-        return event;
+      return event;
     }
 
     public static Event useOn(final Useable item, final Actor target, final Stage secondStage) {
@@ -212,9 +212,9 @@ public final class Events {
             @Override public ResultMessage fire(Player player) {
                 log("You use " + item + " on " + target + ".");
                 item.usedBy(player, target, secondStage);
-                return null;
+              return null;
             }
         };
-        return event;
+      return event;
     }
 }

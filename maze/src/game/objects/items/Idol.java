@@ -45,11 +45,6 @@ implements Questioner {
         this.createRiddles();
     }
 
-    public Idol(Coordinate c) {
-        super(c);
-        this.createRiddles();
-    }
-
     //begin implementation of Actor methods
     @Override
     public boolean matches(String name) {

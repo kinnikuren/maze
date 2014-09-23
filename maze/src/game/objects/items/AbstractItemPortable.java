@@ -27,10 +27,6 @@ public abstract class AbstractItemPortable extends AbstractItem implements Porta
         super();
     }
 
-    public AbstractItemPortable(Coordinate c) {
-        super(c);
-    }
-
     public Coordinate getLocation() { return location; }
 
     public String name() { return name; }
@@ -53,18 +49,16 @@ public abstract class AbstractItemPortable extends AbstractItem implements Porta
     }
 
     public Event interact(Commands trigger, String prep, Actor interactee) {
-        if (trigger == COMBINE) {
-            if (prep.equals("with")) {
-                return Events.combine(this, (Portable)interactee);
-            } else return null;
-        } else {
-            return null;
+        Event event = null;
+        if (trigger == COMBINE && prep.equals("with")) {
+          event = Events.combine(this, (Portable)interactee);
         }
+      return event;
     }
 
     @Override
     public Event interact(Commands trigger, String prep, Actor interactee, Stage secondStage) {
-        return null;
+      return null;
     }
 
     @Override public abstract boolean matches(String name);

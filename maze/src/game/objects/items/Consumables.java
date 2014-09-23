@@ -13,7 +13,6 @@ public final class Consumables {
     //contains various consumable classes that extend AbstractItemConsumable
     public static abstract class Potion extends AbstractItemConsumable {
         public Potion() { }
-        public Potion(Coordinate c) { super(c); }
         @Override public abstract boolean matches(String name);
         @Override public abstract String details();
         @Override public abstract int weight();
@@ -23,7 +22,6 @@ public final class Consumables {
     public static class HealingPotion extends Potion {
         private int healing = 4;
         public HealingPotion() { }
-        public HealingPotion(Coordinate c) { super(c); }
         @Override public String name() { return "Healing Potion"; }
         @Override public boolean matches(String name) { return matchRef(HEALING_POTION, name); }
         @Override public String details() { return "This looks like a healing potion."; }
@@ -38,7 +36,6 @@ public final class Consumables {
     public static class Apple extends Potion {
         private int healing = 2;
         public Apple() { }
-        public Apple(Coordinate c) { super(c); }
         @Override public String name() { return "Apple"; }
         @Override public boolean matches(String name) { return matchRef(APPLE, name); }
         @Override public String details() { return "It's a crisp, delicious apple."; }

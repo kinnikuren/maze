@@ -42,7 +42,7 @@ public class BestiaryGenerator {
     }
 
     public static boolean thereAreMonsters(Maze.Room room) {
-        for (Actor actor : room.interactions()) {
+        for (Actor actor : room.getActors()) {
             if (actor instanceof Monster) return true;
         }
       return false;

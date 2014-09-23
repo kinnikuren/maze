@@ -9,15 +9,10 @@ import game.player.util.Attributes;
 import java.util.HashMap;
 
 public abstract class AbstractItemWeapon extends AbstractItemEquippable {
-    protected HashMap<Attributes, Integer> stats = new HashMap<Attributes, Integer>();
 
     public AbstractItemWeapon() {
         super();
     };
-
-    public AbstractItemWeapon(Coordinate c) {
-        super(c);
-    }
 
     @Override
     public EquipSlots type() {

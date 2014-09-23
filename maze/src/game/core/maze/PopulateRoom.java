@@ -35,7 +35,7 @@ public class PopulateRoom {
 
         darknessLocation = darknessLocs[rand.nextInt(darknessLocs.length)];
         log("Spawning The Darkness at " + darknessLocation + "...");
-        TheDarkness.addDarkness(maze, darknessLocation);
+        TheDarkness dk = new TheDarkness(maze, maze.getRoom(darknessLocation));
 
         HashSet<Coordinate> reachableAfterDarkness = Pathfinder.findReachableAfterLock(maze, darknessLocation);
         log("Reachable after Darkness added: " + reachableAfterDarkness);

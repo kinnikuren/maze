@@ -18,11 +18,6 @@ implements Actor {
         canCarry = false;
     }
 
-    public AbstractItemFixture(Coordinate c) {
-        super(c);
-        canCarry = false;
-    }
-
     public void visitedBy(Player player) {
         isVisited = true;
     }

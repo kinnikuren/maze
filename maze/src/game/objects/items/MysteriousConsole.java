@@ -47,11 +47,6 @@ implements Questioner {
         this.createRiddles();
     }
 
-    public MysteriousConsole(Coordinate c) {
-        super(c);
-        this.createRiddles();
-    }
-
     @Override
     public String name() { return "Mysterious Console"; }
 

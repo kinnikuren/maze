@@ -8,8 +8,4 @@ public abstract class AbstractItemArmor extends AbstractItemEquippable {
         super();
     }
 
-    public AbstractItemArmor(Coordinate c) {
-        super(c);
-    }
-
 }

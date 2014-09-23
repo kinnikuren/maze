@@ -136,11 +136,7 @@ public abstract class AbstractRoom implements Stage {
 
     public Iterable<Actor> getActors() { return interactionMap.values(); }
 
-    public Collection<Actor> interactions() {
-      return interactionMap.values();
-    }
-
-    public ArrayListMultimap<String, Actor> getMap() {
+    public ArrayListMultimap<String, Actor> interactionMap() {
         return interactionMap;
     }
 

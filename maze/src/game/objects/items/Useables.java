@@ -27,7 +27,6 @@ public final class Useables {
 
     public static class Compass extends AbstractItemUseable{
         public Compass() { }
-        public Compass(Coordinate c) { super(c); }
         @Override public String name() { return "Compass"; }
         @Override public boolean matches(String name) { return matchRef(COMPASS, name); }
         @Override public String details() { return "This will get you were you need to go."; }
@@ -104,7 +103,6 @@ public final class Useables {
 
     public static class WarpWhistle extends AbstractItemUseable{
         public WarpWhistle() { super(); }
-        public WarpWhistle(Coordinate c) { super(c); }
         @Override public String name() { return "Warp Whistle"; }
         @Override public boolean matches(String name) { return matchRef(WARPWHISTLE, name); }
         @Override public String details() { return "Blow it."; }
@@ -167,10 +165,10 @@ public final class Useables {
                     Paired<Coordinate> c = gate.getCoords();
                     if(gate.unlock(this)) {
                         print("You unlocked it!");
-                        player.maze().getRoom(c.o1).getMap().remove(oldGateName, target);
-                        player.maze().getRoom(c.o2).getMap().remove(oldGateName, target);
-                        player.maze().getRoom(c.o1).getMap().put(target.name(), target);
-                        player.maze().getRoom(c.o2).getMap().put(target.name(), target);
+                        player.maze().getRoom(c.o1).interactionMap().remove(oldGateName, target);
+                        player.maze().getRoom(c.o2).interactionMap().remove(oldGateName, target);
+                        player.maze().getRoom(c.o1).interactionMap().put(target.name(), target);
+                        player.maze().getRoom(c.o2).interactionMap().put(target.name(), target);
 
                     } else {
                         print("You failed to unlock the " + target + " with the " + this.name());

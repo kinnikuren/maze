@@ -1,12 +1,7 @@
 package util;
 
-import game.core.positional.Coordinate;
-import game.core.positional.Node;
-
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.ListIterator;
-
 import com.google.common.base.Predicate;
 
 public final class Utilities {
