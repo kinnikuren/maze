@@ -45,26 +45,22 @@ public final class GameInputHandler {
 
         if (check(leadCmd).in(APPROACH, TALK)) {
             if (arg == null) {
-                if (check(leadCmd).in(TALK)) {
+                if (check(leadCmd).in(TALK))
                     print("\nYou talk to yourself.  You find the conversation unstimulating.");
-                }
-                else {
+                else
                     print("What do you want to " + leadCmd + "?");
-                }
             }
-            else {
-              performAction(you, leadCmd, arg, you.getRoom());
-            }
+            else performAction(you, leadCmd, arg, you.getRoom());
         }
         else if (leadCmd == FIGHT) {
-            if (arg == null || arg.equals("all")) {
+            if (arg == null || arg.equals("all") || arg.equals("everything")) {
                 performAction(you, leadCmd, you.getRoom());
             } else {
                 performAction(you, leadCmd, arg, you.getRoom());
             }
         }
         else if (leadCmd == PICKUP) {
-            if (arg == null || arg.equals("all")) {
+            if (arg == null || arg.equals("all") || arg.equals("everything")) {
                 performAction(you, leadCmd, you.getRoom());
             }
             else {
@@ -87,15 +83,13 @@ public final class GameInputHandler {
             }
         }
         else if (leadCmd == COMBINE) {
-            if (arg == null) {
+            if (arg == null)
                 print("What do you want to " + leadCmd + "?");
-            } else if (prep != null) {
+            else if (prep != null) {
                 if (secondObject == null) {
                     print("What do you want to " + leadCmd + " " + arg + " " + prep + "?");
                 }
-                else {
-                    performAction(you, leadCmd, arg, prep, secondObject, you.inventory(), you.inventory());
-                }
+                else performAction(you, leadCmd, arg, prep, secondObject, you.inventory(), you.inventory());
             }
         }
         else if (check(leadCmd).in(EQUIP, DROP, CONSUME)) {

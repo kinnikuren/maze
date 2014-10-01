@@ -37,6 +37,7 @@ public enum Commands {
         ),
     FIGHT(new String[] {"fight", "f", "attack"},
         "fight/f usage: use to start combat with an opponent."
+                + "\nUse 'all' or 'everything' to fight with all opponents."
         ),
     TALK(new String[] {"talk"},
                 "talk usage: talk to <object> to attempt to talk to an object.",
