@@ -96,6 +96,16 @@ public final class Armor  {
         }
     }
 
+    public static class ExtraSuperSuit extends SuperSuit {
+        public ExtraSuperSuit() {
+            super();
+            this.name = "Extra Super Suit";
+            this.stats.put(DEX, 15);
+            this.stats.put(STR, 15);
+            this.stats.put(INT, 15);
+        }
+    }
+
     //Testing
     public static void main(String[] args) {
         BrownFedora fed = new BrownFedora();
