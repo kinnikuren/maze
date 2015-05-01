@@ -1,6 +1,7 @@
 package tests;
 
 import java.util.*;
+
 import static util.Print.*;
 
 public class CollectionTest {
@@ -43,6 +44,18 @@ public class CollectionTest {
         print(map.keySet());
         String s = map.remove(2);
         print(map.keySet()); print(s);
+
+        List<String> re = new ArrayList<String>();
+        re.add("hi!"); re.add("ehhh..."); re.add("no way Jose."); re.add("blahblahblah"); re.add("cowabunga!!!");
+        System.out.println(re);
+        deleteSomethingFromList(re);
+        System.out.println(re);
+    }
+
+    public static void deleteSomethingFromList(List<String> inList) {
+        List<String> newList = new ArrayList<String>(inList);
+        newList.remove(0);
+        //return inList;
     }
 
 }

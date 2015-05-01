@@ -11,7 +11,6 @@ import game.objects.items.Armor.Helmet;
 import game.objects.items.Armor.SuperSuit;
 import game.objects.items.Armor.ExtraSuperSuit;
 
-
 import java.util.*;
 
 public class CombineTraversalTest {
@@ -86,6 +85,33 @@ public class CombineTraversalTest {
 
         //List<Integer> list = new ArrayList<Integer>();
         //list.addAll(Arrays.asList(new Integer[] {1,1,1,2,2,3,3,3,4,4,4,4,5,5}));
+
+        Class<Equippable> eq = Equippable.class;
+        Class<Equippable> eq2 = Equippable.class;
+        /* try {
+            Equippable eq3 = Equippable.class.newInstance();
+        } catch (InstantiationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } */
+        try {
+            BrownFedora eq3 = BrownFedora.class.newInstance();
+            System.out.println(eq3);
+        } catch (InstantiationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+
+        System.out.println(eq.equals(eq2));
+        System.out.println(eq == eq2);
+
 
     }
 

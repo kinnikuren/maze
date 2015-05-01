@@ -10,6 +10,11 @@ public class TestMoreStuff {
 
     public static void main(String[] args) {
 
+        Dagger d1 = new Dagger();
+        Dagger d2 = new Dagger();
+        System.out.println(d1==d2);
+        System.out.println(d1.equals(d2));
+
         PriorityQueue<String> pq = new PriorityQueue<String>();
         String s1 = "hello";
         String s2 = s1;

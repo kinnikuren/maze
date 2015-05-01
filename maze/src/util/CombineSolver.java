@@ -1,60 +1,20 @@
 package util;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 
 import org.apache.commons.collections4.CollectionUtils;
 
-import game.core.positional.Node;
+import static util.Tuples.*;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
-
-public final class Tuples {
-    private Tuples() { } //no instantiation
-
-    public static <X, Y> Function<Tuple<X, Y>, X> xFunction() {
-        return new Function<Tuple<X, Y>, X>() {
-            @Override
-            public X apply(Tuple<X, Y> tuple) {
-                return tuple.x;
-            }
-        };
-    }
-
-    public static <X, Y> Function<Tuple<X, Y>, Y> yFunction() {
-        return new Function<Tuple<X, Y>, Y>() {
-            @Override
-            public Y apply(Tuple<X, Y> tuple) {
-                return tuple.y;
-            }
-        };
-    }
-
-    public static <X, Y> View<X> xViewOfTuples(final Iterable<Tuple<X,Y>> fromIterable) {
-        final Function<Tuple<X, Y>, X> xF = Tuples.xFunction();
-        return new View<X>(fromIterable, xF);
-    }
-
-    public static <X, Y> View<Y> yViewOfTuples(final Iterable<Tuple<X,Y>> fromIterable) {
-        final Function<Tuple<X, Y>, Y> yF = Tuples.yFunction();
-        return new View<Y>(fromIterable, yF);
-    }
-
-    public static <X, Y> Set<X> xSetOfTuples(final Iterable<Tuple<X,Y>> fromIterable) {
-        Set<X> xSet = new HashSet<X>();
-        for (Tuple<X, Y> t : fromIterable) {
-            xSet.add(t.x);
-        }
-        return xSet;
-    }
-
-    public static <X, Y> Set<Y> ySetOfTuples(final Iterable<Tuple<X,Y>> fromIterable) {
-        Set<Y> ySet = new HashSet<Y>();
-        for (Tuple<X, Y> t : fromIterable) {
-            ySet.add(t.y);
-        }
-        return ySet;
-    }
+public final class CombineSolver<X> {
+    private CombineSolver() { } //no instantiation
 
     public static <X, Y> Tuple<X, Y> findCandidateTuple(Set<Tuple<X, Y>> fromTuples) {
 
@@ -134,6 +94,7 @@ public final class Tuples {
         }
             System.out.println(tuples);
 
+        //return an arbitrary final candidate tuple if more than one exists
         List<Tuple<X, Y>> tuplesList = new ArrayList<Tuple<X, Y>>(tuples);
         if (tuplesList.size() == 1) return tuplesList.get(0);
         else {
@@ -173,6 +134,68 @@ public final class Tuples {
         return solutions;
     }
 
+    public static <X, Y> boolean doesCombineSolutionExist(Set<Tuple<X, Y>> fromTuples) {
 
+        Set<X> setX = xSetOfTuples(fromTuples);
+        Set<Y> setY = ySetOfTuples(fromTuples);
 
+        if (setX.size() != setY.size()) {
+            System.out.println("# of distinct X elements does not match # of distinct Y elements.");
+            System.out.println("Therefore no solution is possible.");
+            return false;
+        }
+        Set<Tuple<X, Y>> solutions = findSolutionTuples(fromTuples);
+        if (setX.size() != solutions.size()) {
+            System.out.println("# of distinct solution nodes does not match # of distinct X and Y elements");
+            System.out.println("Therefore no solution was reached.");
+            return false;
+        }
+        //failsafe check against the algorithm
+        //should be unecessary since the algorithm shouldn't allow duplicate elements
+        //without which the above size check cannot incorrectly pass when the below checks would fail
+        View<X> viewX = xViewOfTuples(solutions);
+        View<Y> viewY = yViewOfTuples(solutions);
+        for (X x : setX) {
+            if (!viewX.contains(x)) {
+                System.out.println("Element " + x + " is missing from proposed solution");
+                return false;
+            }
+        }
+        for (Y y : setY) {
+            if (!viewY.contains(y)) {
+                System.out.println("Element " + y + " is missing from proposed solution");
+                return false;
+            }
+        }
+        //if all checks passed then return true!
+        return true;
+    }
+
+    public static void main(String[] args) {
+
+        Set<Tuple<String, Integer>> tuples = new HashSet<Tuple<String, Integer>>();
+
+        Tuple<String, Integer> t1 = new Tuple<String, Integer>("A", 1); tuples.add(t1);
+        Tuple<String, Integer> t2 = new Tuple<String, Integer>("A", 2); tuples.add(t2);
+        Tuple<String, Integer> t3 = new Tuple<String, Integer>("A", 3); tuples.add(t3);
+        //Tuple<String, Integer> t4 = new Tuple<String, Integer>("B", 1); tuples.add(t4);
+        Tuple<String, Integer> t5 = new Tuple<String, Integer>("B", 2); tuples.add(t5);
+        Tuple<String, Integer> t6 = new Tuple<String, Integer>("C", 2); tuples.add(t6);
+        //Tuple<String, Integer> t7 = new Tuple<String, Integer>("C", 3); tuples.add(t7);
+        //Tuple<String, Integer> t8 = new Tuple<String, Integer>("C", 4); tuples.add(t8);
+        //Tuple<String, Integer> t9 = new Tuple<String, Integer>("D", 3); tuples.add(t9);
+        //Tuple<String, Integer> t10 = new Tuple<String, Integer>("D", 4); tuples.add(t10);
+
+        Set<Tuple<String, Integer>> solutions = findSolutionTuples(tuples);
+        System.out.println("---***************---");
+        System.out.println("---***************---");
+        System.out.println("---solution tuples---");
+        System.out.println(solutions);
+        System.out.println("---***************---");
+        if (doesCombineSolutionExist(tuples)) {
+            System.out.println("A solution was reached!");
+        } else {
+            System.out.println("No solution was reached. :(");
+        }
+    }
 }
