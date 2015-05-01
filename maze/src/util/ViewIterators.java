@@ -50,4 +50,13 @@ public final class ViewIterators {
     };
   }
 
+  public static <T> Iterator<T> flatten(final Iterator<? extends T> fromIterator) {
+      return new FlatIterator<T>(fromIterator) {
+          @Override
+          T flatten(T from) {
+          return from;
+          }
+      };
+  }
+
 }

@@ -29,7 +29,7 @@ public class View<T> implements Iterable<T> {
 
     public View(final Iterable<? extends T> fromIterable) {
         //iterating through this view will yield type-flattened versions of the members of the backing iterable
-        //functionally equivalent to Collection<? extends T> given the original Collection<T>, except read-only
+        //functionally equivalent to Collection<? extends T> given the original Collection<T>, except can be read-only
         this.view = this.flatten(fromIterable);
     }
 

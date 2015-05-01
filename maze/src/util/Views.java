@@ -60,7 +60,7 @@ public final class Views {
       return new FluentIterable<T>() {
           @Override
           public Iterator<T> iterator() {
-            return RmViewIterators.flatten(fromIterable.iterator());
+            return ViewIterators.flatten(fromIterable.iterator());
           }
       };
     }
