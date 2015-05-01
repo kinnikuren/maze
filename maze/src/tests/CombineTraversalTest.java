@@ -24,6 +24,12 @@ public class CombineTraversalTest {
         public boolean match(String type) {
             return this.typeMatch.contains(type);
         }
+        public Set<String> getMatches() {
+            return typeMatch;
+        }
+        public void printMatches() {
+            System.out.println(typeMatch);
+        }
     }
 
     public static class TestTypes {
@@ -34,7 +40,7 @@ public class CombineTraversalTest {
     }
 
     public boolean isArmor(Object o) {
-        Class aia = AbstractItemArmor.class;
+        Class<AbstractItemArmor> aia = AbstractItemArmor.class;
         return aia.isInstance(o);
         //return o instanceof AbstractItemArmor;
         /* try { AbstractItemArmor a = (AbstractItemArmor)o;
@@ -45,19 +51,19 @@ public class CombineTraversalTest {
     }
 
     public boolean isHelmet(Object o) {
-        Class h = Helmet.class;
+        Class<Helmet> h = Helmet.class;
         return h.isInstance(o);
         //return o instanceof Helmet;
     }
 
     public boolean isEquippable(Object o) {
-        Class eq = Equippable.class;
+        Class<Equippable> eq = Equippable.class;
         return eq.isInstance(o);
         //return o.getClass().isInstance(eq);
     }
 
     public boolean isExtraSuperSuit(Object o) {
-        Class ess = ExtraSuperSuit.class;
+        Class<ExtraSuperSuit> ess = ExtraSuperSuit.class;
         return ess.isInstance(o);
     }
 
@@ -78,23 +84,8 @@ public class CombineTraversalTest {
         System.out.println("--------------");
         if (ctt.isExtraSuperSuit(ss2)) System.out.println("Super Suit is ExtraSuperSuit"); */
 
-        //String[] types = new String[] {"A", "B", "C"};
-        //TestTypes tt = new TestTypes(types);
-        Class eq = Equippable.class;
-        Class eq2 = Equippable.class;
-        System.out.println("equals: " + eq.equals(eq2));
-    }
-
-    public static class MatrixNode<X,Y> {
-        protected final X x;
-        protected final Y y;
-        public int xCount = 0;
-        public int yCount = 0;
-
-        public MatrixNode(X x, Y y) {
-            this.x = x;
-            this.y = y;
-        }
+        //List<Integer> list = new ArrayList<Integer>();
+        //list.addAll(Arrays.asList(new Integer[] {1,1,1,2,2,3,3,3,4,4,4,4,5,5}));
 
     }
 
