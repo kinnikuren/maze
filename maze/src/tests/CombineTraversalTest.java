@@ -62,13 +62,7 @@ public class CombineTraversalTest {
     }
 
     public static void main(String[] args) {
-
-        String[] types = new String[] {"A", "B", "C"};
-        TestTypes tt = new TestTypes(types);
-
-        Class armor = Armor.class;
-        Class helmet = Helmet.class;
-        BrownFedora bf = new BrownFedora();
+        /* BrownFedora bf = new BrownFedora();
         SuperSuit ss = new SuperSuit();
         //AbstractItemArmor ss2 = new SuperSuit();
         AbstractItemEquippable ss2 = new ExtraSuperSuit();
@@ -82,8 +76,25 @@ public class CombineTraversalTest {
         if (ctt.isEquippable(ss2)) System.out.println("Super Suit is Equippable");
         if (ctt.isEquippable(bf)) System.out.println("Brown Fedora is Equippable");
         System.out.println("--------------");
-        if (ctt.isExtraSuperSuit(ss2)) System.out.println("Super Suit is ExtraSuperSuit");
+        if (ctt.isExtraSuperSuit(ss2)) System.out.println("Super Suit is ExtraSuperSuit"); */
 
+        //String[] types = new String[] {"A", "B", "C"};
+        //TestTypes tt = new TestTypes(types);
+        Class eq = Equippable.class;
+        Class eq2 = Equippable.class;
+        System.out.println("equals: " + eq.equals(eq2));
+    }
+
+    public static class MatrixNode<X,Y> {
+        protected final X x;
+        protected final Y y;
+        public int xCount = 0;
+        public int yCount = 0;
+
+        public MatrixNode(X x, Y y) {
+            this.x = x;
+            this.y = y;
+        }
 
     }
 
