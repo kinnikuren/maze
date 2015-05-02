@@ -150,7 +150,7 @@ public final class CombineSolver<X> {
             System.out.println("Therefore no solution was reached.");
             return false;
         }
-        //failsafe check against the algorithm
+        //next is failsafe check against the algorithm
         //should be unecessary since the algorithm shouldn't allow duplicate elements
         //without which the above size check cannot incorrectly pass when the below checks would fail
         View<X> viewX = xViewOfTuples(solutions);

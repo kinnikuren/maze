@@ -1,17 +1,33 @@
 package game.objects.general;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import com.google.common.collect.ArrayListMultimap;
 
-import game.core.interfaces.Portable;
+import game.core.interfaces.*;
+import game.objects.items.AbstractItem;
 import game.objects.items.Trinkets.*;
 import game.objects.items.Useables.*;
 import game.objects.items.Weapons.*;
+import util.Tuple;
+import static util.CombineSolver.*;
 
 public class Combiner {
+
+    @SuppressWarnings("rawtypes")
+    public static class RecipeItem {
+        private Class c;
+        public RecipeItem(Class c) {
+            this.c = c;
+        }
+        public boolean matches(Object o) {
+            return c.isInstance(o);
+        }
+        @Override
+        public String toString() {
+            return c.getName();
+        }
+    }
 
     @SuppressWarnings("rawtypes")
     public static class Combination {
@@ -122,9 +138,29 @@ public class Combiner {
     }
 
     public static void main(String[] args) {
-        System.out.println(Combiner.Combinations.C01.recipe());
-        System.out.println(Combiner.Combinations.C02.result());
-        System.out.println(Combiner.Combinations.C03.result());
-        //System.out.println("placeholder");
+        //System.out.println(Combiner.Combinations.C01.recipe());
+        //System.out.println(Combiner.Combinations.C02.result());
+        //System.out.println(Combiner.Combinations.C03.result());
+
+        RecipeItem[] tr = new RecipeItem[] {new RecipeItem(Flammable.class),
+                new RecipeItem(Flammable.Flame.class), new RecipeItem(WoodenStick.class)};
+        List<RecipeItem> torchRecipe = new ArrayList<RecipeItem>(Arrays.asList(tr));
+        AbstractItem[] ar = new AbstractItem[] {new OilyRag(), new Match(), new WoodenStick()};
+        List<AbstractItem> torchIngredients = new ArrayList<AbstractItem>(Arrays.asList(ar));
+
+        Set<Tuple<RecipeItem, AbstractItem>> combos = new HashSet<Tuple<RecipeItem, AbstractItem>>();
+        for (RecipeItem ri : torchRecipe) {
+            for (AbstractItem ai : torchIngredients) {
+                if (ri.matches(ai)) {
+                    combos.add(new Tuple<RecipeItem, AbstractItem>(ri, ai));
+                }
+            }
+        }
+        System.out.println(combos);
+        Set<Tuple<RecipeItem, AbstractItem>> comboSolution = findSolutionTuples(combos);
+        boolean canBeSolved = doesCombineSolutionExist(combos);
+        System.out.println(comboSolution);
+        System.out.println("can be solved? " + canBeSolved);
+
     }
 }

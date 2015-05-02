@@ -324,7 +324,7 @@ public final class GameInputHandler {
 
             for(String str : printList()) print(str);
             */
-            printList();
+            printCommandsList();
         }
         else print("\nThis instruction is invalid. Type 'commands' for a list of commands.");
     }

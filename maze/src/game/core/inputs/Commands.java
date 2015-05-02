@@ -89,7 +89,7 @@ public enum Commands {
             ),
     MAP(new String[] {"map"}, "show the map."
             ),
-    BSW(new String[] {"bsw"}, "map cheat."
+    BSW(new String[] {"bsw", "blacksheepwall"}, "map cheat."
             ),
     HELP(new String[] {"help"},
         "help usage: help <command name> to print out details of using the command."
@@ -127,7 +127,7 @@ public enum Commands {
 
         public String toString() { return matchInputs.get(0); }
 
-        public static void printList() {
+        public static void printCommandsList() {
             print("List of Commands:");
             print("-----------------------------------------------------------------------------");
             print("| move (mv) (go) + <<direction>> | where can i go? (go?) | where am i? (am?)|");

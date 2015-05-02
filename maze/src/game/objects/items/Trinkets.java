@@ -2,6 +2,7 @@ package game.objects.items;
 
 import static game.objects.general.References.*;
 import static util.Print.*;
+import game.core.interfaces.Flammable;
 import game.core.positional.Coordinate;
 
 import java.util.LinkedList;
@@ -22,8 +23,7 @@ public final class Trinkets {
         public BronzeCoin() { }
         @Override public String name() { return "Bronze Coin"; }
         @Override public boolean matches(String name) { return matchRef(BRONZE_COIN, name); }
-        @Override public String details() { return "This bronze coin is very light and faded "
-                + "with age."; }
+        @Override public String details() { return "This bronze coin is very light and faded with age."; }
         @Override public int weight() { return 2; }
     }
 
@@ -31,8 +31,7 @@ public final class Trinkets {
         public SilverCoin() { }
         @Override public String name() { return "Silver Coin"; }
         @Override public boolean matches(String name) { return matchRef(SILVER_COIN, name); }
-        @Override public String details() { return "This silver coin is light and still somewhat "
-                + "shiny."; }
+        @Override public String details() { return "This silver coin is light and still somewhat shiny."; }
         @Override public int weight() { return 5; }
     }
 
@@ -40,8 +39,7 @@ public final class Trinkets {
         public GoldCoin() { }
         @Override public String name() { return "Gold Coin"; }
         @Override public boolean matches(String name) { return matchRef(GOLD_COIN, name); }
-        @Override public String details() { return "This gold coin is heavy and has a dull "
-                + "lustre."; }
+        @Override public String details() { return "This gold coin is heavy and has a dull lustre."; }
         @Override public int weight() { return 8; }
     }
 
@@ -53,12 +51,24 @@ public final class Trinkets {
         @Override public int weight() { return 16; }
     }
 
-    public static class OilyRag extends AbstractItemTrinket {
+    public static class OilyRag extends AbstractItemTrinket implements Flammable {
         public OilyRag() { }
         @Override public String name() { return "Oily Rag"; }
         @Override public boolean matches(String name) { return matchRef(OILY_RAG, name); }
         @Override public String details() { return "This dirty rag smells of kerosene."; }
         @Override public int weight() { return 1; }
+
+        @Override public void lightOnFire(Flame flame) {}
+        @Override public boolean isOnFire() { return false; }
+        @Override public void extinguish() {}
+    }
+
+    public static class Match extends AbstractItemTrinket implements Flammable.Flame {
+        public Match() { }
+        @Override public String name() { return "Match"; }
+        @Override public boolean matches(String name) { return this.name.equals(name); }
+        @Override public String details() { return "A small wooden match."; }
+        @Override public int weight() { return 0; }
     }
 
     public static class EncNone extends AbstractItemTrinket {
