@@ -6,6 +6,10 @@ import com.google.common.collect.ArrayListMultimap;
 
 import game.core.interfaces.*;
 import game.objects.items.AbstractItem;
+<<<<<<< HEAD
+=======
+import game.objects.items.AbstractItemWeapon;
+>>>>>>> a sample demonstration of a combination recipe being solved
 import game.objects.items.Trinkets.*;
 import game.objects.items.Useables.*;
 import game.objects.items.Weapons.*;
@@ -15,9 +19,15 @@ import static util.CombineSolver.*;
 public class Combiner {
 
     @SuppressWarnings("rawtypes")
+<<<<<<< HEAD
     public static class RecipeItem {
         private Class c;
         public RecipeItem(Class c) {
+=======
+    public static class Ingredient {
+        private Class c;
+        public Ingredient(Class c) {
+>>>>>>> a sample demonstration of a combination recipe being solved
             this.c = c;
         }
         public boolean matches(Object o) {
@@ -25,7 +35,11 @@ public class Combiner {
         }
         @Override
         public String toString() {
+<<<<<<< HEAD
             return c.getName();
+=======
+            return "Ingredient: " + c.getSimpleName();
+>>>>>>> a sample demonstration of a combination recipe being solved
         }
     }
 
@@ -142,25 +156,36 @@ public class Combiner {
         //System.out.println(Combiner.Combinations.C02.result());
         //System.out.println(Combiner.Combinations.C03.result());
 
-        RecipeItem[] tr = new RecipeItem[] {new RecipeItem(Flammable.class),
-                new RecipeItem(Flammable.Flame.class), new RecipeItem(WoodenStick.class)};
-        List<RecipeItem> torchRecipe = new ArrayList<RecipeItem>(Arrays.asList(tr));
+        Ingredient[] tr = new Ingredient[] {new Ingredient(Flammable.class),
+                new Ingredient(Flammable.Flame.class), new Ingredient(WoodenStick.class)};
+        List<Ingredient> torchRecipe = new ArrayList<Ingredient>(Arrays.asList(tr));
         AbstractItem[] ar = new AbstractItem[] {new OilyRag(), new Match(), new WoodenStick()};
         List<AbstractItem> torchIngredients = new ArrayList<AbstractItem>(Arrays.asList(ar));
 
-        Set<Tuple<RecipeItem, AbstractItem>> combos = new HashSet<Tuple<RecipeItem, AbstractItem>>();
-        for (RecipeItem ri : torchRecipe) {
+        Set<Tuple<Ingredient, AbstractItem>> combos = new HashSet<Tuple<Ingredient, AbstractItem>>();
+
+        boolean matched = false;
+        boolean matchedAll = true;
+        for (Ingredient ri : torchRecipe) {
+            matched = false;
             for (AbstractItem ai : torchIngredients) {
                 if (ri.matches(ai)) {
-                    combos.add(new Tuple<RecipeItem, AbstractItem>(ri, ai));
+                    combos.add(new Tuple<Ingredient, AbstractItem>(ri, ai));
+                    matched = true;
                 }
             }
+            if (!matched) matchedAll = false;
+            break;
         }
-        System.out.println(combos);
-        Set<Tuple<RecipeItem, AbstractItem>> comboSolution = findSolutionTuples(combos);
-        boolean canBeSolved = doesCombineSolutionExist(combos);
-        System.out.println(comboSolution);
-        System.out.println("can be solved? " + canBeSolved);
+
+        if (matchedAll) {
+            System.out.println(combos);
+            Set<Tuple<Ingredient, AbstractItem>> comboSolution = findSolutionTuples(combos);
+            boolean canBeSolved = isCombineSolutionValid(combos, comboSolution);
+            System.out.println(comboSolution);
+            System.out.println("can be solved? " + canBeSolved);
+        }
+        else System.out.println("Not all ingredients found matching items, so no solution is possible.");
 
     }
 }

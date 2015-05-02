@@ -31,7 +31,7 @@ public final class CombineSolver<X> {
         int xMinCard = Collections.min(xCardMap.values());
             System.out.println("min x cardinality: " + xMinCard);
 
-        //min Y cardinality will be determined amongst the valid X candidates only
+        //min Y cardinality will be determined amongst the Y values of the valid X candidates only
         //but the cardinality itself must be derived over the entire view
         Map<Y, Integer> yCardMap = CollectionUtils.getCardinalityMap(viewY);
         System.out.println(yCardMap);
@@ -112,7 +112,7 @@ public final class CombineSolver<X> {
         while (tuples.size() > 0) {
 
             System.out.println(tuples);
-            System.out.println("TUPLE SIZE: " + tuples.size());
+            System.out.println("TUPLE SET SIZE: " + tuples.size());
             System.out.println("--------------------");
 
             Tuple<X, Y> tCandidate = findCandidateTuple(tuples);
@@ -134,7 +134,8 @@ public final class CombineSolver<X> {
         return solutions;
     }
 
-    public static <X, Y> boolean doesCombineSolutionExist(Set<Tuple<X, Y>> fromTuples) {
+    public static <X, Y> boolean isCombineSolutionValid(Set<Tuple<X, Y>> fromTuples,
+            Set<Tuple<X, Y>> solutions) {
 
         Set<X> setX = xSetOfTuples(fromTuples);
         Set<Y> setY = ySetOfTuples(fromTuples);
@@ -144,7 +145,6 @@ public final class CombineSolver<X> {
             System.out.println("Therefore no solution is possible.");
             return false;
         }
-        Set<Tuple<X, Y>> solutions = findSolutionTuples(fromTuples);
         if (setX.size() != solutions.size()) {
             System.out.println("# of distinct solution nodes does not match # of distinct X and Y elements");
             System.out.println("Therefore no solution was reached.");
@@ -169,6 +169,12 @@ public final class CombineSolver<X> {
         }
         //if all checks passed then return true!
         return true;
+    }
+
+    public static <X, Y> boolean doesCombineSolutionExist(Set<Tuple<X, Y>> fromTuples) {
+
+        Set<Tuple<X, Y>> solutions = findSolutionTuples(fromTuples);
+        return isCombineSolutionValid(fromTuples, solutions);
     }
 
     public static void main(String[] args) {
