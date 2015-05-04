@@ -6,10 +6,7 @@ import com.google.common.collect.ArrayListMultimap;
 
 import game.core.interfaces.*;
 import game.objects.items.AbstractItem;
-<<<<<<< HEAD
-=======
 import game.objects.items.AbstractItemWeapon;
->>>>>>> a sample demonstration of a combination recipe being solved
 import game.objects.items.Trinkets.*;
 import game.objects.items.Useables.*;
 import game.objects.items.Weapons.*;
@@ -19,15 +16,9 @@ import static util.CombineSolver.*;
 public class Combiner {
 
     @SuppressWarnings("rawtypes")
-<<<<<<< HEAD
-    public static class RecipeItem {
-        private Class c;
-        public RecipeItem(Class c) {
-=======
     public static class Ingredient {
         private Class c;
         public Ingredient(Class c) {
->>>>>>> a sample demonstration of a combination recipe being solved
             this.c = c;
         }
         public boolean matches(Object o) {
@@ -35,11 +26,7 @@ public class Combiner {
         }
         @Override
         public String toString() {
-<<<<<<< HEAD
-            return c.getName();
-=======
             return "Ingredient: " + c.getSimpleName();
->>>>>>> a sample demonstration of a combination recipe being solved
         }
     }
 
