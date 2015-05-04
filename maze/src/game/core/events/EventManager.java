@@ -46,9 +46,9 @@ public class EventManager {
         this.interactions = new View<Actor>(actors);
     }
 
-    public PriorityQueue<Event> getCurrentEvents() { return currentEvents.queue(); }
-
     public View<Actor> interactions() { return interactions; }
+
+    public PriorityQueue<Event> getCurrentEvents() { return currentEvents.queue(); }
 
     public PriorityQueue<Event> getCurrentEvents(Commands trigger) {
         for (Actor i : interactions) {

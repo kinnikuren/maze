@@ -287,43 +287,6 @@ public final class GameInputHandler {
             you.setLocation(teleportCoord);
         }
         else if(fullCmd == COMMANDS) {
-
-            /*
-            print("\nList of commands:");
-            int size = printList().length;
-
-            int cols = 3;
-            int rows = 0;
-            int index = 0;
-
-            do {
-                rows++;
-                size -= cols;
-            } while (size % cols > 0);
-
-            for (int i = 0; i < cols; i++) {
-                printnb("--------------------------------------------");
-                //print("|                  |");
-            }
-            print("");
-
-            for (int i = 0; i < rows; i++) {
-
-                print("");
-                for (int j = 0; j < cols; j++) {
-                    //printnb("|                  |");
-                    printnb("| " + printList()[index] + " |");
-                    index++;
-                }
-                print("");
-                for (int j = 0; j < cols; j++) {
-                    printnb("--------------------------------------------");
-                }
-                print("");
-            }
-
-            for(String str : printList()) print(str);
-            */
             printCommandsList();
         }
         else print("\nThis instruction is invalid. Type 'commands' for a list of commands.");
