@@ -43,8 +43,7 @@ public class Inventory implements Stage {
         return portables;
      }
 
-    //@throwsNullArgumentException
-    public void add(Portable item) throws NullArgumentException {
+    public void add(Portable item) {
         checkNullArg(item);
         inventory.put(item.name(), item);
         log("Item added to inventory interactions: " + item);
