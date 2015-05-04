@@ -38,13 +38,11 @@ public class AStar {
       return current.getDistanceTo(goal);
     }
 
-    public static LinkedList<Coordinate> discover(Maze maze)
-                throws NullArgumentException {
+    public static LinkedList<Coordinate> discover(Maze maze) {
       return discover(maze.center(), maze.exit(), maze);
     }
 
-    public static LinkedList<Coordinate> discover(Coordinate start, Coordinate goal, Maze maze)
-                throws NullArgumentException {
+    public static LinkedList<Coordinate> discover(Coordinate start, Coordinate goal, Maze maze) {
         checkNullArgs(start, goal, maze);
         boolean discovery = false;
         LinkedList<Coordinate> path = null;

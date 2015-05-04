@@ -62,8 +62,7 @@ public class PaperDoll implements Stage {
       return paperDoll.get(slot);
     }
 
-  //@throws[NullArgumentException]
-    public Equippable add(Equippable item) throws NullArgumentException {
+    public Equippable add(Equippable item) {
         checkNullArg(item);
 
                 log("Attempting to add " + item + " to paper doll...");

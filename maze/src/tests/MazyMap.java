@@ -25,7 +25,7 @@ public class MazyMap {
         //placeholder constructor
     }
 
-    public boolean add(Coordinate c) throws IllegalArgumentException {
+    public boolean add(Coordinate c) {
         checkNullArg(c);
         if (roomMap.keySet().contains(c)) return false;
         else {
@@ -87,7 +87,7 @@ public class MazyMap {
       return null;
     }
 
-    private void checkLegalArgs(Coordinate... coordinates) throws IllegalArgumentException {
+    private void checkLegalArgs(Coordinate... coordinates) {
         checkNullArg(coordinates);
         if (!containsAll(coordinates)) {
           throw new IllegalArgumentException("Only coordinates that are present in "
@@ -95,13 +95,13 @@ public class MazyMap {
         }
     }
 
-    public boolean link(Coordinate c, Coordinate target) throws IllegalArgumentException {
+    public boolean link(Coordinate c, Coordinate target) {
         //links nodes that already exist in the map; returns false if a link already exists in that direction
         checkLegalArgs(c, target);
       return addLinkTo(c, target);
     }
 
-    public boolean linkDouble(Coordinate c1, Coordinate c2) throws IllegalArgumentException {
+    public boolean linkDouble(Coordinate c1, Coordinate c2) {
         //returns false if either link cannot be added, else it will add both links
         boolean newLinks = false;
         checkLegalArgs(c1, c2);
@@ -114,8 +114,7 @@ public class MazyMap {
       return newLinks;
     }
 
-    public boolean addNodesLinkedOneWay(Coordinate c, Coordinate target)
-            throws IllegalArgumentException {
+    public boolean addNodesLinkedOneWay(Coordinate c, Coordinate target) {
         checkNullArgs(c, target);
         add(c); //in case it doesn't exist in the map yet
         add(target); //in case it doesn't exist in the map yet
@@ -136,12 +135,12 @@ public class MazyMap {
       return newLinks;
     }
 
-    public boolean deleteLink(Coordinate c, Coordinate target) throws IllegalArgumentException {
+    public boolean deleteLink(Coordinate c, Coordinate target) {
         checkLegalArgs(c, target);
       return removeLinkTo(c, target);
     }
 
-    public boolean deleteLinkDouble(Coordinate c1, Coordinate c2) throws IllegalArgumentException {
+    public boolean deleteLinkDouble(Coordinate c1, Coordinate c2) {
         //returns false if either link cannot be deleted, else it will delete both links
         boolean removeLinks = false;
         checkLegalArgs(c1, c2);
@@ -171,7 +170,7 @@ public class MazyMap {
       return roomMap.get(c);
     }
 
-    public void build(Room room) throws IllegalArgumentException {
+    public void build(Room room) {
         checkNullArg(room);
         Node node = getNode(room.position);
         if (node != null) roomMap.put(node, room);
@@ -249,7 +248,7 @@ public class MazyMap {
         }
     }
 
-    public Key addLockedGate(Coordinate c1, Coordinate c2) throws IllegalArgumentException {
+    public Key addLockedGate(Coordinate c1, Coordinate c2) {
         checkLegalArgs(c1, c2);
 
         Gate gate = new Gate(c1, c2);

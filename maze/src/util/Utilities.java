@@ -21,11 +21,11 @@ public final class Utilities {
         }
     }
 
-    public static void checkNullArg(Object o) throws NullArgumentException {
+    public static void checkNullArg(Object o) {
         if (o == null) throw new NullArgumentException("Null arguments are not allowed for this method.");
     }
 
-    public static void checkNullArgs(Object... args) throws NullArgumentException {
+    public static void checkNullArgs(Object... args) {
         for (Object o : args) {
           if (o == null) throw new NullArgumentException("Null arguments are not allowed for this method.");
         }

@@ -25,7 +25,7 @@ public abstract class ReadOnlyFlatIterator<T> implements Iterator<T> {
     }
 
     @Override
-    public final void remove() throws UnsupportedOperationException {
+    public final void remove() {
         //backingIterator.remove();
         throw new UnsupportedOperationException();
     }

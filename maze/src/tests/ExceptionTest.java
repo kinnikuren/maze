@@ -10,8 +10,7 @@ import static util.Print.*;
 
 public class ExceptionTest {
 
-    public static void main(String[] args)
-            throws UnsupportedOperationException {
+    public static void main(String[] args) {
         Set<Node> nodeSet = new HashSet<Node>();
         nodeSet.add(new Node(1,2));
         nodeSet.add(new Node(2,2));
@@ -26,8 +25,7 @@ public class ExceptionTest {
         tryRemoving(nodeSet.iterator());
     }
 
-    public static void tryRemoving(Iterator<? extends Coordinate> itr)
-            throws UnsupportedOperationException {
+    public static void tryRemoving(Iterator<? extends Coordinate> itr) {
         /*ReadOnlyFlatIterator<Coordinate> rofi =
                 new ReadOnlyFlatIterator<Coordinate>(itr);
         for (rofi = rofi; rofi.hasNext();) {

@@ -54,7 +54,7 @@ public class MazeMap {
       return true;
     }
 
-    public boolean add(Coordinate c) throws NullArgumentException {
+    public boolean add(Coordinate c) {
         checkNullArg(c);
         if (!contains(c)) {
             Node node = new Node(c);
@@ -64,7 +64,7 @@ public class MazeMap {
       return false;
     }
 
-    public boolean addPositionSet(HashSet<Coordinate> inputSet) throws NullArgumentException {
+    public boolean addPositionSet(HashSet<Coordinate> inputSet) {
         //returns false if couldn't add all the positions to the map, but adds as many as it can
         boolean addResult = true;
         for (Coordinate c : inputSet) {
@@ -94,7 +94,7 @@ public class MazeMap {
       return node == null ? false : node.removeLinkTo(target);
     }
 
-    public void checkLegalArgs(Coordinate... args) throws IllegalArgumentException {
+    public void checkLegalArgs(Coordinate... args) {
         for (Coordinate c : args) {
           checkNullArg(c);
           if (!contains(c)) {
@@ -104,13 +104,13 @@ public class MazeMap {
           }
     }
 
-    public boolean link(Coordinate c, Coordinate target) throws IllegalArgumentException {
+    public boolean link(Coordinate c, Coordinate target) {
         //links nodes that already exist in the map; returns false if a link already exists in that direction
         checkLegalArgs(c, target);
       return addLinkTo(c, target);
     }
 
-    public boolean linkDouble(Coordinate c1, Coordinate c2) throws IllegalArgumentException {
+    public boolean linkDouble(Coordinate c1, Coordinate c2) {
         //returns false if either link cannot be added, else it will add both links
         boolean newLinks = false;
         checkLegalArgs(c1, c2);
@@ -123,8 +123,7 @@ public class MazeMap {
       return newLinks;
     }
 
-    public boolean addNodesLinkedOneWay(Coordinate c, Coordinate target)
-            throws IllegalArgumentException {
+    public boolean addNodesLinkedOneWay(Coordinate c, Coordinate target) {
         checkNullArgs(c, target);
         add(c); //in case it doesn't exist in the map yet
         add(target); //in case it doesn't exist in the map yet
@@ -145,12 +144,12 @@ public class MazeMap {
       return newLinks;
     }
 
-    public boolean deleteLink(Coordinate c, Coordinate target) throws IllegalArgumentException {
+    public boolean deleteLink(Coordinate c, Coordinate target) {
         checkLegalArgs(c, target);
       return removeLinkTo(c, target);
     }
 
-    public boolean deleteLinkDouble(Coordinate c1, Coordinate c2) throws IllegalArgumentException {
+    public boolean deleteLinkDouble(Coordinate c1, Coordinate c2) {
         //returns false if either link cannot be deleted, else it will delete both links
         boolean removeLinks = false;
         checkLegalArgs(c1, c2);
@@ -269,7 +268,7 @@ public class MazeMap {
         }
     }
 
-    public Key addLockedGate(Coordinate c1, Coordinate c2) throws IllegalArgumentException {
+    public Key addLockedGate(Coordinate c1, Coordinate c2) {
         checkLegalArgs(c1, c2);
         Key key = null;
         Room r1 = getRoom(c1);
@@ -300,7 +299,7 @@ public class MazeMap {
       return false;
     }
 
-    public Key addLockedGate(Gate gate) throws IllegalArgumentException {
+    public Key addLockedGate(Gate gate) {
         Coordinate c1 = gate.g.o1;
         Coordinate c2 = gate.g.o2;
 
