@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Random;
 
 public final class Bestiary {
-    public static List<Monster> monsterParty = new ArrayList<Monster>();
 
     public static abstract class Monster extends AbstractUnitFighter {
         private Random rand = new Random();
@@ -59,11 +58,8 @@ public final class Bestiary {
             Event event = null;
             if (isAlive) {
               if (trigger == FIGHT) {
-                monsterParty.add(this);
-                log("Adding " + this + " to monster party..");
-                log(monsterParty.toString());
-
-                event = Events.fightAll(monsterParty, HIGH);
+                //event = Events.fightAll(monsterParty, HIGH);
+                event = Events.fight(this, HIGH);
               } else if (trigger == MOVE) {
                   event = announce(this, DEFAULT, moveTrigger);
               }

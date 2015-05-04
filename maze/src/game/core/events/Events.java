@@ -54,7 +54,7 @@ public final class Events {
       return event;
     }
 
-    public static Event fightAll(final List<Monster> monsterParty,
+    /* public static Event fightAll(final List<Monster> monsterParty,
             final Priority priority) {
         Event event = new Event(monsterParty, priority) {
           @Override public ResultMessage fire(Player player) {
@@ -65,7 +65,7 @@ public final class Events {
           }
         };
       return event;
-    }
+    } */
 
     public static Event fightSkeletonTwice(final Bestiary.Skeleton sk1, final Priority priority) {
         Event event = new Event(sk1, priority) {

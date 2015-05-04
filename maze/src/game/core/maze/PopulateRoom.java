@@ -19,7 +19,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class PopulateRoom {
     private static Random rand = new Random();
 
-    public static void run(Maze maze) {
+    public static void populify(Maze maze) {
         ApplicationContext context =
             new ClassPathXmlApplicationContext("beans.xml");
 

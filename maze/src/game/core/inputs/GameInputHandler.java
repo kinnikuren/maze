@@ -120,6 +120,7 @@ public final class GameInputHandler {
                 log("Inventory contains " + arg);
                 performAction(you, leadCmd, arg, you.inventory());
             }
+            else log("There isn't " + arg + " to describe here.");
         }
         else if (leadCmd == MOVE) {
           if (arg == null) {

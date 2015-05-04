@@ -14,6 +14,7 @@ import game.objects.obstacles.TheDarkness;
 import game.objects.units.Player;
 import game.objects.units.Bestiary.Skeleton;
 import game.objects.units.Bestiary.Rat;
+import game.objects.items.Landmarks;
 import game.objects.items.Landmarks.*;
 import game.player.util.Statistics;
 
@@ -39,8 +40,11 @@ public class RunMazeTest {
         Coordinate center = new Coordinate();
         openSet.add(center);
         openSet.add(new Coordinate(0,1));
-        Maze coolMaze = MazeFactory.buildMaze(openSet, 30, center);
+        //Maze coolMaze = MazeFactory.buildMaze(openSet, 30, center);
+        Maze coolMaze = MazeFactory.buildMaze(openSet, 2, center);
 
+        //coolMaze.populateRooms();
+        coolMaze.getRoom(center).addActor(new Landmarks.EmptyThrone());
         Statistics.initialize();
 
         //Maze coolMaze = MazeFactory.buildMaze(30);
@@ -49,9 +53,6 @@ public class RunMazeTest {
         log("Exit location => " + coolMaze.exit());
         log("Center location => " + coolMaze.center());
         log("Final size: " + coolMaze.size());
-
-        coolMaze.populateRooms();
-
 
         //AStar.discover(coolMaze);
         print("\nMaze Run Test 4.0 :: Maze project.");

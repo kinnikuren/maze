@@ -31,7 +31,7 @@ public class Maze {
         @Override
         public void populateRoom() {
             //for testing
-            tests.PopulateRoomTest.fillerUp(position, center, this);
+            //tests.PopulateRoomTest.fillerUp(position, center, this);
         }
         public View<Coordinate> viewNeighbors() {
           return Maze.this.viewNeighborsOf(position);
@@ -167,7 +167,7 @@ public class Maze {
         else print("No exit found.");
     }
 
-    public HashSet<Coordinate> getExitSet(Double distanceFactor) {
+    private HashSet<Coordinate> getExitSet(Double distanceFactor) {
          HashMap<Coordinate,Double> distanceMap = new HashMap<Coordinate,Double>();
          HashSet<Coordinate> coordinateSet = new HashSet<Coordinate>();
          Coordinate origin = new Coordinate();
@@ -228,7 +228,7 @@ public class Maze {
 
     //private
     public void populateRooms() {
-        PopulateRoom.run(this);
+        PopulateRoom.populify(this);
         //for (Room room : map.viewAllRooms()) {
         //  room.populateRoom();
         // }
