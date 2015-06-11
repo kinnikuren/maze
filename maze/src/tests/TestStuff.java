@@ -84,7 +84,7 @@ public class TestStuff {
 
 
     public static void main(String[] args) {
-        HashMap<Integer, String> map = new HashMap<Integer, String>();
+        /* HashMap<Integer, String> map = new HashMap<Integer, String>();
         map.put(1, "string1");
         map.put(2, "string2");
         map.put(3, "string3");
@@ -101,6 +101,11 @@ public class TestStuff {
         print("--post itr--");
         print(map);
         print(list);
-
+        */
+        //Scanner scnr = new Scanner(System.in);
+        //int N = scnr.nextInt();
+        //print("hello");
+        //return;
+        //print("world");
     }
 }

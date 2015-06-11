@@ -44,7 +44,8 @@ public final class Bestiary {
 
         @Override
         public boolean canInteract(AbstractUnit unit) {
-          return unit instanceof Fighter ? true : false;
+          //return unit instanceof Fighter ? true : false;
+            return true; //default to true for now
         }
         @Override
         public boolean isDone(Stage stage) {
