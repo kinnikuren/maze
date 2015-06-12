@@ -16,6 +16,8 @@ import java.util.Set;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import util.Utilities.InOut;
+
 public class PopulateRoom {
     private static Random rand = new Random();
 
@@ -32,7 +34,7 @@ public class PopulateRoom {
         Coordinate cableLocation = Cable.addCable(maze);
 
         //spawn darkness
-        HashSet<Coordinate> darknessSet = maze.getCoordinateSet(0.3,maze.exit());
+        HashSet<Coordinate> darknessSet = maze.getCandidateSet(maze.exit(), 0.3, InOut.IN);
         Coordinate darknessLocation;
 
         Coordinate[] darknessLocs =
@@ -80,7 +82,7 @@ public class PopulateRoom {
             } else if (rarity.equals("dd")) {
                 coordinateSet = reachableAfterDarkness;
             } else {
-                coordinateSet = maze.getCoordinateSet(distanceFactor,maze.exit());
+                coordinateSet = maze.getCandidateSet(distanceFactor,maze.exit());
             }
 
             Coordinate spawnPoint;

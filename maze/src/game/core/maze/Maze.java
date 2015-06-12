@@ -7,11 +7,12 @@ import game.core.positional.Coordinate;
 import java.util.*;
 
 import util.View;
+import util.Utilities.InOut;
 import static util.Print.*;
 import static util.Loggers.*;
 
 public class Maze {
-    public static void mazify(Maze maze) { // Maze only generates if openSet exists
+    protected static void mazify(Maze maze) { // Maze only generates if openSet exists
         if (maze.openSet.size() > 0) {
             print("Preparing to mazify...");
             MazeGenerator.mappify(maze);
@@ -64,7 +65,10 @@ public class Maze {
 
         this.mazeId = MazeFactory.newMazeId(this);
         this.sizeUpperBound = sizeUpperBound;
-        if (sizeUpperBound > 0) this.buildCenterAtOrigin();
+        if (sizeUpperBound > 0) {
+            this.buildCenterAtOrigin();
+        }
+        else print("can't construct a maze of size 0.");
     }
 
     protected Maze(HashSet<Coordinate> openSet, int sizeUpperBound,
@@ -153,7 +157,7 @@ public class Maze {
         map.build(new Room(c));
     }
 
-    private void findExit() {
+    private boolean findExit() {
         HashSet<Coordinate> exitSet = new HashSet<Coordinate>();
 
         exitSet = getExitSet(exitFactor);
@@ -163,33 +167,22 @@ public class Maze {
             Coordinate[] exits = exitSet.toArray(new Coordinate[exitSet.size()]);
             int rand = new Random().nextInt(exitSet.size());
             exit = exits[rand];
+          return true;
         }
-        else print("No exit found.");
+        else {
+            print("No exit found.");
+          return false;
+        }
     }
 
     private HashSet<Coordinate> getExitSet(Double distanceFactor) {
-         HashMap<Coordinate,Double> distanceMap = new HashMap<Coordinate,Double>();
-         HashSet<Coordinate> coordinateSet = new HashSet<Coordinate>();
-         Coordinate origin = new Coordinate();
-         Double maxDistance = new Double(0);
+    //uses the center as a reference point, throws exception if center is undefined
+        if (center == null) throw new IllegalStateException("The exit set can't be determined while the maze center is undefined");
 
-         for (Coordinate c : map.viewLinkedNodes()) {
-             if (map.viewNeighborsOf(c).size() < 4) {
-                 Double distance = c.getDistanceTo(origin);
-                 maxDistance = (distance > maxDistance) ? distance : maxDistance;
-                 distanceMap.put(c, distance);
-             }
-         }
-             print(maxDistance); print(distanceMap);
-         for (Map.Entry<Coordinate,Double> entry : distanceMap.entrySet()) {
-             if (entry.getValue() >= maxDistance*distanceFactor)
-                 coordinateSet.add(entry.getKey());
-         }
-
-         return coordinateSet;
+      return getCandidateSet(center, exitFactor, InOut.OUT);
     }
 
-    public HashSet<Coordinate> getCoordinateSet(Double distanceFactor, Coordinate refPoint) {
+    public HashSet<Coordinate> getCandidateSet(Coordinate refPoint, Double distanceFactor, InOut flag) {
         HashMap<Coordinate,Double> distanceMap = new HashMap<Coordinate,Double>();
         HashSet<Coordinate> coordinateSet = new HashSet<Coordinate>();
         //Coordinate origin = new Coordinate();
@@ -202,8 +195,14 @@ public class Maze {
         }
             //print(maxDistance); print(distanceMap);
         for (Map.Entry<Coordinate,Double> entry : distanceMap.entrySet()) {
+          if (flag == InOut.IN) {
             if (entry.getValue() <= maxDistance*distanceFactor)
-                coordinateSet.add(entry.getKey());
+              coordinateSet.add(entry.getKey());
+          }
+          else if (flag == InOut.OUT) {
+            if (entry.getValue() >= maxDistance*distanceFactor)
+              coordinateSet.add(entry.getKey());
+          }
         }
 
         return coordinateSet;

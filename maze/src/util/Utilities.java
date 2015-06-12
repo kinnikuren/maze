@@ -21,6 +21,11 @@ public final class Utilities {
         }
     }
 
+    public enum InOut {
+        IN,
+        OUT;
+    }
+
     public static void checkNullArg(Object o) {
         if (o == null) throw new NullArgumentException("Null arguments are not allowed for this method.");
     }
