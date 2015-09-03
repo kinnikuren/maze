@@ -183,9 +183,10 @@ public class Maze {
     }
 
     public HashSet<Coordinate> getCandidateSet(Coordinate refPoint, Double distanceFactor, InOut flag) {
+        //use InOut to specify if the candidates should be inside or outside the range
+        //range is inclusive
         HashMap<Coordinate,Double> distanceMap = new HashMap<Coordinate,Double>();
         HashSet<Coordinate> coordinateSet = new HashSet<Coordinate>();
-        //Coordinate origin = new Coordinate();
         Double maxDistance = new Double(0);
 
         for (Coordinate c : map.viewLinkedNodes()) {

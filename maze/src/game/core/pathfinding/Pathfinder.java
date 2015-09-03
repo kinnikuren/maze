@@ -22,8 +22,8 @@ public class Pathfinder {
         checkNullArg(maze);
         checkNullArg(maze.center());
 
-        HashSet<Coordinate> reachableSet = new HashSet<Coordinate>();
         Coordinate center = maze.center();
+        HashSet<Coordinate> reachableSet = new HashSet<Coordinate>();
         HashSet<Coordinate> openSet = new HashSet<Coordinate>();
         HashSet<Coordinate> newSet = new HashSet<Coordinate>();
         reachableSet.add(center);
@@ -60,8 +60,8 @@ public class Pathfinder {
         checkNullArg(maze);
         checkNullArg(maze.center());
 
-        HashSet<Coordinate> reachableSet = new HashSet<Coordinate>();
         Coordinate center = maze.center();
+        HashSet<Coordinate> reachableSet = new HashSet<Coordinate>();
         HashSet<Coordinate> openSet = new HashSet<Coordinate>();
         HashSet<Coordinate> newSet = new HashSet<Coordinate>();
 
@@ -89,8 +89,8 @@ public class Pathfinder {
         checkNullArg(maze);
         checkNullArg(maze.center());
 
-        HashSet<Coordinate> reachableSet = new HashSet<Coordinate>();
         Coordinate center = maze.center();
+        HashSet<Coordinate> reachableSet = new HashSet<Coordinate>();
         HashSet<Coordinate> openSet = new HashSet<Coordinate>();
         HashSet<Coordinate> newSet = new HashSet<Coordinate>();
 

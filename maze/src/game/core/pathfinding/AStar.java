@@ -19,11 +19,9 @@ public class AStar {
     private static HashSet<Coordinate> closed = new HashSet<Coordinate>();
     private static PriorityQueue<Coordinate> open;
 
-    private Maze maze;
     private LinkedList<Coordinate> pathList = new LinkedList<Coordinate>();
 
-    public AStar(Maze maze) {
-        this.maze = maze;
+    public AStar() {
     }
 
     public static Comparator<Coordinate> fComparator = new Comparator<Coordinate>() {
@@ -34,7 +32,7 @@ public class AStar {
         }
     };
 
-    public static double h(Coordinate current, Coordinate goal) { //A* admissible heuristic
+    public static double heuristic(Coordinate current, Coordinate goal) { //A* admissible heuristic
       return current.getDistanceTo(goal);
     }
 
@@ -58,7 +56,7 @@ public class AStar {
             open = new PriorityQueue<Coordinate>(maze.size(), fComparator);
 
             g.put(start,0.0);
-            f.put(start, g.get(start)+h(start,goal));
+            f.put(start, g.get(start)+heuristic(start,goal));
             open.add(start);
 
             while(!open.isEmpty()) {
@@ -78,7 +76,7 @@ public class AStar {
                 if (!open.contains(c) || temp_g < g.get(c)) {
                   paths.put(c, current);
                   g.put(c, temp_g);
-                  f.put(c, g.get(c) + h(c,goal));
+                  f.put(c, g.get(c) + heuristic(c,goal));
                   if (!open.contains(c)) open.add(c);
                 }
               }

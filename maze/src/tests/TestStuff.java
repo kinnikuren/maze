@@ -107,5 +107,15 @@ public class TestStuff {
         //print("hello");
         //return;
         //print("world");
+
+        Integer[] intArray = new Integer[] {1,2,3,4};
+        List<Integer> integers = Arrays.asList(intArray);
+
+        String s = null;
+
+        for (Integer i : integers) {
+          s = i.toString();
+        }
+        System.out.println("s: " + s);
     }
 }

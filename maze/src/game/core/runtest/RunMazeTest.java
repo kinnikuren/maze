@@ -9,6 +9,7 @@ import game.core.maze.Maze;
 import game.core.maze.MazeFactory;
 import game.core.maze.MazeMap.*;
 import game.core.maze.Win;
+import game.core.pathfinding.AStar;
 import game.core.positional.Coordinate;
 import game.objects.obstacles.TheDarkness;
 import game.objects.units.Player;
@@ -54,7 +55,7 @@ public class RunMazeTest {
         log("Center location => " + coolMaze.center());
         log("Final size: " + coolMaze.size());
 
-        //AStar.discover(coolMaze);
+        AStar.discover(coolMaze);
         print("\nMaze Run Test 4.0 :: Maze project.");
         print("Ready for user input.");
 

@@ -58,7 +58,7 @@ public class PopulateRoom {
             log("Max spawn is " + maxSpawn);
             log("Rarity is " + rarity);
 
-            Double distanceFactor=1.0;
+            Double distanceFactor;
             if (rarity.equals("rare")) {
                 distanceFactor = 0.2;
             } else if (rarity.equals("medium-rare")) {
@@ -82,7 +82,7 @@ public class PopulateRoom {
             } else if (rarity.equals("dd")) {
                 coordinateSet = reachableAfterDarkness;
             } else {
-                coordinateSet = maze.getCandidateSet(distanceFactor,maze.exit());
+                coordinateSet = maze.getCandidateSet(maze.exit(), distanceFactor, InOut.IN);
             }
 
             Coordinate spawnPoint;
