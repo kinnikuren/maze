@@ -33,9 +33,8 @@ public class KeyMaster {
         LinkedList<Coordinate> path1 = null;
         LinkedList<Coordinate> path2 = null;
 
-        AStar.reset();
         path1 = AStar.discover(maze.center(),c1,maze);
-        AStar.reset();
+
         path2 = AStar.discover(maze.center(),c2,maze);
         //log(path1);
         //log(path2);

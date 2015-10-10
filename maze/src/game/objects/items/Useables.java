@@ -40,7 +40,6 @@ public final class Useables {
             Coordinate diff = null;
             Maze maze = player.maze();
 
-            AStar.reset();
             path = AStar.discover(player.location(),player.maze().exit(),player.maze());
             if (path.size() >= 2) {
                 nextRoom = path.get(path.size()-2);
@@ -112,8 +111,6 @@ public final class Useables {
         @Override
         public void usedBy(Player player) {
             LinkedList<Coordinate> path = null;
-
-            AStar.reset();
 
             path = AStar.discover(player.location(),player.maze().exit(),player.maze());
 

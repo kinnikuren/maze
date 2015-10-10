@@ -6,41 +6,33 @@ import game.core.positional.Coordinate;
 import java.util.*;
 import java.lang.StringBuilder;
 
-import util.NullArgumentException;
-import static util.Print.*;
 import static util.Utilities.*;
 import static util.Loggers.*;
 
 public class AStar {
-    private static Coordinate current;
-    private static HashMap<Coordinate, Double> g = new HashMap<Coordinate, Double>();
-    private static HashMap<Coordinate, Double> f = new HashMap<Coordinate, Double>();
-    private static HashMap<Coordinate, Coordinate> paths = new HashMap<Coordinate, Coordinate>();
-    private static HashSet<Coordinate> closed = new HashSet<Coordinate>();
-    private static PriorityQueue<Coordinate> open;
 
-    private LinkedList<Coordinate> pathList = new LinkedList<Coordinate>();
-
-    public AStar() {
-    }
-
-    public static Comparator<Coordinate> fComparator = new Comparator<Coordinate>() {
-        @Override
-        public int compare(Coordinate c1, Coordinate c2) {
-            double i = f.get(c1)-f.get(c2);
-          return sign(i);
-        }
-    };
-
-    public static double heuristic(Coordinate current, Coordinate goal) { //A* admissible heuristic
-      return current.getDistanceTo(goal);
-    }
+    public AStar() { }
 
     public static LinkedList<Coordinate> discover(Maze maze) {
       return discover(maze.center(), maze.exit(), maze);
     }
 
     public static LinkedList<Coordinate> discover(Coordinate start, Coordinate goal, Maze maze) {
+        Coordinate current;
+        final HashMap<Coordinate, Double> g = new HashMap<Coordinate, Double>();
+        final HashMap<Coordinate, Double> f = new HashMap<Coordinate, Double>();
+        final HashMap<Coordinate, Coordinate> paths = new HashMap<Coordinate, Coordinate>();
+        final HashSet<Coordinate> closed = new HashSet<Coordinate>();
+        final PriorityQueue<Coordinate> open;
+
+        Comparator<Coordinate> fComparator = new Comparator<Coordinate>() {
+            @Override
+            public int compare(Coordinate c1, Coordinate c2) {
+                double i = f.get(c1)-f.get(c2);
+              return sign(i);
+            }
+        };
+
         checkNullArgs(start, goal, maze);
         boolean discovery = false;
         LinkedList<Coordinate> path = null;
@@ -113,11 +105,7 @@ public class AStar {
       return path;
     }
 
-    public static void reset() {
-        g.clear();
-        f.clear();
-        paths.clear();
-        closed.clear();
-        open.clear();
-    }
+    private static double heuristic(Coordinate current, Coordinate goal) { //A* admissible heuristic
+        return current.getDistanceTo(goal);
+      }
 }
