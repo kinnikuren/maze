@@ -1,5 +1,7 @@
 package game.core.inputs;
 
+import game.core.events.Event;
+import game.core.interfaces.Actor;
 import game.core.positional.Coordinates;
 
 import java.util.*;
@@ -66,7 +68,7 @@ public enum Commands {
         ),
     DROP( new String[] {"drop"},
         "drop item in inventory."
-            ),
+        ),
     EQUIP( new String[] {"equip"},
         "equip item in inventory."
             ),
@@ -126,6 +128,8 @@ public enum Commands {
         }
 
         public String toString() { return matchInputs.get(0); }
+
+        public Event defaultEvent(Actor... actors) { return null; }
 
         public static void printCommandsList() {
             print("List of Commands:");
