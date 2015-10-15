@@ -108,7 +108,7 @@ public class TestStuff {
         //return;
         //print("world");
 
-        Integer[] intArray = new Integer[] {1,2,3,4};
+        /*Integer[] intArray = new Integer[] {1,2,3,4};
         List<Integer> integers = Arrays.asList(intArray);
 
         String s = null;
@@ -116,6 +116,19 @@ public class TestStuff {
         for (Integer i : integers) {
           s = i.toString();
         }
-        System.out.println("s: " + s);
+        System.out.println("s: " + s);*/
+
+        String s1 = "abcde";
+        String s2 = "abcde";
+
+        System.out.println(s1 == s2);
+        Object o1 = s1;
+        Object o2 = s2;
+        System.out.println(s1 == o2);
+        System.out.println(s2 == o2);
+        System.out.println(o1 == o2);
+
+        String s3 = new String("abcde");
+        System.out.println(s2 == s3);
     }
 }
