@@ -130,5 +130,11 @@ public class TestStuff {
 
         String s3 = new String("abcde");
         System.out.println(s2 == s3);
+
+        Integer[] intArray = new Integer[] {1,2,3,4, null};
+        List<Integer> integers = Arrays.asList(intArray);
+        if (integers.contains(null)) {
+            System.out.println("5 passed");
+        }
     }
 }

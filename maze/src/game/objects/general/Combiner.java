@@ -143,26 +143,40 @@ public class Combiner {
         //System.out.println(Combiner.Combinations.C02.result());
         //System.out.println(Combiner.Combinations.C03.result());
 
+        /*Ingredient[] tr = new Ingredient[] {new Ingredient(Flammable.class),
+                new Ingredient(Flammable.Flame.class), new Ingredient(WoodenStick.class)};*/
         Ingredient[] tr = new Ingredient[] {new Ingredient(Flammable.class),
-                new Ingredient(Flammable.Flame.class), new Ingredient(WoodenStick.class)};
+                new Ingredient(Flammable.Flame.class), new Ingredient(WoodenStick.class), new Ingredient(Coin.class)};
         List<Ingredient> torchRecipe = new ArrayList<Ingredient>(Arrays.asList(tr));
-        AbstractItem[] ar = new AbstractItem[] {new OilyRag(), new Match(), new WoodenStick()};
+
+        //AbstractItem[] ar = new AbstractItem[] {new OilyRag(), new Match(), new WoodenStick()};
+        //AbstractItem[] ar = new AbstractItem[] {new OilyRag(), new EncNone(), new WoodenStick()};
+        AbstractItem[] ar = new AbstractItem[] {new OilyRag(), new EncNone(), new WoodenStick(), new FlammableCoin()};
         List<AbstractItem> torchIngredients = new ArrayList<AbstractItem>(Arrays.asList(ar));
 
         Set<Tuple<Ingredient, AbstractItem>> combos = new HashSet<Tuple<Ingredient, AbstractItem>>();
+
+        System.out.println("torchRecipe size " + torchRecipe.size());
+        System.out.println("torchIngredients size " + torchIngredients.size());
 
         boolean matched = false;
         boolean matchedAll = true;
         for (Ingredient ri : torchRecipe) {
             matched = false;
+            System.out.println("processing recipe item " + ri);
+
             for (AbstractItem ai : torchIngredients) {
                 if (ri.matches(ai)) {
+                    System.out.println("recipe item " + ri + " matches torch ingredient " + ai);
                     combos.add(new Tuple<Ingredient, AbstractItem>(ri, ai));
                     matched = true;
                 }
             }
-            if (!matched) matchedAll = false;
-            break;
+            if (!matched) {
+                System.out.println("FAILED to find match for " + ri);
+                matchedAll = false;
+                break;
+            }
         }
 
         if (matchedAll) {

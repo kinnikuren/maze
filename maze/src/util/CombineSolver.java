@@ -96,7 +96,8 @@ public final class CombineSolver<X> {
 
         //return an arbitrary final candidate tuple if more than one exists
         List<Tuple<X, Y>> tuplesList = new ArrayList<Tuple<X, Y>>(tuples);
-        if (tuplesList.size() == 1) return tuplesList.get(0);
+        if (tuplesList.size() == 1)
+            return tuplesList.get(0);
         else {
             Random rnd = new Random();
             int i = rnd.nextInt(tuplesList.size());
@@ -186,7 +187,7 @@ public final class CombineSolver<X> {
         Tuple<String, Integer> t3 = new Tuple<String, Integer>("A", 3); tuples.add(t3);
         //Tuple<String, Integer> t4 = new Tuple<String, Integer>("B", 1); tuples.add(t4);
         Tuple<String, Integer> t5 = new Tuple<String, Integer>("B", 2); tuples.add(t5);
-        Tuple<String, Integer> t6 = new Tuple<String, Integer>("C", 2); tuples.add(t6);
+        Tuple<String, Integer> t6 = new Tuple<String, Integer>("C", 3); tuples.add(t6);
         //Tuple<String, Integer> t7 = new Tuple<String, Integer>("C", 3); tuples.add(t7);
         //Tuple<String, Integer> t8 = new Tuple<String, Integer>("C", 4); tuples.add(t8);
         //Tuple<String, Integer> t9 = new Tuple<String, Integer>("D", 3); tuples.add(t9);

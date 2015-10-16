@@ -80,4 +80,12 @@ public final class Trinkets {
         @Override public int weight() { return 16; }
     }
 
+    public static class FlammableCoin extends Coin implements Flammable.Flame {
+        public FlammableCoin() { }
+        @Override public String name() { return "Flammable Coin"; }
+        @Override public boolean matches(String name) { return false; }
+        @Override public String details() { return "Testing this Flammable Coin."; }
+        @Override public int weight() { return 0; }
+    }
+
 }

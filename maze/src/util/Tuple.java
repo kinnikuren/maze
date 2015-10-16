@@ -5,6 +5,9 @@ public class Tuple<X, Y> {
     public final Y y;
 
     public Tuple(X x, Y y) {
+        if (x == null || y == null) {
+            throw new IllegalArgumentException("Null arguments not allowed for Tuple creation");
+        }
         this.x = x;
         this.y = y;
     }
@@ -23,7 +26,11 @@ public class Tuple<X, Y> {
     }
     @Override
     public int hashCode() {
-        return x.hashCode() + y.hashCode();
+        final int prime = 31;
+        int hashCode = 1;
+        hashCode = prime * hashCode + x.hashCode();
+        hashCode = prime * hashCode + y.hashCode();
+        return hashCode;
     }
     @Override
     public String toString() {
