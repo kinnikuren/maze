@@ -74,7 +74,7 @@ public class PopulateRoom {
                 distanceFactor = 1.0;
             }
 
-            HashSet<Coordinate> coordinateSet;
+            Set<Coordinate> coordinateSet;
 
             //darkness dependent spawns
             if (rarity.equals("cable")) {
