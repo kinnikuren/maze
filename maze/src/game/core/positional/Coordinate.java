@@ -71,9 +71,9 @@ public class Coordinate {
         if (o == this) return true;
 
         if (o instanceof Coordinate) {
-            Coordinate c = (Coordinate)o;
-            if (c.x() == x && c.y() == y)
-              return true;
+          Coordinate c = (Coordinate)o;
+          if (c.x() == x && c.y() == y)
+            return true;
         }
       return false;
     }

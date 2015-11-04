@@ -137,38 +137,38 @@ public final class GameInputHandler {
                         + "(for a list of valid directions, type: help move)");
             }
             else if (you.move(direction, maze)) { //returns true if the move is valid
-                  // run any events that trigger on leaving
-                  Theatres.run(you, LEAVE, maze.getRoom(you.getPrevLocation()));
+              // run any events that trigger on leaving
+              Theatres.run(you, LEAVE, maze.getRoom(you.getPrevLocation()));
 
-                  print("You have moved " + direction + ".");
+              print("You have moved " + direction + ".");
 
-                  Room room = maze.getRoom(you.location());
+              Room room = maze.getRoom(you.location());
 
-                  if (you.inventory().contains("Enc-None")) {
-                      print("\nRandom encounters begone! Enc-None shields you.\n");
-                  } else {
-                      EncounterGenerator.run(you);
+              if (you.inventory().contains("Enc-None")) {
+                  print("\nRandom encounters begone! Enc-None shields you.\n");
+              } else {
+                  EncounterGenerator.run(you);
+              }
+
+              Theatres.run(you, MOVE, room);
+
+              if(you.isAlive()) {
+                if (you.location().equals(maze.exit())) {
+                  Win.foundExit();
+                } else {
+                  you.narrator().talksAboutRoom(you, room);
+                  if (!room.hasBeenVisited()) {
+                    room.setVisitedTrue(you);
+                    Statistics.globalUpdate("roomsExplored");
                   }
-
-                  Theatres.run(you, MOVE, room);
-
-                  if(you.isAlive()) {
-                    if (you.location().equals(maze.exit())) {
-                      Win.foundExit();
-                    } else {
-                      you.narrator().talksAboutRoom(you, room);
-                      if (!room.hasBeenVisited()) {
-                        room.setVisitedTrue(you);
-                        Statistics.globalUpdate("roomsExplored");
-                      }
-                      room.describeRoom();
-                      you.whereCanIGo(maze);
-                    }
-                  }
+                  room.describeRoom();
+                  you.whereCanIGo(maze);
                 }
-                else { //if you.move(direction) returned false
+              }
+            }
+            else { //if you.move(direction) returned false
                     print("There's no path to the " + direction + " from this room.");
-                }
+            }
           }
         }
         else if (leadCmd == RETURN) {

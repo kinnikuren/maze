@@ -12,11 +12,16 @@ import java.util.Set;
 import org.apache.commons.collections4.CollectionUtils;
 
 import static util.Tuples.*;
+import static util.Utilities.checkNullArgs;
 
 public final class CombineSolver<X> {
     private CombineSolver() { } //no instantiation
 
     public static <X, Y> Tuple<X, Y> findCandidateTuple(Set<Tuple<X, Y>> fromTuples) {
+
+        checkNullArgs(fromTuples); //throws if these are null
+        if (fromTuples.size() == 0)
+            return null; //won't find a candidate
 
         Set<Tuple<X, Y>> tuples = new HashSet<Tuple<X, Y>>(fromTuples);
             System.out.println(tuples);
@@ -96,7 +101,9 @@ public final class CombineSolver<X> {
 
         //return an arbitrary final candidate tuple if more than one exists
         List<Tuple<X, Y>> tuplesList = new ArrayList<Tuple<X, Y>>(tuples);
-        if (tuplesList.size() == 1)
+        if (tuplesList.size() == 0)
+            return null; //this should never happen, so this is an exception signal for caller to determine what to do
+        else if (tuplesList.size() == 1)
             return tuplesList.get(0);
         else {
             Random rnd = new Random();
@@ -106,6 +113,10 @@ public final class CombineSolver<X> {
     }
 
     public static <X, Y> Set<Tuple<X, Y>> findSolutionTuples(Set<Tuple<X, Y>> fromTuples) {
+
+        checkNullArgs(fromTuples); //throws if these are null
+        if (fromTuples.size() == 0)
+            return null; //won't find any solutions
 
         Set<Tuple<X, Y>> tuples = new HashSet<Tuple<X, Y>>(fromTuples);
         Set<Tuple<X, Y>> solutions = new HashSet<Tuple<X, Y>>();
@@ -117,6 +128,12 @@ public final class CombineSolver<X> {
             System.out.println("--------------------");
 
             Tuple<X, Y> tCandidate = findCandidateTuple(tuples);
+
+            if (tCandidate == null) {
+                System.out.println("\n****\nNo candidate tuple could be found at all! Something is wrong.\n");
+                return null; //this should never happen, so this is an exception signal for caller to determine what to do
+            }
+
             System.out.println("--------------------");
             System.out.println("candidate: " + tCandidate);
             solutions.add(tCandidate);
@@ -137,6 +154,10 @@ public final class CombineSolver<X> {
 
     public static <X, Y> boolean isCombineSolutionValid(Set<Tuple<X, Y>> fromTuples,
             Set<Tuple<X, Y>> solutions) {
+
+        checkNullArgs(fromTuples, solutions); //throws if these are null
+        if (fromTuples.size() == 0 || solutions.size() == 0)
+            return false; //no need to check further
 
         Set<X> setX = xSetOfTuples(fromTuples);
         Set<Y> setY = ySetOfTuples(fromTuples);

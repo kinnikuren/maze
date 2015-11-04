@@ -8,6 +8,8 @@ import game.objects.items.Useables.RedKey;
 
 import java.util.*;
 
+import util.ReadOnlyCatalyzedIterator;
+
 
 public class TestStuff {
 
@@ -108,33 +110,5 @@ public class TestStuff {
         //return;
         //print("world");
 
-        /*Integer[] intArray = new Integer[] {1,2,3,4};
-        List<Integer> integers = Arrays.asList(intArray);
-
-        String s = null;
-
-        for (Integer i : integers) {
-          s = i.toString();
-        }
-        System.out.println("s: " + s);*/
-
-        String s1 = "abcde";
-        String s2 = "abcde";
-
-        System.out.println(s1 == s2);
-        Object o1 = s1;
-        Object o2 = s2;
-        System.out.println(s1 == o2);
-        System.out.println(s2 == o2);
-        System.out.println(o1 == o2);
-
-        String s3 = new String("abcde");
-        System.out.println(s2 == s3);
-
-        Integer[] intArray = new Integer[] {1,2,3,4, null};
-        List<Integer> integers = Arrays.asList(intArray);
-        if (integers.contains(null)) {
-            System.out.println("5 passed");
-        }
     }
 }

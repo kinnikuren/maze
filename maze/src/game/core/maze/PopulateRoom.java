@@ -34,7 +34,7 @@ public class PopulateRoom {
         Coordinate cableLocation = Cable.addCable(maze);
 
         //spawn darkness
-        HashSet<Coordinate> darknessSet = maze.getCandidateSet(maze.exit(), 0.3, InOut.IN);
+        Set<Coordinate> darknessSet = maze.getCandidateSet(maze.exit(), 0.3, InOut.IN);
         Coordinate darknessLocation;
 
         Coordinate[] darknessLocs =

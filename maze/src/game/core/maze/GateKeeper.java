@@ -26,7 +26,7 @@ public class GateKeeper {
         Coordinate neighborPoint;
         int randNum;
 
-        HashSet<Coordinate> coordinateSet = maze.getCandidateSet(maze.exit(), gateDistanceFactor, InOut.IN);
+        Set<Coordinate> coordinateSet = maze.getCandidateSet(maze.exit(), gateDistanceFactor, InOut.IN);
 
         if (coordinateSet.size() > 0) {
             Coordinate[] spawnPoints =

@@ -39,7 +39,7 @@ public class Maze {
         }
     }
 
-    private HashSet<Coordinate> openSet = new HashSet<Coordinate>(); //set of positions to use for generation
+    private HashSet<Coordinate> openSet = new HashSet<>(); //set of positions to use for generation
     private MazeMap map = new MazeMap(); //set of final positions and links
     private Coordinate center = null;
     private Coordinate exit = null;
@@ -158,7 +158,7 @@ public class Maze {
     }
 
     private boolean findExit() {
-        HashSet<Coordinate> exitSet = new HashSet<Coordinate>();
+        Set<Coordinate> exitSet = new HashSet<Coordinate>();
 
         exitSet = getExitSet(exitFactor);
 
@@ -175,18 +175,18 @@ public class Maze {
         }
     }
 
-    private HashSet<Coordinate> getExitSet(Double distanceFactor) {
+    private Set<Coordinate> getExitSet(Double distanceFactor) {
     //uses the center as a reference point, throws exception if center is undefined
         if (center == null) throw new IllegalStateException("The exit set can't be determined while the maze center is undefined");
 
       return getCandidateSet(center, exitFactor, InOut.OUT);
     }
 
-    public HashSet<Coordinate> getCandidateSet(Coordinate refPoint, Double distanceFactor, InOut flag) {
+    public Set<Coordinate> getCandidateSet(Coordinate refPoint, Double distanceFactor, InOut flag) {
         //use InOut to specify if the candidates should be inside or outside the range
         //range is inclusive
-        HashMap<Coordinate,Double> distanceMap = new HashMap<Coordinate,Double>();
-        HashSet<Coordinate> coordinateSet = new HashSet<Coordinate>();
+        Map<Coordinate,Double> distanceMap = new HashMap<>();
+        HashSet<Coordinate> coordinateSet = new HashSet<>();
         Double maxDistance = new Double(0);
 
         for (Coordinate c : map.viewLinkedNodes()) {
